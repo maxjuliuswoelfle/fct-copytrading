@@ -251,7 +251,7 @@ def main():
 
     if not a.wirklich:
         print("\n  TROCKENLAUF — es wurde NICHTS veraendert.")
-        print(f"  Wirklich ausfuehren:  python3 kick.py {k['email']} --wirklich\n")
+        print(f"  Wirklich ausfuehren:  kick {k['email']} --wirklich\n")
         return
 
     # ------------------------------------------------------------ ausfuehren
@@ -325,7 +325,7 @@ def liste_faellige(con):
     for r, bis in faellig:
         name = f"{r['first_name'] or ''} {r['last_name'] or ''}".strip()
         print(f"  id={r['id']:<5} {r['email']:<38} {name:<24} abgelaufen {bis[:10]}")
-    print(f"\n  {len(faellig)} Faelle. Pruefen mit:  python3 kick.py <email>")
+    print(f"\n  {len(faellig)} Faelle. Pruefen mit:  kick <email>")
     if uebersprungen:
         print(f"\n  {len(uebersprungen)} uebersprungen (Ausnahmeliste):")
         for r, grund in uebersprungen:
