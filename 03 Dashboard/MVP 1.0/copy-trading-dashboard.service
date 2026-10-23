@@ -1,0 +1,29 @@
+[Unit]
+Description=Copy Trading Dashboard (FastAPI)
+After=network.target
+Wants=copy-trading-bot.service
+
+[Service]
+Type=simple
+User=botuser
+Group=botuser
+WorkingDirectory=/home/botuser/dashboard
+Environment=BOT_CORE_PATH=/home/botuser/copy-trading-bot
+Environment=DB_PATH=/home/botuser/copy-trading-bot/copy_trading.db
+# Gemeinsame Secrets mit dem Bot (SMTP, Affiliate, Ablefy, INTERNAL_API_TOKEN) — eine Quelle der Wahrheit
+EnvironmentFile=/home/botuser/copy-trading-bot/.env
+ExecStart=/home/botuser/copy-trading-bot/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8443 --workers 3
+Restart=always
+RestartSec=5
+
+# Security Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/botuser/copy-trading-bot /home/botuser/dashboard
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

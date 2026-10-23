@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: Kick Gunnar Still am 30.09.2026 09:00 UTC
+
+[Timer]
+OnCalendar=2026-09-30 09:00:00 UTC
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

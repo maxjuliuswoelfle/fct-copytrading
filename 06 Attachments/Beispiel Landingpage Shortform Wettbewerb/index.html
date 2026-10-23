@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Kurzclip Wettbewerb | Max Steinauer</title>
+  <link rel="icon" type="image/png" href="Logos/Icon Orange Gradient.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF8528;
+      --orange-light: #ffab61;
+      --orange-dim: rgba(255,133,40,0.15);
+      --orange-glow: rgba(255,133,40,0.25);
+      --black: #000000;
+      --surface: #0d0d0d;
+      --surface2: #141414;
+      --surface3: #1a1a1a;
+      --border: rgba(255,255,255,0.07);
+      --text: #ffffff;
+      --text-muted: rgba(255,255,255,0.5);
+      --text-dim: rgba(255,255,255,0.3);
+      --error: #ff4444;
+    }
+
+    .serif { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; }
+
+    /* ─── BRAND GRADIENT TEXT ─── */
+    .logo-text em,
+    .hero h1 span,
+    .section-label,
+    .prize-card.first .prize-rank,
+    .prize-card.first .prize-amount,
+    .resource-arrow,
+    .step-content a,
+    .tb-modal-body h3 {
+      background: linear-gradient(135deg, #F07828 0%, #FAC085 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: #000; }
+
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      max-width: 100vw;
+      overscroll-behavior-y: none;
+    }
+
+    /* Ambient bottom-left glow */
+    body::before {
+      content: '';
+      position: fixed;
+      bottom: -100px; left: -150px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,133,40,0.3) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+      animation: glowPulse 10s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+    }
+    .logo-icon { width: 26px; height: 26px; flex-shrink: 0; }
+    .logo-text { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; }
+    .logo-text em { font-style: normal; color: var(--orange); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--orange) !important; color: #000 !important;
+      padding: 9px 20px; border-radius: 8px;
+      font-weight: 600 !important; font-size: 14px !important;
+      transition: background 0.2s, transform 0.1s !important;
+    }
+    .nav-cta:hover { background: var(--orange-light) !important; transform: translateY(-1px) !important; }
+
+    /* mobile toggle */
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px;
+    }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 64px; left: 0; right: 0;
+      z-index: 99;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 14px 24px; font-size: 15px; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+    .mobile-menu .m-cta {
+      margin: 16px 24px; text-align: center;
+      background: var(--orange); color: #000;
+      font-weight: 700; border-radius: 8px; border: none;
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; z-index: 1;
+      padding: 96px 48px 72px;
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--orange-dim);
+      border: 1px solid rgba(255,133,40,0.3);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 13px; font-weight: 500; color: var(--orange-light);
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--orange); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+    .hero h1 {
+      font-size: clamp(38px, 6.5vw, 70px);
+      font-weight: 700; line-height: 1.06;
+      letter-spacing: -2.5px; margin-bottom: 22px;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--text-muted); max-width: 500px;
+      margin: 0 auto 40px; font-weight: 400; line-height: 1.7;
+    }
+    .hero-sub strong { color: var(--text); }
+    .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--orange); color: #000;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 15px;
+      padding: 14px 32px; border-radius: 10px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(255,133,40,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(255,133,40,0.5);
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: transparent; color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500; font-size: 15px;
+      padding: 14px 32px; border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    /* ─── PRIZES ─── */
+    .prizes-strip {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 12px;
+      padding: 0 48px 80px; flex-wrap: wrap;
+    }
+    .prize-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 28px;
+      text-align: center; min-width: 130px;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .prize-card:hover { border-color: rgba(255,133,40,0.3); transform: translateY(-3px); }
+    .prize-card.first {
+      border-color: rgba(255,133,40,0.45);
+      background: linear-gradient(135deg, rgba(255,133,40,0.1), var(--surface2));
+    }
+    .prize-card.first::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--orange);
+    }
+    .prize-rank {
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px;
+    }
+    .prize-card.first .prize-rank { color: var(--orange); }
+    .prize-emoji { font-size: 22px; margin-bottom: 10px; }
+    .prize-amount {
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 700; color: var(--text); letter-spacing: -0.5px;
+    }
+    .prize-card.first .prize-amount { color: var(--orange); }
+    .prize-label { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px; background: var(--border);
+      max-width: 860px; margin: 0 auto 80px;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto;
+      padding: 0 48px 96px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 14px;
+    }
+    .section h2 {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700; letter-spacing: -1px; margin-bottom: 40px;
+    }
+
+    /* ─── STEPS ─── */
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step {
+      display: grid; grid-template-columns: 52px 1fr;
+      gap: 24px; align-items: start;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 32px;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: rgba(255,133,40,0.25); }
+    .step-num {
+      width: 44px; height: 44px;
+      background: var(--orange-dim);
+      border: 1px solid rgba(255,133,40,0.3);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; color: var(--orange); flex-shrink: 0;
+    }
+    .step-content h3 {
+      font-size: 17px; font-weight: 600;
+      margin-bottom: 8px; letter-spacing: -0.3px;
+    }
+    .step-content p { color: var(--text-muted); font-size: 15px; line-height: 1.65; }
+    .step-content p + p { margin-top: 10px; font-size: 14px; color: var(--text-dim); }
+    .step-content a { color: var(--orange); text-decoration: none; }
+    .step-content a:hover { text-decoration: underline; }
+
+    /* platform tags */
+    .platforms { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .platform-tag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 12px;
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+    }
+
+    /* ─── RESOURCES ─── */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: auto auto;
+      gap: 14px;
+    }
+    .resources-grid .resource-card:nth-child(1) { grid-column: span 2; }
+    .resources-grid .resource-card:nth-child(2) { grid-column: span 2; }
+    .resources-grid .resource-card:nth-child(3) { grid-column: span 2; }
+    .resources-grid .resource-card:nth-child(4) { grid-column: span 3; }
+    .resources-grid .resource-card:nth-child(5) { grid-column: span 3; }
+
+    .resource-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      min-height: 160px;
+    }
+    .resource-card:hover {
+      border-color: rgba(255,133,40,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .resource-card.drive {
+      border-color: rgba(255,133,40,0.2);
+      background: linear-gradient(135deg, rgba(255,133,40,0.07), var(--surface2));
+    }
+    .resource-card.drive:hover { border-color: rgba(255,133,40,0.5); }
+    .resource-icon {
+      width: 42px; height: 42px;
+      background: var(--orange-dim);
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .resource-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.2px; }
+    .resource-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .resource-arrow { margin-top: auto; color: var(--orange); font-size: 18px; }
+
+    @media (max-width: 700px) {
+      .resources-grid { grid-template-columns: 1fr; }
+      .resources-grid .resource-card:nth-child(1),
+      .resources-grid .resource-card:nth-child(2),
+      .resources-grid .resource-card:nth-child(3),
+      .resources-grid .resource-card:nth-child(4),
+      .resources-grid .resource-card:nth-child(5) { grid-column: span 1; }
+    }
+
+    /* ─── FORM ─── */
+    .form-wrap {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 48px;
+      max-width: 620px; margin: 0 auto;
+    }
+    .form-header { margin-bottom: 32px; }
+    .form-header h2 { font-size: 28px; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .form-header p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; background: var(--surface3);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 13px 16px;
+      font-size: 15px; font-family: 'DM Sans', sans-serif;
+      color: var(--text); outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 40px; cursor: pointer;
+    }
+    .form-group select option { background: #1a1a1a; }
+    .form-group input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.4); cursor: pointer; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(255,133,40,0.5);
+      box-shadow: 0 0 0 3px rgba(255,133,40,0.1);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-dim); }
+    .form-group.has-error input,
+    .form-group.has-error select { border-color: rgba(255,68,68,0.6); box-shadow: 0 0 0 3px rgba(255,68,68,0.1); }
+    .err-msg { display: none; font-size: 12px; color: var(--error); margin-top: 6px; }
+    .form-group.has-error .err-msg { display: block; }
+
+    .form-note {
+      font-size: 13px; color: var(--text-dim);
+      margin-bottom: 24px; line-height: 1.65;
+      border-left: 2px solid rgba(255,133,40,0.25);
+      padding-left: 14px;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--orange); color: #000;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 16px;
+      padding: 15px; border-radius: 10px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(255,133,40,0.3);
+      letter-spacing: -0.2px;
+    }
+    .btn-submit:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 0 45px rgba(255,133,40,0.5); }
+    .btn-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+    /* success */
+    .success-msg {
+      display: none; text-align: center; padding: 32px 0;
+    }
+    .success-check {
+      width: 64px; height: 64px;
+      background: var(--orange-dim);
+      border: 1px solid rgba(255,133,40,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 28px;
+    }
+    .success-msg h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .success-msg p { color: var(--text-muted); font-size: 15px; line-height: 1.65; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      padding-bottom: max(40px, calc(env(safe-area-inset-bottom) + 40px));
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+    .footer-links a {
+      color: var(--text-dim); font-size: 13px; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy { font-size: 13px; color: var(--text-dim); }
+
+    /* ─── MODAL ─── */
+    .tb-modal {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 24px;
+      align-items: center; justify-content: center;
+    }
+    .tb-modal.open { display: flex; }
+    .tb-modal-inner {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 680px; width: 100%;
+      max-height: 85vh;
+      display: flex; flex-direction: column;
+    }
+    .tb-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .tb-modal-header h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    .tb-close {
+      background: var(--surface3); border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 14px;
+      width: 32px; height: 32px; border-radius: 8px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tb-close:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .tb-modal-body {
+      padding: 28px 32px 32px;
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .tb-modal-body h3 {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: -8px;
+    }
+    .tb-modal-body p {
+      font-size: 14px; color: var(--text-muted); line-height: 1.75;
+    }
+    .tb-modal-body strong { color: var(--text); }
+    @media (max-width: 700px) {
+      .tb-modal { padding: 16px; align-items: flex-end; }
+      .tb-modal-inner { max-height: 90vh; border-radius: 16px 16px 0 0; }
+      .tb-modal-header { padding: 20px 20px 16px; }
+      .tb-modal-body { padding: 20px 20px 28px; }
+    }
+
+    /* ─── MOTION ─── */
+
+    .hero h1 { position: relative; overflow: hidden; }
+
+    /* Animated border glow — Platz 1 */
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 4px rgba(255,133,40,0.1); border-color: rgba(255,133,40,0.45); }
+      50% { box-shadow: 0 0 11px rgba(255,133,40,0.3), 0 0 28px rgba(255,133,40,0.1); border-color: rgba(255,133,40,0.95); }
+    }
+    .prize-card.first { animation: borderGlow 2.5s ease-in-out infinite; }
+
+    /* Typewriter cursor */
+    @keyframes twBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .tw-cursor {
+      display: inline-block; width: 2px; height: 0.8em;
+      background: linear-gradient(135deg, #F07828, #FAC085);
+      margin-left: 3px; vertical-align: middle; border-radius: 1px;
+      animation: twBlink 0.65s ease-in-out infinite;
+    }
+
+    /* Directional reveals */
+    .reveal-left { opacity: 0; transform: translateX(-48px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-right { opacity: 0; transform: translateX(48px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+    .steps .step:nth-child(2) { transition-delay: 0.08s; }
+    .steps .step:nth-child(3) { transition-delay: 0.16s; }
+    .resources-grid .resource-card:nth-child(2) { transition-delay: 0.07s; }
+    .resources-grid .resource-card:nth-child(3) { transition-delay: 0.14s; }
+    .resources-grid .resource-card:nth-child(4) { transition-delay: 0.1s; }
+    .resources-grid .resource-card:nth-child(5) { transition-delay: 0.18s; }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      body { overflow-x: hidden; }
+      body::before { display: none; }
+      .hero { padding: 70px 24px 36px; }
+      .prizes-strip {
+        flex-wrap: wrap;
+        padding: 10px 24px 20px; margin-bottom: 36px;
+        gap: 10px; justify-content: center;
+      }
+      .prize-card { flex-shrink: 0; min-width: 100px; padding: 16px 18px; transform: none !important; }
+      .prize-card:hover { transform: none !important; border-color: rgba(255,133,40,0.3); }
+      .prize-emoji { font-size: 18px; margin-bottom: 8px; }
+      .prize-amount { font-size: 20px; }
+      .prize-rank { font-size: 10px; }
+      .prize-label { font-size: 11px; }
+      .section { padding: 0 24px 48px; }
+      #form { padding-bottom: 48px !important; }
+      .form-wrap { padding: 28px 20px; border-radius: 14px; }
+      footer { padding: 32px 24px; padding-bottom: max(24px, env(safe-area-inset-bottom)); flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .step { grid-template-columns: 1fr; }
+      .step-num { width: 36px; height: 36px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav>
+    <a href="#" class="logo">
+      <img src="Logos/Icon Orange Gradient.png" class="logo-icon" alt="Max Steinauer Icon" />
+      <span class="logo-text">Max <em>Steinauer</em></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">So geht's</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#form" class="nav-cta">Clip einreichen</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">So geht's</a>
+    <a href="#resources">Resources</a>
+    <a href="#form" class="m-cta">Clip einreichen →</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero reveal">
+    <div class="hero-badge">Monatlicher Wettbewerb läuft</div>
+    <h1>Erstelle Clips.<br /><span>Verdiene <span class="serif">Geld.</span></span></h1>
+    <p class="hero-sub">Schneide Shorts aus Max Steinauers Content, poste sie — und verdiene bis zu <strong>$3.000+</strong> monatlich.</p>
+    <div class="hero-actions">
+      <a href="#form" class="btn-primary">Jetzt mitmachen</a>
+      <a href="#resources" class="btn-secondary">Resources ansehen</a>
+    </div>
+  </div>
+
+  <!-- ═══ PRIZES ═══ -->
+  <div class="prizes-strip reveal">
+    <div class="prize-card first">
+      <div class="prize-rank">Platz 1</div>
+      <div class="prize-emoji">🏆</div>
+      <div class="prize-amount">$500</div>
+      <div class="prize-label">Hauptpreis</div>
+    </div>
+    <div class="prize-card">
+      <div class="prize-rank">Platz 2</div>
+      <div class="prize-emoji">🥈</div>
+      <div class="prize-amount">$350</div>
+      <div class="prize-label">Silberpreis</div>
+    </div>
+    <div class="prize-card">
+      <div class="prize-rank">Platz 3</div>
+      <div class="prize-emoji">🥉</div>
+      <div class="prize-amount">$150</div>
+      <div class="prize-label">Bronzepreis</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section class="section reveal" id="how">
+    <div class="section-label">Teilnahme</div>
+    <h2>Wie nehme ich am <span class="serif">Wettbewerb</span> teil?</h2>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Schneide einen Short-Clip</h3>
+          <p>Wähle Content aus Max Steinauers Long-Form-Videos. Provokant, humorvoll oder informativ — dein Schnitt, deine Idee. Es werden ausschließlich eigenständig erstellte Clips akzeptiert.</p>
+          <p>Long-Form Content findest du unten im <a href="#resources">Resources-Bereich</a>.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Poste auf deinen Plattformen</h3>
+          <p>Lade den Clip regelkonform auf einer der folgenden Plattformen hoch. Pflicht: Jedes Video muss die Hashtags <strong style="color:rgba(255,255,255,0.8)">#maxsteinauer</strong> und <strong style="color:rgba(255,255,255,0.8)">#firstclasstrading</strong> enthalten — ohne Hashtags keine Teilnahme.</p>
+          <div class="platforms">
+            <span class="platform-tag">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.84 4.84 0 01-1.07-.1z"/></svg>
+              TikTok
+            </span>
+            <span class="platform-tag">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram Reels
+            </span>
+            <span class="platform-tag">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              YouTube Shorts
+            </span>
+            <span class="platform-tag">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X / Twitter
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Sammle Views &amp; reiche ein</h3>
+          <p>Sammle organische Views, Retention und Engagement. Wenn dein Clip viral geht, trage ihn über das Formular unten ein. Die Auswertung findet immer am <strong style="color:rgba(255,255,255,0.75)">letzten Tag des Monats</strong> statt.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ RESOURCES ═══ -->
+  <section class="section reveal" id="resources">
+    <div class="section-label">Content</div>
+    <h2>Hier findest du <span class="serif">Long-Form Content</span></h2>
+    <div class="resources-grid">
+
+      <a href="https://youtube.com/@maxsteinauer" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8528"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <h3>YouTube Videos</h3>
+        <p>Alle Videos auf Max Steinauers Hauptkanal — ideal zum Schneiden.</p>
+        <div class="resource-arrow">→</div>
+      </a>
+
+      <a href="https://youtube.com/@maxsteinauer" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8528"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <h3>YouTube Livestreams</h3>
+        <p>Livestream-Aufzeichnungen — lange Sessions mit viel schneidbarem Material.</p>
+        <div class="resource-arrow">→</div>
+      </a>
+
+      <a href="https://youtube.com/@maxsteinauer-vlogs" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8528"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <h3>YouTube Vlog-Kanal</h3>
+        <p>Hinter den Kulissen, persönliche Einblicke und Vlog-Content.</p>
+        <div class="resource-arrow">→</div>
+      </a>
+
+      <a href="https://www.instagram.com/maxsteinauer" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8528"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </div>
+        <h3>Instagram Content</h3>
+        <p>Instagram-Posts und Stories für zusätzlichen Schnitt-Content.</p>
+        <div class="resource-arrow">→</div>
+      </a>
+
+      <a href="https://drive.google.com/drive/folders/1RbWJkZTqhEq6QEmrcct5YWtJhWePG9_f?usp=sharing" target="_blank" rel="noopener" class="resource-card drive">
+        <div class="resource-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF8528"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Ressourcen &amp; Logos Download</h3>
+        <p>Alle Logos, Assets und Vorlagen — direkt aus Google Drive herunterladen und sofort verwenden.</p>
+        <div class="resource-arrow">→ Google Drive öffnen</div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ FORM ═══ -->
+  <section class="section reveal" id="form" style="padding-bottom: 100px;">
+    <div class="form-wrap">
+      <div class="form-header">
+        <div class="section-label">Einreichen</div>
+        <h2>Clip <span class="serif">einreichen</span></h2>
+        <p>Bitte pro Formular nur <strong>einen Clip</strong> einreichen. Bei mehreren Clips: einzeln absenden.</p>
+      </div>
+
+      <!-- Success -->
+      <div class="success-msg" id="successMsg">
+        <div class="success-check">✓</div>
+        <h3>Danke für deine <span class="serif">Teilnahme.</span></h3>
+        <p>Dein Clip wurde erfolgreich eingereicht. Die Auswertung findet am letzten Tag des Monats statt.<br /><br />Max Steinauer — Trader, Unternehmer &amp; Creator</p>
+        <button class="btn-primary" style="margin-top: 28px;" onclick="resetForm()">Weiteren Clip einreichen</button>
+      </div>
+
+      <!-- Form -->
+      <div id="formContent">
+        <div class="form-group" id="grp-url">
+          <label>Video-Link *</label>
+          <input type="url" id="f-url" placeholder="https://www.tiktok.com/@dein-account/video/..." />
+          <div class="err-msg">Bitte gib einen gültigen Link ein (https://…).</div>
+        </div>
+
+        <div class="form-group" id="grp-platform">
+          <label>Plattform *</label>
+          <select id="f-platform">
+            <option value="" disabled selected>Plattform auswählen…</option>
+            <option value="tiktok">TikTok</option>
+            <option value="instagram">Instagram Reels</option>
+            <option value="youtube">YouTube Shorts</option>
+            <option value="x">X / Twitter</option>
+          </select>
+          <div class="err-msg">Bitte wähle die Plattform aus.</div>
+        </div>
+
+        <div class="form-group" id="grp-date">
+          <label>Veröffentlichungsdatum *</label>
+          <input type="date" id="f-date" />
+          <div class="err-msg">Bitte gib das Datum an.</div>
+        </div>
+
+        <div class="form-group" id="grp-email">
+          <label>E-Mail Adresse *</label>
+          <input type="email" id="f-email" placeholder="deine@email.com" />
+          <div class="err-msg">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+        </div>
+
+        <div class="form-group" id="grp-wallet">
+          <label>USDT Wallet-Adresse (TRC20) *</label>
+          <input type="text" id="f-wallet" placeholder="0x..." />
+          <div class="err-msg">Bitte gib deine USDT TRC20 Wallet-Adresse ein.</div>
+        </div>
+
+        <p class="form-note">Die Auszahlung erfolgt ausschließlich in <strong>USDT (TRC20)</strong>. Für fehlerhafte oder unvollständige Angaben übernehmen wir keine Haftung. Auswertung immer am letzten Tag des Monats.</p>
+
+        <button class="btn-submit" id="submitBtn" onclick="submitForm()">Clip einreichen →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <a href="#" class="logo">
+      <img src="Logos/Icon Orange Gradient.png" class="logo-icon" alt="Max Steinauer Icon" />
+      <span class="logo-text">Max <em>Steinauer</em></span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="#how">So geht's</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#form">Clip einreichen</a></li>
+      <li><a href="#" onclick="document.getElementById('impressumModal').classList.add('open'); return false;">Impressum</a></li>
+      <li><a href="#" onclick="document.getElementById('tbModal').classList.add('open'); return false;">Teilnahmebedingungen</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Max Steinauer</span>
+  </footer>
+
+  <!-- ═══ IMPRESSUM MODAL ═══ -->
+  <div id="impressumModal" class="tb-modal">
+    <div class="tb-modal-inner">
+      <div class="tb-modal-header">
+        <h2>Impressum</h2>
+        <button class="tb-close" onclick="document.getElementById('impressumModal').classList.remove('open')" aria-label="Schließen">✕</button>
+      </div>
+      <div class="tb-modal-body">
+
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <p>F&amp;S Coaching FZCO<br />Silicon Oasis, DDP, Building A1<br />Dubai, Vereinigte Arabische Emirate<br /><br />Geschäftsleitung: Maximilian Steinauer<br />E-Mail: info@firstclass-trading.com</p>
+
+        <h3>Haftung für Inhalte</h3>
+        <p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Wir übernehmen jedoch keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der bereitgestellten Inhalte. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Eine Verpflichtung zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleibt hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+
+        <h3>Haftung für Links</h3>
+        <p>Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Daher können wir für diese fremden Inhalte keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+
+        <h3>Urheberrecht</h3>
+        <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
+
+        <h3>Risikohinweis</h3>
+        <p>Der Handel mit Finanzinstrumenten wie Aktien, Futures, Optionen, Devisen (Forex) sowie insbesondere mit Hebelprodukten (z. B. CFDs) ist mit erheblichen Risiken verbunden und nicht für jeden Anleger geeignet. Es besteht die Möglichkeit, dass Sie einen Totalverlust des eingesetzten Kapitals erleiden oder sogar Verluste entstehen, die Ihre ursprüngliche Investition übersteigen. Nur Personen und Institutionen, die die damit verbundenen Risiken vollständig verstanden haben und bereit sowie finanziell in der Lage sind, erhebliche Verluste zu tragen, sollten sich auf diese Art von Handelsaktivitäten einlassen.</p>
+        <p>FirstClass Trading richtet sich ausschließlich an Personen, die sich für Bildungs- und Informationszwecke interessieren. Sämtliche Inhalte auf dieser Website dienen ausschließlich der allgemeinen Information und Weiterbildung. Sie stellen ausdrücklich weder eine Finanz-, Anlage- noch eine Steuerberatung dar und sind auch keine Aufforderung oder Empfehlung zum Kauf, Verkauf oder Halten von Finanzinstrumenten.</p>
+        <p>Jede Handels- oder Investitionsentscheidung trifft der Nutzer eigenverantwortlich und auf eigenes Risiko. Wir übernehmen keinerlei Haftung für Verluste oder Schäden, die direkt oder indirekt aus der Nutzung oder dem Vertrauen auf bereitgestellte Informationen entstehen.</p>
+        <p>Wir weisen ausdrücklich auf die besonders hohen Risiken bei Geschäften mit Futures, Optionen, CFDs und anderen Hebelprodukten hin. Aufgrund des Hebeleffekts können sich Verluste überproportional verstärken und über das eingesetzte Kapital hinausgehen, was gegebenenfalls zu Nachschusspflichten führt.</p>
+        <p>Durch die Nutzung dieser Website bestätigen Sie ausdrücklich, dass Sie sich dieser Risiken bewusst sind, diese verstanden haben und ausschließlich auf eigenes Risiko handeln.</p>
+
+        <h3>Streitschlichtung</h3>
+        <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/<br />Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+        <h3>Rechtsgültigkeit</h3>
+        <p>Dieses Impressum gilt für die Website www.firstclass-trading.com und www.firstclass-trading.de sowie für alle dazugehörigen Social-Media-Profile.<br /><br />Für weitere Informationen: info@firstclass-trading.com</p>
+
+        <p style="color: var(--text-dim); font-size: 12px; margin-top: 8px;">Stand: März 2026</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TEILNAHMEBEDINGUNGEN MODAL ═══ -->
+  <div id="tbModal" class="tb-modal">
+    <div class="tb-modal-inner">
+      <div class="tb-modal-header">
+        <h2>Teilnahmebedingungen</h2>
+        <button class="tb-close" onclick="document.getElementById('tbModal').classList.remove('open')" aria-label="Schließen">✕</button>
+      </div>
+      <div class="tb-modal-body">
+
+        <h3>Veranstalter und Gegenstand</h3>
+        <p>Der Kurzclip-Wettbewerb wird von Max Steinauer (F&S Coaching FZCO) durchgeführt und dient der kreativen Erstellung und Verbreitung von Kurzvideo-Inhalten auf Basis von Content von Max Steinauer. Mit der Teilnahme erklären sich die Teilnehmer mit diesen Teilnahmebedingungen verbindlich einverstanden.</p>
+
+        <h3>Teilnahmeberechtigung</h3>
+        <p>Teilnahmeberechtigt sind ausschließlich natürliche Personen, die das 18. Lebensjahr vollendet haben. Mitarbeiter des Veranstalters sowie Personen, die unmittelbar an der Organisation des Wettbewerbs beteiligt sind, sind von der Teilnahme ausgeschlossen.</p>
+
+        <h3>Teilnahme und Ablauf</h3>
+        <p><em>Schritt 1: Erstellung des Clips</em> – Zur Teilnahme muss der Teilnehmer einen eigenständig erstellten Kurzclip aus bestehendem Long-Form-Content von Max Steinauer schneiden. Der Clip muss auf einer eigenen kreativen Idee des Teilnehmers beruhen. Es werden ausschließlich Clips akzeptiert, die vom Teilnehmer selbst erstellt wurden. Der zugrunde liegende Long-Form-Content darf ausschließlich aus offiziellen Kanälen von Max Steinauer stammen, einschließlich der auf dieser Website verlinkten Inhalte.</p>
+        <p><em>Schritt 2: Veröffentlichung</em> – Der Kurzclip muss regelkonform auf einer der folgenden Plattformen veröffentlicht werden: TikTok, Instagram Reels, X (ehemals Twitter) oder YouTube Shorts.</p>
+
+        <h3>Pflicht</h3>
+        <p>Jeder veröffentlichte Clip muss die Hashtags <strong>#maxsteinauer</strong> und <strong>#firstclasstrading</strong> enthalten. Clips ohne diese Hashtags gelten nicht als Teilnahme.</p>
+
+        <h3>Performance &amp; Einreichung</h3>
+        <p>Der Teilnehmer sammelt mit seinem Clip organische Views, Retention und Engagement. Sobald ein Clip eine besonders starke Performance erzielt, muss der Teilnehmer den direkten Link zum Video über das auf dieser Seite bereitgestellte Formular einreichen. Berücksichtigt werden ausschließlich Clips, die zu den best-performendsten Videos des jeweiligen Monats zählen.</p>
+
+        <h3>Einzureichende Angaben</h3>
+        <p>Für jeden eingereichten Clip sind folgende Angaben vollständig und korrekt zu machen: direkter Link zum Video, Veröffentlichungsdatum, E-Mail-Adresse sowie eine TRC20-USDT-Wallet-Adresse für eine mögliche Auszahlung. Jeder Clip muss separat eingereicht werden. Das bloße Verlinken eines Social-Media-Accounts ist nicht ausreichend.</p>
+
+        <h3>Preise und Ausschüttung</h3>
+        <p>Die Preisverteilung erfolgt monatlich und richtet sich nach der Performance der Clips: Platz 1: 1.500 USD – Platz 2: 700 USD – Platz 3: 400 USD – Platz 4: 250 USD – Platz 5: 150 USD.</p>
+        <p>Der Veranstalter behält sich vor, Preisstruktur, Anzahl der Gewinner oder Ausschüttungshöhen jederzeit anzupassen, insbesondere bei besonderen Markt- oder Kampagnenbedingungen. Die Auszahlung erfolgt ausschließlich in USDT (TRC20) an die vom Gewinner angegebene Wallet-Adresse. Für fehlerhafte oder unvollständige Angaben übernimmt der Veranstalter keine Haftung.</p>
+
+        <h3>Verbotene Praktiken &amp; Disqualifikation</h3>
+        <p>Jegliche Manipulation ist strengstens untersagt. Insbesondere verboten sind: Kauf von Views, Likes, Kommentaren oder sonstigem Engagement, Nutzung von Bots, Click-Farms oder automatisierten Systemen sowie Täuschung, Falschangaben oder sonstige Formen von Fraud. Der Veranstalter überprüft Performance-Daten. Bei festgestelltem oder begründetem Verdacht auf Manipulation erfolgt eine sofortige Disqualifikation ohne Anspruch auf Preisgeld oder Ersatz.</p>
+
+        <h3>Nutzungsrechte</h3>
+        <p>Mit der Teilnahme räumt der Teilnehmer dem Veranstalter das nicht-exklusive, zeitlich und räumlich unbegrenzte Recht ein, die eingereichten Clips zu Marketing-, Community- oder Dokumentationszwecken zu verwenden, zu teilen und öffentlich zugänglich zu machen. Das auf dieser Seite zum Download bereitgestellte Brand-Kit und die Logos von Max Steinauer dürfen ausschließlich für die Erstellung der Wettbewerbsclips verwendet werden. Eine anderweitige Nutzung ist nicht gestattet.</p>
+
+        <h3>Haftungsausschluss</h3>
+        <p>Der Veranstalter übernimmt keine Haftung für technische Störungen, Plattform-Algorithmen, Reichweitenänderungen oder sonstige Umstände, die die Performance eines Clips beeinflussen können. Ein Anspruch auf Teilnahme, Bewertung oder Auszahlung besteht nicht.</p>
+
+        <h3>Support &amp; Rückfragen</h3>
+        <p>Bei Fragen zum Wettbewerb oder zur Teilnahme kann der Teilnehmer den offiziellen Support über die angegebenen Kontaktmöglichkeiten erreichen.</p>
+
+        <h3>Schlussbestimmungen</h3>
+        <p>Der Veranstalter behält sich vor, den Wettbewerb jederzeit zu ändern, zu pausieren oder zu beenden, sofern sachliche Gründe dies erfordern. Der Rechtsweg ist ausgeschlossen.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // Modals
+    ['tbModal','impressumModal'].forEach(function(id) {
+      var el = document.getElementById(id);
+      el.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+      });
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('tbModal').classList.remove('open');
+        document.getElementById('impressumModal').classList.remove('open');
+      }
+    });
+
+    // Mobile nav
+    document.getElementById('navToggle').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.remove('open');
+      });
+    });
+
+    // ── FLOATING PARTICLES ──
+    (function() {
+      var canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
+      document.body.prepend(canvas);
+      var ctx = canvas.getContext('2d');
+      var W = 0, H = 0, pts = [];
+      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+      function spawn() {
+        pts = [];
+        for (var i = 0; i < 150; i++) {
+          pts.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.3+0.3,
+            vx: (Math.random()-0.5)*0.2, vy: -(Math.random()*0.18+0.04),
+            o: Math.random()*0.28+0.05, ph: Math.random()*Math.PI*2 });
+        }
+      }
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        var t = Date.now()*0.001;
+        // Ambient glow — on mobile drawn via canvas to avoid iOS compositing bugs
+        if (W <= 700) {
+          var gPhase = 0.5 - 0.5 * Math.cos(t * 0.628); // 10s cycle
+          var gScale = 1 + 0.3 * gPhase;
+          var gAlpha = (1 - 0.4 * gPhase) * 0.3;
+          var gCX = 200 + Math.sin(t * 0.23) * 60 + Math.cos(t * 0.11) * 30;
+          var gCY = H - 250 + Math.cos(t * 0.19) * 50 + Math.sin(t * 0.07) * 40;
+          var gR = 350 * gScale;
+          var grd = ctx.createRadialGradient(gCX, gCY, 0, gCX, gCY, gR);
+          grd.addColorStop(0, 'rgba(255,133,40,' + gAlpha.toFixed(3) + ')');
+          grd.addColorStop(0.65, 'rgba(255,133,40,0)');
+          grd.addColorStop(1,    'rgba(255,133,40,0)');
+          ctx.fillStyle = grd;
+          ctx.fillRect(0, 0, W, H);
+        }
+        pts.forEach(function(p) {
+          var a = p.o*(0.5+0.5*Math.sin(t*1.2+p.ph));
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(255,133,40,'+a+')'; ctx.fill();
+          p.x+=p.vx; p.y+=p.vy;
+          if(p.y<-5) p.y=H+5; if(p.x<-5) p.x=W+5; if(p.x>W+5) p.x=-5;
+        });
+        requestAnimationFrame(draw);
+      }
+      resize(); spawn(); draw();
+      window.addEventListener('resize', function(){ resize(); spawn(); });
+    })();
+
+    // ── TYPEWRITER ──
+    (function() {
+      var h1 = document.querySelector('.hero h1');
+      if (!h1) return;
+      var line1 = 'Erstelle Clips.';
+      var line2 = 'Verdiene ';
+      var serif = 'Geld.';
+
+      // Build full DOM structure first, measure height, then clear text
+      var t1      = document.createTextNode('');
+      var br      = document.createElement('br');
+      var spLine2 = document.createElement('span');
+      var t2      = document.createTextNode('');
+      var spSerif = document.createElement('span');
+      spSerif.className = 'serif';
+      var t3      = document.createTextNode('');
+      var cur     = document.createElement('span');
+      cur.className = 'tw-cursor';
+
+      spSerif.appendChild(t3);
+      spLine2.appendChild(t2);
+      spLine2.appendChild(spSerif);
+      h1.innerHTML = '';
+      h1.appendChild(t1);
+      h1.appendChild(br);
+      h1.appendChild(spLine2);
+      h1.appendChild(cur);
+
+      // Measure final height with full text
+      t1.textContent = line1;
+      t2.textContent = line2;
+      t3.textContent = serif;
+      h1.style.minHeight = h1.offsetHeight + 'px';
+
+      // Clear and start typing
+      t1.textContent = '';
+      t2.textContent = '';
+      t3.textContent = '';
+
+      function type(node, text, cb, spd) {
+        var i = 0;
+        (function step() {
+          node.textContent = text.substring(0, ++i);
+          if (i < text.length) setTimeout(step, spd || 55);
+          else if (cb) setTimeout(cb, 200);
+        })();
+      }
+
+      setTimeout(function() {
+        type(t1, line1, function() {
+          type(t2, line2, function() {
+            type(t3, serif, function() {
+              setTimeout(function() {
+                cur.style.animation = 'none';
+                cur.style.transition = 'opacity 0.5s';
+                cur.style.opacity = '0';
+              }, 1000);
+            }, 60);
+          }, 55);
+        }, 55);
+      }, 500);
+    })();
+
+    // ── DIRECTIONAL REVEALS ──
+    document.querySelectorAll('.step').forEach(function(el,i){
+      el.classList.add('reveal');
+    });
+    document.querySelectorAll('.resource-card').forEach(function(el,i){
+      el.classList.add('reveal');
+    });
+
+    // ── SCROLL REVEAL ──
+    var reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 150px 0px' });
+    reveals.forEach(function(el) { io.observe(el); });
+
+    // Form
+    function setErr(grpId, show) {
+      var el = document.getElementById('grp-' + grpId);
+      if (el) el.classList.toggle('has-error', show);
+    }
+    function isUrl(v) { try { new URL(v); return true; } catch(e) { return false; } }
+
+    function resetForm() {
+      document.getElementById('f-url').value = '';
+      document.getElementById('f-platform').value = '';
+      document.getElementById('f-date').value = '';
+      document.getElementById('f-email').value = '';
+      document.getElementById('f-wallet').value = '';
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = 'Clip einreichen →';
+      btn.disabled = false;
+      document.getElementById('successMsg').style.display = 'none';
+      document.getElementById('formContent').style.display = 'block';
+    }
+
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzVBxzkRIl0hUdN8JtpujjjnXkelmlcwZ3HmuP79PwOfKOTSqAWihLrI673JE2efE0Qbg/exec';
+
+    function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    function submitForm() {
+      var url      = document.getElementById('f-url').value.trim();
+      var platform = document.getElementById('f-platform').value;
+      var date     = document.getElementById('f-date').value;
+      var email    = document.getElementById('f-email').value.trim();
+      var wallet   = document.getElementById('f-wallet').value.trim();
+
+      var ok = true;
+      if (!url || !isUrl(url))         { setErr('url', true);      ok = false; } else setErr('url', false);
+      if (!platform)                   { setErr('platform', true); ok = false; } else setErr('platform', false);
+      if (!date)                       { setErr('date', true);     ok = false; } else setErr('date', false);
+      if (!email || !isEmail(email))   { setErr('email', true);    ok = false; } else setErr('email', false);
+      if (!wallet || wallet.length < 10) { setErr('wallet', true); ok = false; } else setErr('wallet', false);
+      if (!ok) return;
+
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = 'Wird gesendet…';
+      btn.disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url, platform: platform, date: date, email: email, wallet: wallet })
+      })
+      .then(function() {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      })
+      .catch(function() {
+        btn.textContent = 'Clip einreichen →';
+        btn.disabled = false;
+        alert('Fehler beim Senden. Bitte versuche es erneut.');
+      });
+    }
+
+    // Clear error on interaction
+    ['url','email','wallet'].forEach(function(id) {
+      var el = document.getElementById('f-' + id);
+      if (el) el.addEventListener('input', function() { setErr(id, false); });
+    });
+    document.getElementById('f-platform').addEventListener('change', function() { setErr('platform', false); });
+    document.getElementById('f-date').addEventListener('change', function() { setErr('date', false); });
+  </script>
+</body>
+</html>

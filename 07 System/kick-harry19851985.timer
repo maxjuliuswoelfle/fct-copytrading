@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: kick harry19851985@gmail.com (5 Sol Ruffy) on 2027-06-29 09:00 UTC (paid until then)
+
+[Timer]
+OnCalendar=2027-06-29 09:00:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

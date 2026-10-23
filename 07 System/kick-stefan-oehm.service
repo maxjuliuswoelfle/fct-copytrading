@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick stefan.oehm@gmail.com (Stefan Oehm / @eisman88) from Telegram groups (cancellation 2026-08-28)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_stefan_oehm.sh

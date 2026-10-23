@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick kardrekh@gmail.com (Tunc) from Telegram groups (cancellation 2026-08-07)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_tunc_kardrekh.sh

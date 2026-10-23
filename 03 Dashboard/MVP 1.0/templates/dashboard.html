@@ -1,0 +1,439 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · FirstClass Copy Trading{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEAD -->
+<div class="page-head">
+  <div>
+    <h1>{% if hour >= 18 or hour < 5 %}Guten Abend{% elif hour >= 12 %}Guten Tag{% elif hour >= 5 %}Guten Morgen{% endif %}, {{ user.customer_name.split(' ')[0] if user else 'Trader' }}</h1>
+    <div class="sub">
+      Dein Copy Trading Portfolio steht heute bei
+      <span style="color:var(--bull);font-weight:600;" data-live="today_pnl_pct">— %</span>
+      <span style="color:var(--tx-4);margin:0 6px;">|</span>
+      {{ today_formatted }}
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn btn-ghost" onclick="location.reload()"><svg class="ico" style="width:15px;height:15px;"><use href="#i-refresh"/></svg>Aktualisieren</button>
+    <a href="https://levex.com/en/perp/trade/BTCUSDT" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration:none;"><svg class="ico"><use href="#i-link"/></svg>Trading Account</a>
+  </div>
+</div>
+
+<!-- MASTER ACCOUNT HERO -->
+<section class="master-hero">
+  <div class="master-grid">
+    <div class="master-left">
+      <div class="master-label">
+        <span class="live-dot"></span>
+        Du kopierst · Master Account
+      </div>
+
+      <div class="master-trader">
+        <div class="master-avatar" style="padding:0;">
+          <img src="/static/logos/Max%20Steinauer.png" alt="Max Steinauer" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">
+          <div class="verify"><svg viewBox="0 0 24 24" style="width:12px;height:12px;"><use href="#i-verified"/></svg></div>
+        </div>
+        <div class="master-trader-info">
+          <h2>Max Steinauer</h2>
+          <div class="role">
+            Head Trader, FirstClass Trading
+          </div>
+        </div>
+      </div>
+
+      <div class="master-return-block">
+        <div class="master-return-label">Gesamtrendite · Seit Start</div>
+        <div>
+          <span class="master-return-value num" data-live="master_return_pct">— %</span>
+          <span class="master-return-period">seit {{ bot_since[:10] if bot_since else 'Start' }}</span>
+        </div>
+      </div>
+
+      <div class="master-metrics">
+        <div class="master-metric">
+          <div class="l">Lfd. Jahr</div>
+          <div class="v bull num" data-live="master_ytd_pct">— %</div>
+        </div>
+        <div class="master-metric">
+          <div class="l">Trefferquote</div>
+          <div class="v num">{{ "%.1f"|format(bot_win_rate) }} %</div>
+        </div>
+        <div class="master-metric">
+          <div class="l">Max. Drawdown</div>
+          <div class="v bear num" data-live="max_drawdown">— %</div>
+        </div>
+        <div class="master-metric">
+          <div class="l">Follower</div>
+          <div class="v num" data-live="follower_count">{{ follower_count }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="master-right">
+      <div class="master-status">
+        <span class="live-dot"></span>
+        <span data-live="positions_status">Live · {{ active_positions|length }} offene Position{{ 'en' if active_positions|length != 1 else '' }}</span>
+      </div>
+      <svg class="master-chart" viewBox="0 0 240 110" preserveAspectRatio="none" id="masterMiniChart">
+        <defs>
+          <linearGradient id="masterGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#FF8528" stop-opacity="0.40"/>
+            <stop offset="100%" stop-color="#FF8528" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path id="masterMiniArea" d="M0,90 L20,82 L40,86 L60,72 L80,76 L100,60 L120,64 L140,46 L160,52 L180,36 L200,28 L220,18 L240,12 L240,110 L0,110 Z" fill="url(#masterGrad)"/>
+        <path id="masterMiniLine" d="M0,90 L20,82 L40,86 L60,72 L80,76 L100,60 L120,64 L140,46 L160,52 L180,36 L200,28 L220,18 L240,12" fill="none" stroke="#FF8528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- STATS GRID -->
+<section class="stats-grid">
+  <div class="card stat-card">
+    <div class="stat-head">
+      <div class="stat-label">Dein Portfolio</div>
+      <div class="stat-icon orange"><svg class="ico"><use href="#i-wallet"/></svg></div>
+    </div>
+    <div class="stat-value num" data-live="portfolio_value">— $</div>
+    <div class="stat-foot">
+      <span class="stat-delta bull" data-live="portfolio_1d_delta"><svg class="ico" style="width:12px;height:12px;"><use href="#i-trending-up"/></svg>— % <span class="sub">1T</span></span>
+      <svg width="68" height="24" viewBox="0 0 68 24" preserveAspectRatio="none" id="portfolioSparkline">
+        <path id="sparklinePath" d="M0,18 L8,16 L16,17 L24,13 L32,14 L40,10 L48,11 L56,6 L68,3" fill="none" stroke="#00C896" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card stat-card">
+    <div class="stat-head">
+      <div class="stat-label">Gesamt P&amp;L</div>
+      <div class="stat-icon"><svg class="ico"><use href="#i-trending-up"/></svg></div>
+    </div>
+    <div class="stat-value num" style="color:{% if total_pnl >= 0 %}var(--bull){% else %}var(--bear){% endif %};" data-live="total_pnl">
+      {% if total_pnl >= 0 %}+{% endif %}{{ "%.2f"|format(total_pnl) }} $
+    </div>
+    <div class="stat-foot">
+      <span class="stat-delta {% if total_pnl >= 0 %}bull{% else %}bear{% endif %}" data-live="total_return_pct">— % <span class="sub">seit Start</span></span>
+    </div>
+  </div>
+
+  <div class="card stat-card">
+    <div class="stat-head">
+      <div class="stat-label">Kopierte Trades</div>
+      <div class="stat-icon"><svg class="ico"><use href="#i-copy"/></svg></div>
+    </div>
+    <div class="stat-value num">{{ total_trades }}</div>
+    <div class="stat-foot">
+      <span class="stat-delta"><span class="sub" data-live="active_count">{{ active_positions|length }} aktiv</span> · <span style="color:{% if win_rate >= 50 %}var(--bull){% else %}var(--bear){% endif %};">{{ "%.1f"|format(win_rate) }} %</span> Trefferquote</span>
+    </div>
+  </div>
+
+  <div class="card stat-card">
+    <div class="stat-head">
+      <div class="stat-label">Sync Genauigkeit</div>
+      <div class="stat-icon"><svg class="ico"><use href="#i-target"/></svg></div>
+    </div>
+    <div class="stat-value num" data-live="sync_accuracy">— %</div>
+    <div class="stat-foot">
+      <span class="stat-delta bull" data-live="sync_latency">— ms Ø Latenz</span>
+    </div>
+  </div>
+</section>
+
+<!-- ROW 2: EQUITY CHART + LIVE FEED -->
+<section class="row-2">
+
+  <div class="card chart-card">
+    <div class="chart-head">
+      <div>
+        <div class="chart-title">Portfolio Performance</div>
+        <div class="chart-sub">Deine Portfolio Performance im Vergleich zum Master Trading Account</div>
+      </div>
+      <div class="tabbar" id="chartTabbar">
+        <button class="tab" data-period="1T">1T</button>
+        <button class="tab" data-period="1W">1W</button>
+        <button class="tab active" data-period="1M">1M</button>
+        <button class="tab" data-period="3M">3M</button>
+        <button class="tab" data-period="YTD">YTD</button>
+        <button class="tab" data-period="All">All</button>
+      </div>
+    </div>
+
+    <div class="chart-stats">
+      <div class="chart-stat">
+        <div class="l" style="display:flex;align-items:center;gap:7px;">
+          <span class="bar-dot" style="background:#00C896;"></span>
+          Dein Portfolio
+        </div>
+        <div class="v num" data-live="chart_you_value">— $<span class="delta bull" data-live="chart_you_pct">— %</span></div>
+      </div>
+      <div class="chart-stat">
+        <div class="l" style="display:flex;align-items:center;gap:7px;">
+          <span class="bar-dot" style="background:#FF8528;"></span>
+          Master
+        </div>
+        <div class="v num" style="color:var(--fct);" data-live="chart_master_pct">— %</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" id="perfChartWrap">
+      <svg viewBox="0 0 800 280" preserveAspectRatio="none" width="100%" height="100%" id="perfChart">
+        <defs>
+          <linearGradient id="youGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#00C896" stop-opacity="0.20"/>
+            <stop offset="100%" stop-color="#00C896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="masterChartGrad" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#FF8528" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#FF8528" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Horizontal grid -->
+        <g stroke="rgba(255,255,255,0.04)" stroke-width="1" id="chartGrid"></g>
+
+        <!-- Y-axis labels -->
+        <g font-size="9" fill="#6B6B6B" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="500" id="chartYAxis"></g>
+
+        <!-- Master area + line -->
+        <path id="masterArea" fill="url(#masterChartGrad)" d=""/>
+        <path id="masterLine" fill="none" stroke="#FF8528" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 4" opacity="0.85" d=""/>
+
+        <!-- You area + line -->
+        <path id="youArea" fill="url(#youGrad)" d=""/>
+        <path id="youLine" fill="none" stroke="#00C896" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d=""/>
+
+        <!-- Crosshair -->
+        <line id="crosshair" x1="0" y1="20" x2="0" y2="220" stroke="rgba(255,255,255,0.18)" stroke-width="1" stroke-dasharray="3 4" opacity="0"/>
+
+        <!-- Interactive dots -->
+        <circle id="masterDot" cx="0" cy="0" r="3.5" fill="#FF8528" opacity="0"/>
+        <circle id="youDotHalo" cx="0" cy="0" r="9" fill="#00C896" opacity="0.15"/>
+        <circle id="youDot" cx="0" cy="0" r="4" fill="#00C896"/>
+
+        <!-- X-axis labels -->
+        <g font-size="9" fill="#6B6B6B" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="500" id="chartXAxis"></g>
+
+        <!-- Hover capture -->
+        <rect id="hoverRect" x="0" y="0" width="800" height="260" fill="transparent" style="cursor: crosshair;"/>
+      </svg>
+      <div id="perfTooltip" class="perf-tooltip" style="display:none;">
+        <div class="tt-date"></div>
+        <div class="tt-row">
+          <span class="tt-dot you-dot"></span>
+          <span class="tt-label">Du</span>
+          <span class="tt-val you-val" style="font-size:11px;"></span>
+        </div>
+        <div class="tt-row">
+          <span class="tt-dot master-dot"></span>
+          <span class="tt-label">Master</span>
+          <span class="tt-val master-val" style="font-size:11px;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card feed-card">
+    <div class="feed-head">
+      <div class="l">
+        <span class="live-dot"></span>
+        <div>
+          <h3>Live Aktivität</h3>
+        </div>
+      </div>
+    </div>
+    <div class="feed">
+      {% if recent_trades %}
+        {% for trade in recent_trades[:6] %}
+        <div class="feed-item">
+          <div class="feed-ico {% if trade.pnl >= 0 %}bull{% else %}bear{% endif %}">
+            <svg class="ico"><use href="{% if trade.pnl >= 0 %}#i-arrow-up-right{% else %}#i-arrow-down-right{% endif %}"/></svg>
+          </div>
+          <div class="feed-body">
+            <div class="feed-title">
+              <b>Geschlossen</b>
+              <span class="pair">{{ trade.symbol }}</span> ·
+              <span class="{% if trade.pnl >= 0 %}bull{% else %}bear{% endif %}">
+                {% if trade.pnl >= 0 %}+{% endif %}{{ "%.2f"|format(trade.pnl) }} $
+              </span>
+            </div>
+            <div class="feed-meta">
+              {{ trade.side }}
+              {% if trade.avg_entry %} · Einstieg {{ "%.2f"|format(trade.avg_entry) }} ${% endif %}
+              <span class="sep">·</span>
+              {{ trade.closed_at[:10] if trade.closed_at else '' }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div style="padding:40px 20px;text-align:center;color:var(--tx-3);font-size:13px;">
+          Noch keine Trade-Aktivität vorhanden.
+        </div>
+      {% endif %}
+    </div>
+    <a href="/live-feed" class="feed-foot" style="text-decoration:none;display:block;"></a>
+  </div>
+</section>
+
+<!-- ROW 3: ACTIVE POSITIONS -->
+<section class="card section-card">
+  <div class="section-head">
+    <div>
+      <h3>Aktive Positionen</h3>
+      <div class="sub">Echtzeit Positionen aus deinem Trading Account</div>
+    </div>
+    {% if active_positions %}
+    <div class="live-pill">
+      <span class="live-dot"></span>
+      <span data-live="positions_pill">{{ active_positions|length }} Live-Position{{ 'en' if active_positions|length != 1 else '' }}</span>
+    </div>
+    {% endif %}
+  </div>
+  {% if active_positions %}
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Paar</th>
+        <th>Einstieg</th>
+        <th>Aktuell</th>
+        <th>Größe</th>
+        <th>TP / SL</th>
+        <th>Unrealisierter P&amp;L</th>
+      </tr>
+    </thead>
+    <tbody id="positions-body">
+      {% for pos in active_positions %}
+      {% set symbol_letter = pos.symbol[0] if pos.symbol else '?' %}
+      {% set is_long = pos.side == 'Buy' %}
+      <tr data-position-id="{{ pos.master_position_id }}">
+        <td>
+          <div class="pair-cell">
+            <div class="pair-ico" style="background:linear-gradient(135deg,{% if 'BTC' in pos.symbol %}#F7931A,#E08613{% elif 'ETH' in pos.symbol %}#627EEA,#3C5BD0{% elif 'SOL' in pos.symbol %}#14F195,#0BA67A{% elif 'XRP' in pos.symbol %}#23292F,#0F1419{% else %}#6B6B6B,#4A4A4A{% endif %});">
+              {{ symbol_letter }}
+            </div>
+            <div class="pair-meta">
+              <div class="pair-name num">{{ pos.symbol }}</div>
+              <div class="pair-side {% if is_long %}long{% else %}short{% endif %}">
+                {{ 'LONG' if is_long else 'SHORT' }}
+                {% if pos.leverage %} · {{ pos.leverage|int }}×{% endif %}
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="num">{{ "%.2f"|format(pos.customer_entry_price) if pos.customer_entry_price else '—' }} $</td>
+        <td class="num" data-live-price="{{ pos.master_position_id }}">— $</td>
+        <td>
+          <div class="num">{{ pos.customer_qty if pos.customer_qty else '—' }}</div>
+          <div class="pnl-sub">{{ "%.2f"|format(pos.size) if pos.size else '—' }} $</div>
+        </td>
+        <td>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div class="num" style="color:var(--bull);font-size:12px;">TP {{ "%.2f"|format(pos.take_profit) if pos.take_profit else '—' }}</div>
+            <div class="num" style="color:var(--bear);font-size:12px;">SL {{ "%.2f"|format(pos.stop_loss) if pos.stop_loss else '—' }}</div>
+          </div>
+        </td>
+        <td data-live-pnl="{{ pos.master_position_id }}">
+          <div class="pnl-cell num" style="color:var(--tx-3);">— $</div>
+          <div class="pnl-sub">— %</div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <div style="padding:40px 24px;text-align:center;color:var(--tx-3);font-size:13px;">
+    Keine aktiven Positionen. Der Bot wartet auf neue Trades vom Master.
+  </div>
+  {% endif %}
+</section>
+
+<!-- ROW 4: COMPARISON + RECENT ACTIVITY -->
+<section class="row-4">
+
+  <div class="card compare-card">
+    <div class="compare-head">
+      <div class="compare-title">Du vs Master · Letzte 30 Tage</div>
+      <div class="compare-sub">Sync Genauigkeit bei <span data-live="compare_sync">—</span> % <span style="color:var(--tx-4);margin:0 4px;">|</span> deine Performance folgt Max nahezu identisch</div>
+    </div>
+    <div class="compare-bars">
+      <div class="compare-bar">
+        <div class="compare-bar-head">
+          <div class="compare-bar-name">
+            <span class="bar-dot" style="background:#FF8528;"></span>
+            Max Steinauer · Master
+          </div>
+          <div class="compare-bar-value bull num" data-live="compare_master_pct">— %</div>
+        </div>
+        <div class="compare-bar-track"><div class="compare-bar-fill master" id="compareMasterBar" style="width:{% if bot_trades > 0 %}98{% else %}0{% endif %}%;"></div></div>
+        <div class="compare-meta">{{ bot_trades }} Trades · {{ bot_wins }} Gewinne · {{ "%.1f"|format(bot_win_rate) }} % Trefferquote</div>
+      </div>
+      <div class="compare-bar">
+        <div class="compare-bar-head">
+          <div class="compare-bar-name">
+            <span class="bar-dot" style="background:#00C896;"></span>
+            Dein Account
+          </div>
+          <div class="compare-bar-value bull num" data-live="compare_you_pct">— %</div>
+        </div>
+        <div class="compare-bar-track"><div class="compare-bar-fill you" id="compareYouBar" style="width:{% if total_trades > 0 %}97{% else %}0{% endif %}%;"></div></div>
+        <div class="compare-meta">{{ total_trades }} Trades synchronisiert · {{ wins }} Gewinne · {{ "%.1f"|format(win_rate) }} % Trefferquote</div>
+      </div>
+      <div class="compare-bar">
+        <div class="compare-bar-head">
+          <div class="compare-bar-name">
+            <span class="bar-dot" style="background:rgba(255,255,255,0.4);"></span>
+            BTC · Buy &amp; Hold Benchmark
+          </div>
+          <div class="compare-bar-value num" style="color:var(--tx-2);" data-live="btc_benchmark">— %</div>
+        </div>
+        <div class="compare-bar-track"><div class="compare-bar-fill bench" id="compareBtcBar" style="width:0%;"></div></div>
+        <div class="compare-meta">Zum Vergleich</div>
+      </div>
+    </div>
+
+    <div class="compare-foot">
+      <div class="info-ico"><svg class="ico"><use href="#i-info"/></svg></div>
+      <div class="txt">
+        Abweichungen zwischen deinem P&L und dem Master können durch <b>unterschiedliche Positionsgrößen</b> und <b>Slippage</b> entstehen.<br>
+        Ø Sync Latenz: <b data-live="sync_latency_footer">— ms</b>.
+      </div>
+    </div>
+  </div>
+
+  <div class="card activity-card">
+    <div class="activity-head">
+      <h3>Letzte Trades</h3>
+    </div>
+    <div class="activity-list">
+      {% if recent_trades %}
+        {% for trade in recent_trades[:6] %}
+        <div class="activity-item">
+          <div class="act-ico {% if trade.pnl >= 0 %}bull{% elif trade.pnl < 0 %}bear{% else %}neutral{% endif %}">
+            <svg class="ico"><use href="{% if trade.pnl >= 0 %}#i-arrow-up-right{% elif trade.pnl < 0 %}#i-arrow-down-right{% else %}#i-x{% endif %}"/></svg>
+          </div>
+          <div class="act-body">
+            <div class="act-title"><b>{{ trade.symbol }}</b> · {{ trade.side }}</div>
+            <div class="act-meta">Geschlossen {{ trade.closed_at[:10] if trade.closed_at else '' }} · {{ trade.duration }}</div>
+          </div>
+          <div>
+            <div class="act-value {% if trade.pnl >= 0 %}bull{% elif trade.pnl < 0 %}bear{% else %}neutral{% endif %} num">
+              {% if trade.pnl >= 0 %}+{% endif %}{{ "%.2f"|format(trade.pnl) }} $
+            </div>
+            <div class="act-meta {% if trade.pnl >= 0 %}bull{% elif trade.pnl < 0 %}bear{% else %}neutral{% endif %}">{{ "%+.2f"|format(trade.pnl_pct) }} %</div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div style="padding:40px 24px;text-align:center;color:var(--tx-3);font-size:13px;">
+          Noch keine abgeschlossenen Trades.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

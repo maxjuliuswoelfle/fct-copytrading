@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bezahlung - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="auth-layout">
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="brand-icon-box">
+        <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+      </div>
+      <div class="brand-text">
+        <div class="brand-name" style="font-size:18px;">FirstClass</div>
+        <div class="brand-tag">Copy Trading</div>
+      </div>
+    </div>
+
+    {% if tier == "paid_signals" %}
+    <h1>Copy Trading freischalten</h1>
+    <p class="auth-subtitle">Erhalte alle Trades von Max in Echtzeit gespiegelt — inklusive Entry, Stop-Loss, Take-Profit und Trade Management.</p>
+
+    <div class="auth-card">
+      <div style="padding:20px 0 16px;text-align:center;">
+        <div style="font-size:13px;color:var(--tx-3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Copy Trading</div>
+        <div style="font-size:36px;font-weight:700;color:var(--tx-1);">100€<span style="font-size:16px;font-weight:400;color:var(--tx-3);">/Monat</span></div>
+      </div>
+
+      <div style="border-top:1px solid var(--bd-default);padding:16px 0;font-size:13px;color:var(--tx-2);line-height:2;text-align:center;">
+        <div><span style="color:var(--fct);">&#10003;</span> Alle Trades von Max in Echtzeit gespiegelt</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Entry, SL, TP & Trade Management</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Exklusive Telegram Premium-Gruppe</div>
+      </div>
+
+      <a href="{{ checkout_url }}" class="btn btn-primary" style="display:block;width:100%;text-align:center;text-decoration:none;margin-top:8px;">
+        Jetzt bezahlen
+      </a>
+
+      <p style="font-size:12px;color:var(--tx-3);text-align:center;margin-top:12px;">
+        Sichere Zahlung · Monatlich kündbar
+      </p>
+
+      <p style="font-size:11px;color:var(--tx-4);text-align:center;margin-top:16px;line-height:1.5;">
+        Du wirst zu unserem Zahlungsanbieter weitergeleitet. Nach erfolgreicher Zahlung geht es automatisch weiter.
+      </p>
+    </div>
+
+    {% elif tier == "copy_trading" %}
+    <h1>Copy Trading aktivieren</h1>
+    <p class="auth-subtitle">Max' Trades werden automatisch auf deinen Account gespiegelt — in Echtzeit, mit vollem Trade Management.</p>
+
+    <div class="auth-card">
+      <div style="padding:20px 0 16px;text-align:center;">
+        <div style="font-size:13px;color:var(--tx-3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Copy Trading</div>
+        <div style="font-size:36px;font-weight:700;color:var(--tx-1);">500€<span style="font-size:16px;font-weight:400;color:var(--tx-3);"> Einrichtung</span></div>
+        <div style="font-size:16px;color:var(--tx-2);margin-top:4px;">+ 300€/Monat</div>
+      </div>
+
+      <div style="border-top:1px solid var(--bd-default);padding:16px 0;font-size:13px;color:var(--tx-2);line-height:2;text-align:center;">
+        <div><span style="color:var(--fct);">&#10003;</span> Automatisches Trade-Mirroring</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Proportionale Skalierung auf dein Konto</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Volles Trade Management (SL, TP, Scale)</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Live-Dashboard mit Equity Chart</div>
+        <div><span style="color:var(--fct);">&#10003;</span> Alle Trades in Echtzeit gespiegelt</div>
+      </div>
+
+      <a href="{{ checkout_url }}" class="btn btn-primary" style="display:block;width:100%;text-align:center;text-decoration:none;margin-top:8px;">
+        Jetzt bezahlen
+      </a>
+
+      <p style="font-size:12px;color:var(--tx-3);text-align:center;margin-top:12px;">
+        Sichere Zahlung · Monatlich kündbar
+      </p>
+
+      <p style="font-size:11px;color:var(--tx-4);text-align:center;margin-top:16px;line-height:1.5;">
+        Du wirst zu unserem Zahlungsanbieter weitergeleitet. Nach erfolgreicher Zahlung geht es automatisch weiter.
+      </p>
+    </div>
+    {% endif %}
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

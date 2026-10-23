@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick richardkeklik@gmail.com from Telegram groups (cancellation 2026-07-28)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_richard_keklik.sh

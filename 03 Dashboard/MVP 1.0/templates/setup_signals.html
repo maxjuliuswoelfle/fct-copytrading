@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einrichtung - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+  .setup-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 20px 8vh;
+  }
+  .setup-container {
+    width: 100%;
+    max-width: 1000px;
+  }
+  .setup-header {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .setup-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .setup-header p {
+    font-size: 14px;
+    color: var(--tx-3);
+    margin: 0;
+  }
+
+  /* Two-column layout */
+  .setup-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-top: 32px;
+  }
+  @media (max-width: 768px) {
+    .setup-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Step Cards */
+  .setup-card {
+    background: var(--bg-2);
+    border: 1px solid var(--bd-default);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .setup-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.015em;
+  }
+  .setup-card .step-sub {
+    font-size: 13.5px;
+    color: var(--tx-3);
+    margin: 0 0 20px;
+    line-height: 1.55;
+  }
+  .setup-card > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* Info Badge */
+  .info-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: var(--tx-2);
+    line-height: 1.5;
+  }
+  .info-badge svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+  }
+
+  /* Bonus Info */
+  .bonus-box {
+    background: var(--fct-soft);
+    border: 1px solid var(--bd-orange);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .bonus-box h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--fct);
+  }
+  .bonus-box p {
+    font-size: 13px;
+    color: var(--tx-2);
+    margin: 0 0 12px;
+    line-height: 1.55;
+  }
+  .bonus-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+  }
+  .bonus-table th {
+    font-weight: 500;
+    color: var(--tx-3);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .bonus-table th:first-child { text-align: left; }
+  .bonus-table th:last-child { text-align: right; }
+  .bonus-table td:first-child { text-align: left; }
+  .bonus-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .bonus-table td:last-child {
+    color: var(--bull);
+    font-weight: 600;
+    text-align: right;
+  }
+  .bonus-note {
+    font-size: 12px;
+    color: var(--tx-4);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* VIP table */
+  .vip-box {
+    background: var(--bg-3);
+    border: 1px solid var(--bd-default);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .vip-box h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--tx-1);
+  }
+  .vip-box p {
+    font-size: 13px;
+    color: var(--tx-2);
+    margin: 0 0 12px;
+    line-height: 1.55;
+  }
+  .vip-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+  }
+  .vip-table th {
+    font-weight: 500;
+    color: var(--tx-3);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+    text-align: left;
+  }
+  .vip-table th:not(:first-child) { text-align: right; }
+  .vip-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .vip-table td:first-child { text-align: left; }
+  .vip-table td:nth-child(2) {
+    text-align: right;
+    color: var(--tx-3);
+  }
+  .vip-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    color: var(--bull);
+  }
+
+  /* Video Placeholder */
+  .video-placeholder {
+    background: var(--bg-3);
+    border: 1px dashed var(--bd-default);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--tx-4);
+    font-size: 13px;
+  }
+  .video-placeholder svg {
+    display: block;
+    margin: 0 auto 10px;
+    opacity: 0.4;
+  }
+
+  /* Calendly card */
+  .calendly-card {
+    background: var(--bg-2);
+    border: 1px solid var(--bd-default);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .calendly-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .calendly-card .cal-sub {
+    font-size: 13px;
+    color: var(--tx-3);
+    margin: -12px 0 0;
+    line-height: 1.5;
+  }
+
+  /* Key status */
+  .key-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+  .key-status.success {
+    background: var(--bull-soft);
+    border: 1px solid var(--bull-bd);
+    color: var(--bull);
+  }
+  .key-status.error {
+    background: var(--bear-soft);
+    border: 1px solid var(--bear-bd);
+    color: var(--bear);
+  }
+
+  @media (max-width: 768px) {
+    .setup-layout { padding: 32px 16px 48px; }
+    .setup-container { max-width: 100%; box-sizing: border-box; }
+    .setup-columns { gap: 24px; }
+    .setup-card, .calendly-card {
+      max-width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .calendly-card { order: -1; }
+    .setup-card { padding: 22px 18px; border-radius: 14px; }
+    .calendly-card { padding: 20px 18px; border-radius: 14px; }
+    .bonus-box, .vip-box {
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bonus-table, .vip-table { font-size: 12px; min-width: 0; }
+    .info-badge { word-wrap: break-word; overflow-wrap: break-word; }
+    .video-placeholder { padding: 24px 16px; }
+  }
+  @media (max-width: 480px) {
+    .setup-layout { padding: 24px 12px 40px; }
+    .setup-container { max-width: 100%; box-sizing: border-box; }
+    .setup-columns { gap: 20px; }
+    .setup-card { padding: 18px 14px; border-radius: 12px; }
+    .setup-card h2 { font-size: 16px; }
+    .setup-card .step-sub { font-size: 13px; }
+    .setup-header h1 { font-size: 20px; }
+    .setup-header p { font-size: 13px; }
+    .calendly-card { padding: 18px 14px; border-radius: 12px; }
+    .calendly-card h3 { font-size: 14px; }
+    .calendly-card .cal-sub { font-size: 12px; }
+    .bonus-box { padding: 14px; }
+    .vip-box { padding: 14px; }
+    .bonus-table, .vip-table { font-size: 11px; }
+    .info-badge { font-size: 12px; padding: 10px 12px; }
+    .btn { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="setup-layout">
+  <div class="setup-container">
+
+    <!-- Header -->
+    <div class="setup-header">
+      <div class="auth-logo" style="justify-content:center;margin-bottom:20px;">
+        <div class="brand-icon-box">
+          <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+        </div>
+        <div class="brand-text">
+          <div class="brand-name" style="font-size:18px;">FirstClass</div>
+          <div class="brand-tag">Copy Trading</div>
+        </div>
+      </div>
+      <h1>Willkommen, {{ first_name }}!</h1>
+      <p>Noch ein Schritt, dann bist du im Copy Trading.</p>
+      {% if is_upgrade is defined and is_upgrade %}
+      <a href="/cancel-upgrade" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--tx-3);text-decoration:none;transition:color .15s;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Upgrade abbrechen &amp; zur&uuml;ck zum Dashboard
+      </a>
+      {% endif %}
+    </div>
+
+    {% if error %}
+    <div class="alert error" style="margin:20px auto;max-width:600px;">{{ error }}</div>
+    {% endif %}
+
+    <div class="setup-columns">
+
+      <!-- Linke Spalte: LeveX Account + Affiliate -->
+      <div class="setup-card">
+        <h2>LeveX Account erstellen</h2>
+        <p class="step-sub">Um am Copy Trading teilzunehmen, brauchst du einen LeveX Account. Registriere dich über unseren Link — damit verifizieren wir deine Teilnahme und du profitierst vom Bonus-Programm.</p>
+
+        <div class="info-badge">
+          <div style="width:18px;height:18px;min-width:18px;border-radius:50%;background:rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#3B82F6;margin-top:1px;">i</div>
+          <span>Wir können dich nur für das Copy Trading freischalten, wenn dein LeveX Account über unseren Affiliate-Link erstellt wurde.</span>
+        </div>
+
+        <a href="https://levex.com/r/maxsteinauer" target="_blank" rel="noopener" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;margin-bottom:20px;">
+          Jetzt Account erstellen
+        </a>
+
+        <form method="post" action="/setup/premium">
+          <input type="hidden" name="csrf_token" id="csrf_token" value="">
+          <div class="form-group">
+            <label for="levex_uid">Deine LeveX UID</label>
+            <input type="text" id="levex_uid" name="levex_uid" required placeholder="z.B. 123456789" value="{{ levex_uid or '' }}" autocomplete="off">
+            <small style="color:var(--tx-4);font-size:12px;margin-top:4px;display:block;">Du findest deine UID in den LeveX Einstellungen unter "Profil".</small>
+          </div>
+          <div id="uidStatus"></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;">Verifizieren & weiter</button>
+        </form>
+
+        <div class="bonus-box" style="margin-top:24px;">
+          <h4>Einzahlungsbonus</h4>
+          <p>Wenn du dich über unseren Link registrierst, erhältst du automatisch Zugang zum LeveX Einzahlungsbonus:</p>
+          <table class="bonus-table">
+            <tr><th>Einzahlung</th><th>Bonus</th></tr>
+            <tr><td>1.000 USDT</td><td>200 USDT</td></tr>
+            <tr><td>3.000 USDT</td><td>600 USDT</td></tr>
+            <tr><td>10.000 USDT</td><td>1.200 USDT</td></tr>
+            <tr><td>100.000 USDT</td><td>5.000 USDT</td></tr>
+          </table>
+          <div class="bonus-note">
+            Der Bonus wird als Futures Credit gutgeschrieben. Gewinne daraus sind auszahlbar, der Credit selbst nicht.
+          </div>
+        </div>
+
+        <div class="vip-box">
+          <h4>VIP-5 Gebühren für 30 Tage</h4>
+          <p>Über unseren Link erhältst du automatisch 30 Tage VIP-5 Trading-Gebühren:</p>
+          <table class="vip-table">
+            <tr><th>Handelsgebühr</th><th>Standard</th><th>Aktuell</th></tr>
+            <tr><td>Spot Maker</td><td>0,1000 %</td><td>0,0600 %</td></tr>
+            <tr><td>Spot Taker</td><td>0,1000 %</td><td>0,0800 %</td></tr>
+            <tr><td>Futures Maker</td><td>0,0200 %</td><td>0,0160 %</td></tr>
+            <tr><td>Futures Taker</td><td>0,0600 %</td><td>0,0500 %</td></tr>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Rechte Spalte: Video + Support -->
+      <div class="calendly-card">
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video-Anleitung kommt bald
+        </div>
+
+        <h3>Brauchst du Hilfe?</h3>
+        <p class="cal-sub">Unser Team hilft dir bei jedem Schritt — schreib uns einfach per Telegram.</p>
+        <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Telegram Support kontaktieren
+        </a>
+      </div>
+
+    </div>
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){var m=document.cookie.match(/csrf_token=([^;]+)/);if(m){document.querySelectorAll('input[name="csrf_token"]').forEach(function(el){el.value=m[1];});}})();
+</script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

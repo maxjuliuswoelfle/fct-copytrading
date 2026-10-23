@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} - FirstClass Copy Trading{% endblock %}
+{% block crumb_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<div class="stub-page">
+  <div class="stub-icon">
+    <svg class="ico"><use href="#{{ page_icon }}"/></svg>
+  </div>
+  <h2>{{ page_title }}</h2>
+  <p>{{ page_description }}</p>
+</div>
+
+{% endblock %}

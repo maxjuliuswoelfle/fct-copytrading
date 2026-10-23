@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick roman.schaefer1983@gmail.com from Telegram groups (cancellation 2026-07-28)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_roman_schaefer.sh

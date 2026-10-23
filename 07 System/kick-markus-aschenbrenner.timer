@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: kick markus2aschenbrenner@gmail.com (M.) on 2027-07-01 09:00 UTC (yearly plan paid until then)
+
+[Timer]
+OnCalendar=2027-07-01 09:00:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

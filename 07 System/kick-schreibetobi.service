@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick schreibetobi@gmail.com (T. D.) from Telegram groups (cancellation 2026-09-17)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_schreibetobi.sh

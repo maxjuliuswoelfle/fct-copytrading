@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick marcelfey4@gmail.com (Marcel Fey / MarcelBro89) from Telegram groups (cancellation 2026-08-15)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_marcel_fey.sh

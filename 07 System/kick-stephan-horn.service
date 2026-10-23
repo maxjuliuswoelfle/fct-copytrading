@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick 1hornstephan@gmx.de from Telegram groups (cancellation 2026-08-09)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_stephan_horn.sh

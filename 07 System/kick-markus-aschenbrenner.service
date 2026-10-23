@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick markus2aschenbrenner@gmail.com (M.) from Telegram groups (yearly plan ends 2027-07-01)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_markus_aschenbrenner.sh

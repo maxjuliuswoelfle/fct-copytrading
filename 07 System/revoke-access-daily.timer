@@ -1,0 +1,9 @@
+[Unit]
+Description=Taeglicher Zugangsentzug — laeuft 5 Min vor den alten kick-*.timer
+
+[Timer]
+OnCalendar=*-*-* 08:55:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

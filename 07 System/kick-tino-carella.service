@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick mariocarella@gmx.de (Tino Carella) from Telegram groups (cancellation 2026-08-30)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_tino_carella.sh

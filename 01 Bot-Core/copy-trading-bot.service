@@ -1,0 +1,38 @@
+# (C) systemd Service fuer den Copy Trading Bot
+#
+# Installieren:
+#   cp copy-trading-bot.service /etc/systemd/system/
+#   systemctl daemon-reload
+#   systemctl enable copy-trading-bot
+#   systemctl start copy-trading-bot
+
+[Unit]
+Description=Copy Trading Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=botuser
+Group=botuser
+WorkingDirectory=/home/botuser/copy-trading-bot
+ExecStart=/home/botuser/copy-trading-bot/venv/bin/python3 listen.py
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=copy-trading-bot
+
+# Sicherheit
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/botuser/copy-trading-bot
+
+# Environment
+EnvironmentFile=/home/botuser/copy-trading-bot/.env
+
+[Install]
+WantedBy=multi-user.target

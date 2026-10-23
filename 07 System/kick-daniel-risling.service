@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick d.risling@live.de (Daniel Risling) from Telegram groups (cancellation 2026-10-03)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_daniel_risling.sh

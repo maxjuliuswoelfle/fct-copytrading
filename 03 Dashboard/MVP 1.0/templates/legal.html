@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ title }} - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+  .legal-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 60px;
+  }
+  .legal-container {
+    width: 100%;
+    max-width: 760px;
+  }
+  .legal-header {
+    margin-bottom: 32px;
+  }
+  .legal-header a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--tx-3);
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
+  .legal-header a:hover { color: var(--tx-1); }
+  .legal-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+  }
+  .legal-header .legal-date {
+    font-size: 13px;
+    color: var(--tx-4);
+  }
+  .legal-card {
+    background: var(--bg-2);
+    border: 1px solid var(--bd-default);
+    border-radius: 16px;
+    padding: 32px 28px;
+  }
+  .legal-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 28px 0 10px;
+    color: var(--tx-1);
+  }
+  .legal-card h2:first-child { margin-top: 0; }
+  .legal-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--tx-1);
+  }
+  .legal-card p, .legal-card li {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--tx-2);
+    margin: 0 0 12px;
+  }
+  .legal-card ul {
+    padding-left: 20px;
+    margin: 0 0 12px;
+  }
+  .legal-card li { margin-bottom: 4px; }
+  .legal-card a {
+    color: var(--fct);
+    text-decoration: underline;
+  }
+  .legal-card strong { color: var(--tx-1); }
+  .legal-card .legal-footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--bd-subtle);
+    font-size: 12px;
+    color: var(--tx-4);
+  }
+  .legal-bottom-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--tx-4);
+  }
+  .legal-bottom-footer a {
+    color: var(--tx-3);
+    text-decoration: none;
+    margin: 0 8px;
+  }
+  .legal-bottom-footer a:hover { color: var(--tx-1); }
+</style>
+</head>
+<body>
+
+<div class="legal-layout">
+  <div class="legal-container">
+
+    <div class="legal-header">
+      <a href="javascript:history.back()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Zurück
+      </a>
+      <h1>{{ title }}</h1>
+      <div class="legal-date">Stand: Juli 2025</div>
+    </div>
+
+    <div class="legal-card">
+      {{ content | safe }}
+    </div>
+
+    <div class="legal-bottom-footer">
+      <a href="/impressum">Impressum</a>
+      <a href="/agb">AGB</a>
+      <a href="/datenschutz">Datenschutz</a>
+      <a href="/risikohinweis">Risikohinweis</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

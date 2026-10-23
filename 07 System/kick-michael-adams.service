@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot Kick Michael Adams (mikeadmore@proton.me, id 268) am 30.06.2027
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_michael_adams.sh

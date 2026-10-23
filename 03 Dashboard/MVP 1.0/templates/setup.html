@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einrichtung - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+  .setup-layout {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 20px 60px;
+  }
+  .setup-container {
+    width: 100%;
+    max-width: 1000px;
+  }
+  .setup-header {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .setup-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .setup-header p {
+    font-size: 14px;
+    color: var(--tx-3);
+    margin: 0;
+  }
+
+  /* Progress Bar */
+  .setup-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 24px auto 32px;
+  }
+  .setup-step-indicator {
+    display: flex;
+    align-items: center;
+  }
+  .setup-step-indicator:not(:last-child)::after {
+    content: '';
+    width: 48px;
+    height: 2px;
+    background: var(--bd-subtle);
+    margin: 0 10px;
+  }
+  .setup-step-indicator.done:not(:last-child)::after {
+    background: var(--bull);
+  }
+  .step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+    flex-shrink: 0;
+    border: 2px solid var(--bd-default);
+    background: var(--bg-2);
+    color: var(--tx-3);
+    transition: all 0.3s var(--ease);
+  }
+  .setup-step-indicator.active .step-dot {
+    border-color: var(--fct);
+    background: var(--fct-soft);
+    color: var(--fct);
+  }
+  .setup-step-indicator.done .step-dot {
+    border-color: var(--bull);
+    background: var(--bull-soft);
+    color: var(--bull);
+  }
+
+  /* Two-column layout */
+  .setup-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .setup-columns {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .setup-layout {
+      padding: 32px 16px 48px;
+    }
+    .setup-container { max-width: 100%; box-sizing: border-box; }
+    .setup-card, .calendly-card {
+      max-width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .calendly-card { order: -1; padding: 20px 18px; border-radius: 14px; }
+    .setup-card { padding: 22px 18px; border-radius: 14px; }
+    .bonus-box, .vip-box {
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bonus-table, .vip-table { font-size: 12px; min-width: 0; }
+    .info-badge { word-wrap: break-word; overflow-wrap: break-word; }
+    .video-placeholder { padding: 24px 16px; }
+  }
+  @media (max-width: 480px) {
+    .setup-layout {
+      padding: 24px 12px 40px;
+    }
+    .setup-container { max-width: 100%; box-sizing: border-box; }
+    .setup-columns { gap: 20px; }
+    .setup-card {
+      padding: 18px 14px; border-radius: 12px;
+    }
+    .setup-card h2 { font-size: 16px; }
+    .setup-card .step-sub { font-size: 13px; }
+    .setup-header h1 {
+      font-size: 20px;
+    }
+    .setup-header p { font-size: 13px; }
+    .calendly-card { padding: 18px 14px; border-radius: 12px; }
+    .calendly-card h3 { font-size: 14px; }
+    .calendly-card .cal-sub { font-size: 12px; }
+    .bonus-box { padding: 14px; }
+    .vip-box { padding: 14px; }
+    .bonus-table, .vip-table { font-size: 11px; }
+    .info-badge { font-size: 12px; padding: 10px 12px; }
+    .btn { font-size: 13px; }
+  }
+
+  /* Step Cards */
+  .setup-card {
+    background: var(--bg-2);
+    border: 1px solid var(--bd-default);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .setup-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: -0.015em;
+  }
+  .setup-card .step-sub {
+    font-size: 13.5px;
+    color: var(--tx-3);
+    margin: 0 0 20px;
+    line-height: 1.55;
+  }
+  .setup-card > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* Video Placeholder */
+  .video-placeholder {
+    background: var(--bg-3);
+    border: 1px dashed var(--bd-default);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--tx-4);
+    font-size: 13px;
+  }
+  .video-placeholder svg {
+    display: block;
+    margin: 0 auto 10px;
+    opacity: 0.4;
+  }
+
+  /* Info Badge */
+  .info-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: var(--tx-2);
+    line-height: 1.5;
+  }
+  .info-badge svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+  }
+
+  /* Bonus Info */
+  .bonus-box {
+    background: var(--fct-soft);
+    border: 1px solid var(--bd-orange);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .bonus-box h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--fct);
+  }
+  .bonus-box p {
+    font-size: 13px;
+    color: var(--tx-2);
+    margin: 0 0 12px;
+    line-height: 1.55;
+  }
+  .bonus-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .bonus-table th {
+    font-weight: 500;
+    color: var(--tx-3);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .bonus-table th:first-child {
+    text-align: left;
+  }
+  .bonus-table th:last-child {
+    text-align: right;
+  }
+  .bonus-table td:first-child {
+    text-align: left;
+  }
+  .bonus-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .bonus-table td:last-child {
+    color: var(--bull);
+    font-weight: 600;
+    text-align: right;
+  }
+  .bonus-note {
+    font-size: 12px;
+    color: var(--tx-4);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* VIP table (neutral colors) */
+  .vip-box {
+    background: var(--bg-3);
+    border: 1px solid var(--bd-default);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .vip-box h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--tx-1);
+  }
+  .vip-box p {
+    font-size: 13px;
+    color: var(--tx-2);
+    margin: 0 0 12px;
+    line-height: 1.55;
+  }
+  .vip-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .vip-table th {
+    font-weight: 500;
+    color: var(--tx-3);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+    text-align: left;
+  }
+  .vip-table th:not(:first-child) { text-align: right; }
+  .vip-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd-subtle);
+  }
+  .vip-table td:first-child { text-align: left; }
+  .vip-table td:nth-child(2) {
+    text-align: right;
+    color: var(--tx-3);
+  }
+  .vip-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    color: var(--bull);
+  }
+
+  /* Calendly embed */
+  .calendly-card {
+    background: var(--bg-2);
+    border: 1px solid var(--bd-default);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .calendly-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .calendly-card .cal-sub {
+    font-size: 13px;
+    color: var(--tx-3);
+    margin: -12px 0 0;
+    line-height: 1.5;
+  }
+  .calendly-card .btn {
+    box-sizing: border-box;
+  }
+
+  /* Action buttons — all centered text */
+  .setup-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .setup-actions .btn {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn { text-align: center; }
+
+  /* Back button */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--tx-3);
+    text-decoration: none;
+    margin-bottom: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .back-link:hover { color: var(--tx-1); }
+
+  /* API Key form */
+  .key-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+  .key-status.success {
+    background: var(--bull-soft);
+    border: 1px solid var(--bull-bd);
+    color: var(--bull);
+  }
+  .key-status.error {
+    background: var(--bear-soft);
+    border: 1px solid var(--bear-bd);
+    color: var(--bear);
+  }
+</style>
+</head>
+<body>
+
+<div class="setup-layout">
+  <div class="setup-container">
+
+    <!-- Header -->
+    <div class="setup-header">
+      <div class="auth-logo" style="justify-content:center;margin-bottom:20px;">
+        <div class="brand-icon-box">
+          <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+        </div>
+        <div class="brand-text">
+          <div class="brand-name" style="font-size:18px;">FirstClass</div>
+          <div class="brand-tag">Copy Trading</div>
+        </div>
+      </div>
+      <h1>Willkommen, {{ first_name }}!</h1>
+      <p>Richte dein Copy Trading in 3 einfachen Schritten ein.</p>
+      {% if is_upgrade is defined and is_upgrade %}
+      <a href="/cancel-upgrade" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--tx-3);text-decoration:none;transition:color .15s;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Upgrade abbrechen &amp; zur&uuml;ck zum Dashboard
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="setup-progress">
+      <div class="setup-step-indicator {% if step >= 1 %}active{% endif %} {% if step > 1 %}done{% endif %}">
+        <div class="step-dot">{% if step > 1 %}&#10003;{% else %}1{% endif %}</div>
+      </div>
+      <div class="setup-step-indicator {% if step >= 2 %}active{% endif %} {% if step > 2 %}done{% endif %}">
+        <div class="step-dot">{% if step > 2 %}&#10003;{% else %}2{% endif %}</div>
+      </div>
+      <div class="setup-step-indicator {% if step >= 3 %}active{% endif %} {% if step > 3 %}done{% endif %}">
+        <div class="step-dot">{% if step > 3 %}&#10003;{% else %}3{% endif %}</div>
+      </div>
+    </div>
+
+    {% if error %}
+    <div class="alert error" style="margin-bottom:16px;">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+    <div class="key-status success" style="margin-bottom:16px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      {{ success }}
+    </div>
+    {% endif %}
+
+    <!-- ============================================================ -->
+    <!-- SCHRITT 1: LeveX Account erstellen -->
+    <!-- ============================================================ -->
+    {% if step == 1 %}
+    <div style="height:29px;"></div>
+    <div class="setup-columns">
+
+      <!-- Linke Spalte: Anleitung -->
+      <div class="setup-card">
+        <h2>Schritt 1: LeveX Account erstellen</h2>
+        <p class="step-sub">Erstelle dir einen kostenlosen Trading Account auf LeveX. Nutze unseren Link um vom Bonus-Programm zu profitieren.</p>
+
+        <div class="info-badge">
+          <div style="width:18px;height:18px;min-width:18px;border-radius:50%;background:rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#3B82F6;margin-top:1px;">i</div>
+          <span>Wir können dich nur für das Copy Trading freischalten, wenn dein LeveX Account über unseren Affiliate-Link erstellt wurde.</span>
+        </div>
+
+        <div class="setup-actions" style="margin-top:0;margin-bottom:20px;">
+          <a href="https://levex.com/r/maxsteinauer" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration:none;">
+            Jetzt Account erstellen
+          </a>
+          <form method="post" action="/setup/copytrading" style="flex:1;display:flex;">
+            <input type="hidden" name="csrf_token" id="csrf_token" value="">
+            <input type="hidden" name="action" value="complete_step_1">
+            <input type="hidden" name="has_account" value="existing">
+            <button type="submit" class="btn btn-ghost" style="flex:1;">Account erstellt</button>
+          </form>
+        </div>
+
+        <div class="bonus-box">
+          <h4>Einzahlungsbonus</h4>
+          <p>Wenn du dich über unseren Link registrierst, erhältst du automatisch Zugang zum LeveX Einzahlungsbonus. Je mehr du einzahlst, desto höher dein Bonus:</p>
+          <table class="bonus-table">
+            <tr><th>Einzahlung</th><th>Bonus</th></tr>
+            <tr><td>1.000 USDT</td><td>200 USDT</td></tr>
+            <tr><td>3.000 USDT</td><td>600 USDT</td></tr>
+            <tr><td>10.000 USDT</td><td>1.200 USDT</td></tr>
+            <tr><td>100.000 USDT</td><td>5.000 USDT</td></tr>
+          </table>
+          <div class="bonus-note">
+            Der Bonus wird als Futures Credit gutgeschrieben. Gewinne daraus sind auszahlbar, der Credit selbst nicht.
+          </div>
+        </div>
+
+        <div class="vip-box">
+          <h4>VIP-5 Gebühren für 30 Tage</h4>
+          <p>Über unseren Link erhältst du automatisch 30 Tage VIP-5 Trading-Gebühren:</p>
+          <table class="vip-table">
+            <tr><th>Handelsgebühr</th><th>Standard</th><th>Aktuell</th></tr>
+            <tr><td>Spot Maker</td><td>0,1000 %</td><td>0,0600 %</td></tr>
+            <tr><td>Spot Taker</td><td>0,1000 %</td><td>0,0800 %</td></tr>
+            <tr><td>Futures Maker</td><td>0,0200 %</td><td>0,0160 %</td></tr>
+            <tr><td>Futures Taker</td><td>0,0600 %</td><td>0,0500 %</td></tr>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Rechte Spalte: Video + Calendly -->
+      <div class="calendly-card">
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video-Anleitung kommt bald
+        </div>
+
+        <h3>Brauchst du Hilfe bei der Einrichtung?</h3>
+        <p class="cal-sub">Unser Team hilft dir bei jedem Schritt — per Chat oder im persönlichen Call.</p>
+        <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Telegram Support kontaktieren
+        </a>
+        <a href="https://calendly.com/d/cx8t-rf8-xfg/kostenfreie-trading-beratung" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-decoration:none;margin-top:0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Kostenlosen Einrichtungscall buchen
+        </a>
+      </div>
+
+    </div>
+    {% endif %}
+
+    <!-- ============================================================ -->
+    <!-- SCHRITT 2: Guthaben einzahlen -->
+    <!-- ============================================================ -->
+    {% if step == 2 %}
+    <a href="/setup/copytrading?step=1" class="back-link" style="margin-bottom:12px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Zurück
+    </a>
+    <div class="setup-columns">
+
+      <div class="setup-card">
+        <h2>Schritt 2: Guthaben einzahlen</h2>
+        <p class="step-sub">Zahle mindestens <strong>1.000 USDT</strong> auf dein LeveX Futures-Konto ein. Das ist dein Trading-Kapital, mit dem deine Positionen automatisch skaliert werden.</p>
+
+        <div class="info-badge">
+          <div style="width:18px;height:18px;min-width:18px;border-radius:50%;background:rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#3B82F6;margin-top:1px;">i</div>
+          <span>Um deine Trades proportional zu spiegeln, benötigen wir eine Mindestkontogröße von 1.000 USDT. Nur so können Positionsgrößen sauber skaliert und das Risiko korrekt abgebildet werden.</span>
+        </div>
+
+        <form method="post" action="/setup/copytrading">
+          <input type="hidden" name="csrf_token" id="csrf_token" value="">
+          <input type="hidden" name="action" value="complete_step_2">
+          <button type="submit" class="btn btn-primary" style="width:100%;">Mindestguthaben eingezahlt</button>
+        </form>
+
+        <div class="bonus-box" style="margin-top:20px;">
+          <h4>Tipp: Mehr einzahlen = mehr Bonus</h4>
+          <p>Deine Mindesteinzahlung beträgt 1.000 USDT. Aber je mehr du einzahlst, desto höher dein Futures Credit. Zum Beispiel bekommst du bei 3.000 USDT ganze 600 USDT Bonus oben drauf.</p>
+          <div class="bonus-note">
+            Wichtig: Deine Mindesteinzahlung von 1.000 USDT muss eigenes Guthaben sein. Der Bonus kommt zusätzlich als Futures Credit dazu.
+          </div>
+        </div>
+      </div>
+
+      <!-- Rechte Spalte: Video + Calendly -->
+      <div class="calendly-card">
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video-Anleitung kommt bald
+        </div>
+
+        <h3>Brauchst du Hilfe bei der Einrichtung?</h3>
+        <p class="cal-sub">Unser Team hilft dir bei jedem Schritt — per Chat oder im persönlichen Call.</p>
+        <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Telegram Support kontaktieren
+        </a>
+        <a href="https://calendly.com/d/cx8t-rf8-xfg/kostenfreie-trading-beratung" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-decoration:none;margin-top:0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Kostenlosen Einrichtungscall buchen
+        </a>
+      </div>
+
+    </div>
+    {% endif %}
+
+    <!-- ============================================================ -->
+    <!-- SCHRITT 3: API Key erstellen & verbinden -->
+    <!-- ============================================================ -->
+    {% if step == 3 %}
+    <a href="/setup/copytrading?step=2" class="back-link" style="margin-bottom:12px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Zurück
+    </a>
+    <div class="setup-columns">
+
+      <div class="setup-card">
+        <h2>Schritt 3: API Keys erstellen & verbinden</h2>
+        <p class="step-sub">Erstelle in deinen LeveX-Einstellungen zwei API Keys und gib sie hier ein. Damit verbinden wir deinen Account mit unserem Trading-Bot.</p>
+
+        <div class="info-badge" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.2);">
+          <div style="width:18px;height:18px;min-width:18px;border-radius:50%;background:rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;margin-top:1px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span>Deine API Keys sind sicher. Der Copy Trading Key kann ausschließlich Trades spiegeln — keine Auszahlungen, keine Transfers. Der Read Key kann nur Daten lesen. Niemand kann Geld von deinem Account bewegen.</span>
+        </div>
+
+        <form method="post" action="/setup/copytrading" id="apiKeyForm">
+          <input type="hidden" name="csrf_token" id="csrf_token" value="">
+          <input type="hidden" name="action" value="complete_step_3">
+
+          <h4 style="font-size:14px;font-weight:600;margin:0 0 12px;color:var(--fct);">1. Copy Trading API Key</h4>
+          <p style="font-size:12.5px;color:var(--tx-3);margin:0 0 12px;line-height:1.5;">Berechtigung: <strong>Copy Trading</strong> — damit der Bot Trades auf deinem Account ausführen kann.</p>
+          <div class="form-group">
+            <label for="api_key">API Key</label>
+            <input type="text" id="api_key" name="api_key" required placeholder="Copy Trading API Key" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="api_secret">API Secret</label>
+            <input type="password" id="api_secret" name="api_secret" required placeholder="Copy Trading API Secret" autocomplete="off">
+          </div>
+
+          <div id="keyStatus"></div>
+
+          <hr style="border:none;border-top:1px solid var(--bd-subtle);margin:20px 0;">
+
+          <h4 style="font-size:14px;font-weight:600;margin:0 0 12px;color:var(--fct);">2. Futures Read API Key</h4>
+          <p style="font-size:12.5px;color:var(--tx-3);margin:0 0 12px;line-height:1.5;">Berechtigung: <strong>Futures — Read-only</strong> — damit wir deine Balance live tracken und Positionen korrekt skalieren können.</p>
+          <div class="form-group">
+            <label for="read_api_key">API Key</label>
+            <input type="text" id="read_api_key" name="read_api_key" required placeholder="Futures Read API Key" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="read_api_secret">API Secret</label>
+            <input type="password" id="read_api_secret" name="read_api_secret" required placeholder="Futures Read API Secret" autocomplete="off">
+          </div>
+
+          <div id="readKeyStatus"></div>
+
+          <div class="setup-actions">
+            <button type="button" id="validateBtn" class="btn btn-ghost" onclick="validateKeys()">Keys prüfen</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary" disabled>Verbinden & Starten</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Rechte Spalte: Video + Calendly -->
+      <div class="calendly-card">
+        <div class="video-placeholder">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video-Anleitung kommt bald
+        </div>
+
+        <h3>Brauchst du Hilfe bei der Einrichtung?</h3>
+        <p class="cal-sub">Unser Team hilft dir bei jedem Schritt — per Chat oder im persönlichen Call.</p>
+        <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Telegram Support kontaktieren
+        </a>
+        <a href="https://calendly.com/d/cx8t-rf8-xfg/kostenfreie-trading-beratung" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-decoration:none;margin-top:0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Kostenlosen Einrichtungscall buchen
+        </a>
+      </div>
+
+    </div>
+
+    <script>
+    var copyValid = false, readValid = false;
+
+    function checkBothValid() {
+      document.getElementById('submitBtn').disabled = !(copyValid && readValid);
+    }
+
+    async function validateSingleKey(key, secret, statusElId, type) {
+      var statusEl = document.getElementById(statusElId);
+      if (!key || !secret) {
+        statusEl.innerHTML = '<div class="key-status error">Bitte API Key und Secret eingeben.</div>';
+        return false;
+      }
+      try {
+        var resp = await fetch('/api/setup/validate-key', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({api_key: key, api_secret: secret})
+        });
+        var data = await resp.json();
+        if (data.valid) {
+          statusEl.innerHTML = '<div class="key-status success"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' + type + ' Key gültig!</div>';
+          return true;
+        } else {
+          statusEl.innerHTML = '<div class="key-status error">' + (data.error || type + ' Key ungültig.') + '</div>';
+          return false;
+        }
+      } catch (e) {
+        statusEl.innerHTML = '<div class="key-status error">Verbindungsfehler. Bitte erneut versuchen.</div>';
+        return false;
+      }
+    }
+
+    async function validateKeys() {
+      var btn = document.getElementById('validateBtn');
+      btn.disabled = true;
+      btn.textContent = 'Wird geprüft...';
+
+      var key1 = document.getElementById('api_key').value.trim();
+      var sec1 = document.getElementById('api_secret').value.trim();
+      var key2 = document.getElementById('read_api_key').value.trim();
+      var sec2 = document.getElementById('read_api_secret').value.trim();
+
+      copyValid = await validateSingleKey(key1, sec1, 'keyStatus', 'Copy Trading');
+      readValid = await validateSingleKey(key2, sec2, 'readKeyStatus', 'Futures Read');
+      checkBothValid();
+
+      btn.disabled = false;
+      btn.textContent = 'Keys prüfen';
+    }
+    </script>
+    {% endif %}
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+(function(){var m=document.cookie.match(/csrf_token=([^;]+)/);if(m){document.querySelectorAll('input[name="csrf_token"]').forEach(function(el){el.value=m[1];});}})();
+</script>
+</body>
+</html>

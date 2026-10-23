@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick harry19851985@gmail.com (5 Sol Ruffy) from Telegram groups (cancellation 2027-06-29)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_harry19851985.sh

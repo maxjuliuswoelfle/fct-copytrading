@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick volged@web.de (Endorphine) from Telegram groups (yearly term ends 2027-06-28)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_volged.sh

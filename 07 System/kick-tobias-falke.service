@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick tobiasfalke7@gmail.com from Telegram groups (cancellation 2026-09-01)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_tobias_falke.sh

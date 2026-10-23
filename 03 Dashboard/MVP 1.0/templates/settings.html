@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+{% block title %}Einstellungen · FirstClass Copy Trading{% endblock %}
+{% block crumb_title %}Einstellungen{% endblock %}
+
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <h1>Einstellungen</h1>
+    <div class="sub">{% if product_tier == 'copy_trading' %}Verwalte dein Profil, Trading Account und Benachrichtigungen{% else %}Verwalte dein Profil{% endif %}</div>
+  </div>
+</div>
+
+<div class="settings-grid">
+
+  <!-- PROFIL -->
+  <div class="settings-section">
+    <div class="settings-section-head">
+      <div class="settings-section-icon blue">
+        <svg class="ico"><use href="#i-grid"/></svg>
+      </div>
+      <div>
+        <div class="settings-section-title">Profil</div>
+        <div class="settings-section-sub">Deine persönlichen Informationen</div>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label">Name</div>
+      <div class="settings-row-value">{{ customer.name if customer else '—' }}</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">E-Mail</div>
+      <div class="settings-row-value">{{ user.email if user and user.email else 'Nicht hinterlegt' }}</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Kunden-ID</div>
+      <div class="settings-row-value" style="font-family:'SF Mono',monospace;font-size:12px;color:var(--tx-3);">{{ customer.id if customer else '—' }}</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Aktiv seit</div>
+      <div class="settings-row-value">{{ created_at_formatted }}</div>
+    </div>
+  </div>
+
+  {% if product_tier != 'copy_trading' %}
+  <!-- ABO / UPGRADE -->
+  <div class="settings-section">
+    <div class="settings-section-head">
+      <div class="settings-section-icon orange">
+        <svg class="ico"><use href="#i-crown"/></svg>
+      </div>
+      <div>
+        <div class="settings-section-title">Dein Abo</div>
+        <div class="settings-section-sub">Aktueller Plan</div>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label">Aktueller Plan</div>
+      <div class="settings-row-value">{% if product_tier == 'paid_signals' %}Copy Trading Manuell{% else %}Copy Trading{% endif %}</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Status</div>
+      <div class="settings-row-value">
+        <span class="badge online">
+          <span class="live-dot" style="width:6px;height:6px;"></span>
+          Aktiv
+        </span>
+      </div>
+    </div>
+
+  </div>
+  {% endif %}
+
+  {% if product_tier == 'copy_trading' %}
+  <!-- TRADING ACCOUNT -->
+  <div class="settings-section">
+    <div class="settings-section-head">
+      <div class="settings-section-icon orange">
+        <svg class="ico"><use href="#i-link"/></svg>
+      </div>
+      <div>
+        <div class="settings-section-title">Trading Account</div>
+        <div class="settings-section-sub">Deine Verbindung zu LeveX</div>
+      </div>
+    </div>
+
+    <div class="settings-row">
+      <div class="settings-row-label">Exchange</div>
+      <div class="settings-row-value">LeveX</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Status</div>
+      <div class="settings-row-value">
+        {% if customer and customer.is_active %}
+        <span class="badge online">
+          <span class="live-dot" style="width:6px;height:6px;"></span>
+          Verbunden
+        </span>
+        {% else %}
+        <span class="badge offline">Getrennt</span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">API Key</div>
+      <div class="settings-row-value" style="font-family:'SF Mono',monospace;font-size:12px;">{{ api_key_masked }}</div>
+    </div>
+    <div class="settings-row">
+      <div class="settings-row-label">Balance</div>
+      <div class="settings-row-value num" data-live="settings_balance">{{ "%.2f"|format(balance) if balance else '—' }} $</div>
+    </div>
+  </div>
+
+  <!-- COPY TRADING STEUERUNG -->
+  <div class="settings-section">
+    <div class="settings-section-head">
+      <div class="settings-section-icon {% if is_active %}green{% else %}red{% endif %}">
+        <svg class="ico"><use href="#i-radio"/></svg>
+      </div>
+      <div>
+        <div class="settings-section-title">Copy Trading</div>
+        <div class="settings-section-sub">Steuerung des automatischen Tradings</div>
+      </div>
+    </div>
+
+    <div class="pause-banner {% if is_active %}active{% else %}paused{% endif %}" id="pauseBanner">
+      <div class="pause-banner-text">
+        <div class="pause-banner-title" id="pauseTitle">
+          {% if is_active %}Copy Trading ist aktiv{% else %}Copy Trading ist pausiert{% endif %}
+        </div>
+        <div class="pause-banner-sub" id="pauseSub">
+          {% if is_active %}
+          Neue Trades vom Master werden automatisch kopiert.
+          {% else %}
+          Keine neuen Trades werden kopiert. Bestehende Positionen bleiben offen.
+          {% endif %}
+        </div>
+      </div>
+      <div class="toggle {% if is_active %}active{% endif %} {% if not is_active %}warn{% endif %}" id="pauseToggle" title="Copy Trading an/aus"></div>
+    </div>
+
+    <div style="padding:12px 0 0;font-size:12px;color:var(--tx-3);line-height:1.5;">
+      <svg class="ico" style="width:12px;height:12px;vertical-align:-2px;margin-right:4px;color:var(--tx-4);"><use href="#i-info"/></svg>
+      Wenn du pausierst, bleiben bestehende Positionen offen und werden weiterhin gemanagt (SL/TP). Es werden nur keine <b>neuen</b> Trades mehr eröffnet.
+    </div>
+  </div>
+
+  <!-- BENACHRICHTIGUNGEN -->
+  <div class="settings-section">
+    <div class="settings-section-head">
+      <div class="settings-section-icon blue">
+        <svg class="ico"><use href="#i-zap"/></svg>
+      </div>
+      <div>
+        <div class="settings-section-title">Benachrichtigungen</div>
+        <div class="settings-section-sub">Telegram-Alerts für Trade-Aktivitäten</div>
+      </div>
+    </div>
+
+    <div class="settings-toggle-row">
+      <div class="settings-toggle-info">
+        <div class="settings-toggle-title">Trade eröffnet</div>
+        <div class="settings-toggle-sub">Benachrichtigung wenn ein neuer Trade kopiert wird</div>
+      </div>
+      <div class="toggle" data-alert="trade_opened" title="Bald verfügbar"></div>
+    </div>
+
+    <div class="settings-toggle-row">
+      <div class="settings-toggle-info">
+        <div class="settings-toggle-title">Trade geschlossen</div>
+        <div class="settings-toggle-sub">Benachrichtigung wenn ein Trade geschlossen wird (mit P&L)</div>
+      </div>
+      <div class="toggle" data-alert="trade_closed" title="Bald verfügbar"></div>
+    </div>
+
+    <div class="settings-toggle-row">
+      <div class="settings-toggle-info">
+        <div class="settings-toggle-title">SL / TP geändert</div>
+        <div class="settings-toggle-sub">Benachrichtigung bei Stop-Loss oder Take-Profit Änderungen</div>
+      </div>
+      <div class="toggle" data-alert="sl_tp_changed" title="Bald verfügbar"></div>
+    </div>
+
+    <div style="padding:12px 0 0;font-size:12px;color:var(--tx-3);line-height:1.5;">
+      <svg class="ico" style="width:12px;height:12px;vertical-align:-2px;margin-right:4px;color:var(--fct);"><use href="#i-zap"/></svg>
+      Telegram-Alerts werden in Kürze freigeschaltet. Du wirst benachrichtigt.
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% if product_tier == 'copy_trading' %}
+<!-- PAUSE CONFIRMATION MODAL -->
+<div class="modal-overlay" id="pauseModal" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-icon" id="modalIcon">
+      <svg class="ico"><use href="#i-radio"/></svg>
+    </div>
+    <h3 id="modalTitle">Copy Trading pausieren?</h3>
+    <p id="modalText">
+      Es werden <b>keine neuen Trades</b> mehr eröffnet. Bestehende Positionen bleiben offen und werden weiterhin gemanagt (SL/TP-Anpassungen).
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalCancel">Abbrechen</button>
+      <button class="btn" id="modalConfirm" style="background:var(--bear);color:white;">Pausieren</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var pauseToggle = document.getElementById('pauseToggle');
+  var modal = document.getElementById('pauseModal');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalText = document.getElementById('modalText');
+  var modalIcon = document.getElementById('modalIcon');
+  var modalConfirm = document.getElementById('modalConfirm');
+  var modalCancel = document.getElementById('modalCancel');
+  var pendingAction = null;
+
+  function showModal(action) {
+    pendingAction = action;
+    if (action === 'pause') {
+      modalIcon.style.background = 'var(--bear-soft)';
+      modalIcon.style.borderColor = 'var(--bear-bd)';
+      modalIcon.querySelector('.ico').style.color = 'var(--bear)';
+      modalTitle.textContent = 'Copy Trading pausieren?';
+      modalText.innerHTML = 'Es werden <b>keine neuen Trades</b> mehr eröffnet. Bestehende Positionen bleiben offen und werden weiterhin gemanagt (SL/TP-Anpassungen).';
+      modalConfirm.textContent = 'Pausieren';
+      modalConfirm.style.background = 'var(--bear)';
+    } else {
+      modalIcon.style.background = 'var(--bull-soft)';
+      modalIcon.style.borderColor = 'var(--bull-bd)';
+      modalIcon.querySelector('.ico').style.color = 'var(--bull)';
+      modalTitle.textContent = 'Copy Trading fortsetzen?';
+      modalText.innerHTML = 'Neue Trades vom Master werden wieder <b>automatisch kopiert</b>. Dein Account wird sofort wieder synchronisiert.';
+      modalConfirm.textContent = 'Aktivieren';
+      modalConfirm.style.background = 'var(--bull)';
+    }
+    modal.style.display = 'flex';
+  }
+
+  function hideModal() {
+    modal.style.display = 'none';
+    pendingAction = null;
+  }
+
+  function executePause() {
+    if (!pendingAction) return;
+    modalConfirm.disabled = true;
+    modalConfirm.textContent = 'Wird verarbeitet...';
+
+    fetch('/api/toggle-pause', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: pendingAction })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        var banner = document.getElementById('pauseBanner');
+        var title = document.getElementById('pauseTitle');
+        var sub = document.getElementById('pauseSub');
+        var icon = pauseToggle.closest('.settings-section').querySelector('.settings-section-icon');
+
+        if (data.is_active) {
+          pauseToggle.classList.add('active');
+          pauseToggle.classList.remove('warn');
+          banner.className = 'pause-banner active';
+          title.textContent = 'Copy Trading ist aktiv';
+          sub.textContent = 'Neue Trades vom Master werden automatisch kopiert.';
+          icon.className = 'settings-section-icon green';
+        } else {
+          pauseToggle.classList.remove('active');
+          pauseToggle.classList.add('warn');
+          banner.className = 'pause-banner paused';
+          title.textContent = 'Copy Trading ist pausiert';
+          sub.textContent = 'Keine neuen Trades werden kopiert. Bestehende Positionen bleiben offen.';
+          icon.className = 'settings-section-icon red';
+        }
+      }
+      hideModal();
+      modalConfirm.disabled = false;
+    })
+    .catch(function() {
+      hideModal();
+      modalConfirm.disabled = false;
+    });
+  }
+
+  if (pauseToggle) {
+    pauseToggle.addEventListener('click', function() {
+      var isActive = pauseToggle.classList.contains('active');
+      showModal(isActive ? 'pause' : 'resume');
+    });
+  }
+
+  if (modalCancel) modalCancel.addEventListener('click', hideModal);
+  if (modalConfirm) modalConfirm.addEventListener('click', executePause);
+
+  // Overlay-Klick schließt Modal
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) hideModal();
+    });
+  }
+
+  // ESC schließt Modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.style.display !== 'none') hideModal();
+  });
+})();
+</script>
+{% endif %}
+
+{% endblock %}

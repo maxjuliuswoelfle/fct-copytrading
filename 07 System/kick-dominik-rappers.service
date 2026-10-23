@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot Kick Dominik Rappers (dominik-e-mail@web.de, id 401) am 16.10.2026
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_dominik_rappers.sh

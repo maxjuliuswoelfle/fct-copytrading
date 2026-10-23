@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Copy Trading - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="auth-layout" style="align-items:flex-start;padding-top:8vh;padding-bottom:8vh;">
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="brand-icon-box">
+        <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+      </div>
+      <div class="brand-text">
+        <div class="brand-name" style="font-size:18px;">FirstClass</div>
+        <div class="brand-tag">Copy Trading</div>
+      </div>
+    </div>
+
+    <h1>Copy Trading beitreten</h1>
+    <p class="auth-subtitle">Lass alle Trades automatisch auf deinem Account spiegeln — proportional zu deiner Kontogröße.</p>
+
+    <div class="auth-card">
+      {% if error %}
+      <div class="alert error">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="/signup/copytrading">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="">
+        <div class="name-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label for="first_name">Vorname</label>
+            <input type="text" id="first_name" name="first_name" required autofocus placeholder="Max" value="{{ first_name or '' }}">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Nachname</label>
+            <input type="text" id="last_name" name="last_name" required placeholder="Mustermann" value="{{ last_name or '' }}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" required placeholder="deine@email.de" value="{{ email or '' }}">
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <div class="input-pw-wrap">
+            <input type="password" id="password" name="password" required minlength="8" placeholder="Mindestens 8 Zeichen">
+            <button type="button" class="pw-toggle" onclick="togglePw('password',this)" aria-label="Passwort anzeigen">
+              <svg class="eye-open" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+          <small>Mindestens 8 Zeichen</small>
+        </div>
+        <div class="form-group">
+          <label for="password_confirm">Passwort wiederholen</label>
+          <div class="input-pw-wrap">
+            <input type="password" id="password_confirm" name="password_confirm" required minlength="8" placeholder="Passwort bestätigen">
+            <button type="button" class="pw-toggle" onclick="togglePw('password_confirm',this)" aria-label="Passwort anzeigen">
+              <svg class="eye-open" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div style="margin:16px 0 4px;display:flex;flex-direction:column;gap:12px;">
+          <label class="check-label">
+            <input type="checkbox" name="accept_agb" required>
+            <span>Ich akzeptiere die <a href="/agb" target="_blank" style="color:var(--fct);text-decoration:underline;">AGB</a>. *</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" name="accept_privacy" required>
+            <span>Ich habe die <a href="/datenschutz" target="_blank" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a> zur Kenntnis genommen. *</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" name="accept_risk" required>
+            <span>Ich habe den <a href="/risikohinweis" target="_blank" style="color:var(--fct);text-decoration:underline;">Risikohinweis</a> gelesen und bin mir bewusst, dass beim Trading Verluste bis zum Totalverlust meines eingesetzten Kapitals möglich sind. *</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" name="accept_marketing">
+            <span>Ich möchte per E-Mail über Produkt-Updates und Angebote informiert werden. <span style="color:var(--tx-4);">(optional)</span></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:12px;">Account erstellen</button>
+      </form>
+
+      <div style="text-align:center;margin-top:18px;font-size:13px;color:var(--tx-3);">
+        Schon einen Account? <a href="/login" style="color:var(--fct);text-decoration:none;font-weight:500;">Einloggen</a>
+      </div>
+    </div>
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+  </div>
+</div>
+
+<style>
+.check-label{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:var(--tx-2);line-height:1.5;cursor:pointer}
+.check-label input[type="checkbox"]{
+  -webkit-appearance:none;appearance:none;
+  width:18px;height:18px;min-width:18px;margin-top:1px;
+  border:1.5px solid var(--bd-default);border-radius:4px;
+  background:var(--bg-2);cursor:pointer;position:relative;
+  transition:background .15s,border-color .15s;
+}
+.check-label input[type="checkbox"]:hover{border-color:var(--tx-3)}
+.check-label input[type="checkbox"]:checked{background:var(--fct);border-color:var(--fct)}
+.check-label input[type="checkbox"]:checked::after{
+  content:'';position:absolute;left:5px;top:2px;
+  width:5px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+.check-label a{font-weight:500}
+.input-pw-wrap{position:relative}
+.input-pw-wrap input{width:100%;padding-right:44px;box-sizing:border-box}
+.pw-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--tx-3);padding:4px;display:flex;align-items:center}
+.pw-toggle:hover{color:var(--tx-1)}
+</style>
+<script>
+function togglePw(id,btn){
+  var inp=document.getElementById(id);
+  var show=inp.type==='password';
+  inp.type=show?'text':'password';
+  btn.querySelector('.eye-open').style.display=show?'none':'block';
+  btn.querySelector('.eye-closed').style.display=show?'block':'none';
+}
+// CSRF: read token from cookie and inject into form
+(function(){var m=document.cookie.match(/csrf_token=([^;]+)/);if(m){document.querySelectorAll('input[name="csrf_token"]').forEach(function(el){el.value=m[1];});}})();
+</script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

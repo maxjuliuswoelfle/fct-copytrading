@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick Gunnar Still (gunnars.nachrichtenzentrale@gmail.com, du_id 469) am 30.09.2026
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_gunnar_still.sh

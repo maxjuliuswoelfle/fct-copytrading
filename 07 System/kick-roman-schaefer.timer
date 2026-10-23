@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: kick roman.schaefer1983@gmail.com on 2026-07-28 09:00 UTC (paid until then)
+
+[Timer]
+OnCalendar=2026-07-28 09:00:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

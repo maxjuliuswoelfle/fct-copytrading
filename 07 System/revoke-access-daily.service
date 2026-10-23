@@ -1,0 +1,12 @@
+[Unit]
+Description=Taeglicher Zugangsentzug (scheduled_access_revocations)
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/botuser/scripts
+# SCHARF seit 2026-09-28 — nach erfolgreichem Vergleich am Stichtag
+# (Brendler + Landert: alter Timer und Dry-Run identisch, Endstatus 'kicked'
+# in beiden Kanaelen verifiziert). Die alten kick-*.timer sind deaktiviert.
+# Zum Zurueckschalten auf DRY-RUN einfach --apply entfernen.
+ExecStart=/usr/bin/python3 revoke_access_daily.py --apply

@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot Kick Thomas Wimmer (wimmerthomas04@gmail.com, id 375) am 09.10.2026
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_thomas_wimmer.sh

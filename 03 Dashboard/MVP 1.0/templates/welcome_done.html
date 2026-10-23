@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Du bist dabei! - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<style>
+.free-layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8vh 20px 8vh;
+}
+.free-container {
+  width: 100%;
+  max-width: 520px;
+}
+.free-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.free-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+.free-header p {
+  font-size: 14px;
+  color: var(--tx-3);
+  margin: 0;
+  line-height: 1.55;
+}
+.free-card {
+  background: var(--bg-2);
+  border: 1px solid var(--bd-default);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+/* Telegram Badge */
+.telegram-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(42,171,238,0.08) 0%, rgba(34,158,217,0.04) 100%);
+  border: 1px solid rgba(42,171,238,0.2);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.telegram-badge-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2AABEE 0%, #229ED9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 12px rgba(42,171,238,0.25);
+}
+.telegram-badge-content {
+  flex: 1;
+  min-width: 0;
+}
+.telegram-badge-content p {
+  font-size: 13px;
+  color: var(--tx-2);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.telegram-badge .btn {
+  font-size: 13px;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+/* Video Embed */
+.video-embed {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.video-embed wistia-player {
+  border-radius: 12px;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--bd-subtle);
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .free-layout { padding: 32px 16px 48px; }
+  .free-container { max-width: 100%; box-sizing: border-box; }
+  .free-card { padding: 22px 18px; border-radius: 14px; }
+  .free-header h1 { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .free-layout { padding: 24px 12px 40px; }
+  .free-card { padding: 18px 14px; border-radius: 12px; }
+  .free-header h1 { font-size: 20px; }
+  .free-header p { font-size: 13px; }
+  .telegram-badge { flex-direction: column; text-align: center; padding: 16px 14px; }
+  .telegram-badge-icon { width: 40px; height: 40px; border-radius: 10px; }
+  .telegram-badge-icon svg { width: 20px; height: 20px; }
+  .video-embed { border-radius: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="free-layout">
+  <div class="free-container">
+
+    <!-- Header -->
+    <div class="free-header">
+      <div class="auth-logo" style="justify-content:center;margin-bottom:20px;">
+        <div class="brand-icon-box">
+          <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+        </div>
+        <div class="brand-text">
+          <div class="brand-name" style="font-size:18px;">FirstClass</div>
+          <div class="brand-tag">Copy Trading</div>
+        </div>
+      </div>
+      <h1>Du bist dabei, {{ first_name }}!</h1>
+      <p>Dein Account ist eingerichtet. Tritt jetzt der Copy Trading Gruppe bei.</p>
+    </div>
+
+    <div class="free-card">
+
+      <!-- Telegram Badge -->
+      <div class="telegram-badge">
+        <div class="telegram-badge-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
+          </svg>
+        </div>
+        <div class="telegram-badge-content">
+          <p>Deine Copy Trading Gruppe wartet auf dich.</p>
+          <a href="{{ telegram_link }}" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            Telegram-Gruppe beitreten
+          </a>
+        </div>
+      </div>
+
+      <!-- Danke Video -->
+      <div class="video-embed">
+        <script src="https://fast.wistia.com/player.js" async></script>
+        <script src="https://fast.wistia.com/embed/yqaibe0yih.js" async type="module"></script>
+        <style>wistia-player[media-id='yqaibe0yih']:not(:defined){background:center/contain no-repeat url('https://fast.wistia.com/embed/medias/yqaibe0yih/swatch');display:block;filter:blur(5px);padding-top:56.25%;}</style>
+        <wistia-player media-id="yqaibe0yih" aspect="1.7777777777777777"></wistia-player>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- Dashboard CTA -->
+      <a href="/dashboard" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;width:100%;">
+        Zum Dashboard
+      </a>
+
+      <hr class="section-divider">
+
+      <!-- Support Badge -->
+      <div class="telegram-badge" style="background:rgba(255,255,255,0.03);border-color:var(--bd-default);">
+        <div class="telegram-badge-icon" style="background:linear-gradient(135deg,rgba(255,133,40,0.15) 0%,rgba(255,133,40,0.05) 100%);box-shadow:none;border:1px solid rgba(255,133,40,0.25);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--fct)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="telegram-badge-content">
+          <p>Fragen? Unser Team hilft dir weiter.</p>
+          <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener" class="btn btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            Support kontaktieren
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen und die Nutzung zu analysieren. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

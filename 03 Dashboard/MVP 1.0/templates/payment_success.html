@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zahlung erfolgreich - FirstClass Copy Trading</title>
+<link rel="icon" type="image/png" href="/static/logos/Icon%20Orange%20Gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="auth-layout">
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="brand-icon-box">
+        <img src="/static/logos/Icon%20White.png" alt="FirstClass">
+      </div>
+      <div class="brand-text">
+        <div class="brand-name" style="font-size:18px;">FirstClass</div>
+        <div class="brand-tag">Copy Trading</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:24px 0 8px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--bull-soft);border:1px solid var(--bull-bd);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--bull)" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1>Zahlung erfolgreich!</h1>
+
+    {% if payment_confirmed %}
+    <p class="auth-subtitle">Deine Zahlung wurde bestätigt. Du kannst jetzt mit dem Setup fortfahren.</p>
+
+    <div class="auth-card" style="text-align:center;">
+      <a href="{{ next_url }}" class="btn btn-primary" style="display:block;width:100%;text-align:center;text-decoration:none;">
+        Weiter zum Setup
+      </a>
+    </div>
+
+    {% else %}
+    <p class="auth-subtitle">Deine Zahlung wird verarbeitet. Das kann einen Moment dauern.</p>
+
+    <div class="auth-card" style="text-align:center;">
+      <div style="background:var(--bg-3);border:1px solid var(--bd-default);padding:16px;border-radius:10px;margin-bottom:16px;">
+        <div id="status-spinner" style="display:inline-block;width:20px;height:20px;border:2px solid var(--bd-default);border-top-color:var(--fct);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:8px;"></div>
+        <p id="status-text" style="font-size:13px;color:var(--tx-2);margin:0;">Warte auf Zahlungsbestätigung...</p>
+      </div>
+
+      <p style="font-size:12px;color:var(--tx-4);line-height:1.5;">
+        Die Seite prüft automatisch, ob die Zahlung angekommen ist. Falls es länger dauert, kannst du dich später einloggen — sobald die Zahlung bestätigt ist, geht es automatisch weiter.
+      </p>
+
+      <a href="{{ next_url }}" class="btn btn-ghost" style="display:block;width:100%;text-align:center;text-decoration:none;margin-top:12px;">
+        Trotzdem weiter
+      </a>
+    </div>
+    {% endif %}
+
+    <div class="legal-bottom-footer" style="margin-top:32px;text-align:center;font-size:12px;color:var(--tx-4);">
+      <a href="/impressum" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Impressum</a>
+      <a href="/agb" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">AGB</a>
+      <a href="/datenschutz" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Datenschutz</a>
+      <a href="/risikohinweis" style="color:var(--tx-3);text-decoration:none;margin:0 8px;">Risikohinweis</a>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+{% if not payment_confirmed %}
+<script>
+// Poll alle 3 Sekunden ob Zahlung angekommen ist
+(function() {
+  var attempts = 0;
+  var maxAttempts = 40; // 2 Minuten
+  var interval = setInterval(function() {
+    attempts++;
+    fetch('/api/payment-status')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.payment_status === 'paid') {
+          clearInterval(interval);
+          document.getElementById('status-text').textContent = 'Zahlung bestätigt!';
+          document.getElementById('status-spinner').style.display = 'none';
+          setTimeout(function() { window.location.href = '{{ next_url }}'; }, 1000);
+        }
+      })
+      .catch(function() {});
+    if (attempts >= maxAttempts) {
+      clearInterval(interval);
+      document.getElementById('status-text').textContent = 'Zahlung noch nicht bestätigt. Du kannst trotzdem weiter.';
+      document.getElementById('status-spinner').style.display = 'none';
+    }
+  }, 3000);
+})();
+</script>
+{% endif %}
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:10001;background:var(--bg-2);border-top:1px solid var(--bd-default);padding:16px 24px;box-shadow:0 -4px 24px rgba(0,0,0,0.3);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="flex:1;min-width:240px;margin:0;font-size:13px;color:var(--tx-2);line-height:1.5;">
+      Wir verwenden Cookies und ähnliche Technologien, um die Funktionalität unserer Website sicherzustellen. Mehr dazu in unserer <a href="/datenschutz" style="color:var(--fct);text-decoration:underline;">Datenschutzerklärung</a>.
+    </p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onclick="acceptCookies('essential')" class="btn btn-ghost" style="font-size:12px;padding:8px 16px;">Nur notwendige</button>
+      <button onclick="acceptCookies('all')" class="btn btn-primary" style="font-size:12px;padding:8px 16px;">Alle akzeptieren</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){if(!localStorage.getItem('fct_cookie_consent'))document.getElementById('cookieBanner').style.display='block';})();
+function acceptCookies(l){localStorage.setItem('fct_cookie_consent',l);document.getElementById('cookieBanner').style.display='none';}
+</script>
+</body>
+</html>

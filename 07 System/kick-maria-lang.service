@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick marialangzurinfo@gmail.com (Maria Lang) from Telegram groups (cancellation 2026-08-29)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_maria_lang.sh

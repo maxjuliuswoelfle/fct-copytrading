@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot Kick Markus Mayer (kh.markus@proton.me, id 481) am 07.10.2026
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_markus_mayer.sh

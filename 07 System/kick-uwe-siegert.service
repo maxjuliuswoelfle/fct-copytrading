@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick electrocon@t-online.de (Uwe Siegert) from Telegram groups (cancellation 2026-09-07)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_uwe_siegert.sh

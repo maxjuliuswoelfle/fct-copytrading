@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: kick kardrekh@gmail.com (Tunc) on 2026-08-07 09:00 UTC (paid until then)
+
+[Timer]
+OnCalendar=2026-08-07 09:00:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

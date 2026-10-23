@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: kick mariocarella@gmx.de (Tino Carella) on 2026-08-30 09:00 UTC (paid until then)
+
+[Timer]
+OnCalendar=2026-08-30 09:00:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

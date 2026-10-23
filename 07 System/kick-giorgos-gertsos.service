@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot Kick Giorgos Gertsos (gertsos.giorgos@gmail.com, id 327) am 18.09.2026
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_giorgos_gertsos.sh

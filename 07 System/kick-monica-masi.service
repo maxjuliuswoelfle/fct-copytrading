@@ -1,0 +1,6 @@
+[Unit]
+Description=One-shot kick moni1174@proton.me (Monica Masi Imoberdorf) from Telegram groups (goodwill early release 2026-09-01, no permanent ban)
+
+[Service]
+Type=oneshot
+ExecStart=/home/botuser/scripts/kick_monica_masi.sh

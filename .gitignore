@@ -1,0 +1,144 @@
+# ============================================================
+#  Life OS — Git-Filterregeln
+#  Zweck: nur Wissen + Code versionieren, keine Medien, keine Geheimnisse.
+#  Messung 2026-10-23: ohne diese Regeln 5,3 GB / 134.667 Dateien,
+#                      mit diesen Regeln  47,8 MB /   1.812 Dateien.
+# ============================================================
+
+
+# ============================================================
+#  ⚠️  REGEL ZU .gitignore-MUSTERN — teuer gelernt am 2026-10-23
+#  Ein Muster MIT Slash in der Mitte (z. B. ".claudian/sessions/")
+#  ist fuer Git PFAD-RELATIV zu dieser Datei und greift NUR im
+#  Wurzelverzeichnis. Unterordner fallen durch — hier waeren 6 Chat-
+#  Protokolle mit Zugangsdaten im Klartext mitcommittet worden.
+#  Deshalb: immer "**/" davorsetzen, wenn es rekursiv gelten soll.
+#  Ein Muster OHNE Slash (z. B. "node_modules") greift dagegen ueberall.
+# ============================================================
+
+# --- 1. GEHEIMNISSE (wichtigster Block — niemals aufweichen) ---
+.env
+.env.*
+!.env.beispiel
+*.env
+tv-grant.env
+*secret*
+*credentials*
+id_rsa
+id_ed25519
+*.pem
+*.key
+*.p12
+# Google-Dienstkonto-Schluessel (JSON mit private_key)
+*service-account*.json
+*-key.json
+
+# --- 2. Chat-Verlaeufe (enthalten Geheimnisse im Klartext) ---
+**/.claudian/sessions/
+**/.claude/sessions/
+**/.claude/shell-snapshots/
+**/.claude/todos/
+
+# --- 3. Abhaengigkeiten + Caches (jederzeit neu erzeugbar) ---
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.next/
+.turbo/
+dist/
+build/
+.cache/
+*.so
+*.dylib
+**/.obsidian/plugins/
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
+
+# --- 4. Medien (gehoeren nicht in Git — 1,5 GB davon sind reine Dubletten) ---
+*.mp4
+*.mov
+*.webm
+*.avi
+*.mkv
+*.mp3
+*.wav
+*.m4a
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.svg
+*.ico
+*.pdf
+*.heic
+*.psd
+*.ai
+*.sketch
+*.fig
+
+# --- 5. Schriften ---
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.eot
+
+# --- 6. Archive + Datenbank-Abzuege ---
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+*.rar
+*.7z
+*.sql.gz
+*.dump
+*.sqlite
+*.db
+
+# --- 7. Grosse Datensaetze ---
+**/data_cache/
+*.csv.gz
+# CSVs ab ~1 MB bitte einzeln pruefen; Marktdaten gehoeren nicht ins Repo
+03 Projects/Paused/Trading Bot/02 Entwicklung/data_cache/
+
+# --- 8. Betriebssystem-Muell ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# --- 9. Editor ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- 10. Nachtrag 2026-10-23 (aus Kartierung) ---
+# Agent-/Terminal-Caches: store.json enthielt Secrets aus einer Agent-Session
+**/.claude-flow/
+**/.swarm/
+# ACHTUNG: hermes/.env.template enthaelt ECHTE Werte, ist kein Template.
+# Von .env.* ohnehin erfasst — hier nur als Warnung dokumentiert.
+*.env.template
+
+# --- 11. Sicherungen der Zugangsdaten-Bereinigung ---
+# ENTHALTEN DIE ORIGINALE MIT ALLEN ZUGANGSDATEN IM KLARTEXT.
+# Niemals versionieren. Nach erfolgreicher Pruefung loeschen.
+_sicherung_zugangsdaten_*/
+_sicherung_*/
+
+# --- 12. Wegwerf-Artefakte aus Sitzungen ---
+.webhook_response.txt
+*.response.txt
+tmp/
+# persoenliche Claude-Einstellungen (Pfade/Freigaben des jeweiligen Rechners)
+.claude/settings.local.json

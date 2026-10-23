@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Verlauf - FirstClass Copy Trading{% endblock %}
+{% block crumb_title %}Verlauf{% endblock %}
+
+{% block topbar_extra %}
+<div class="topbar-stat">
+  <div class="topbar-stat-label">Gesamt P&L</div>
+  <div class="topbar-stat-value num" style="color: {% if total_pnl >= 0 %}var(--bull){% else %}var(--bear){% endif %};">
+    {{ "%.2f"|format(total_pnl) }} $
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <h1>Trade Verlauf</h1>
+    <div class="sub">Alle abgeschlossenen Trades deines Copy Trading Accounts</div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <span class="stat-delta {% if total_pnl >= 0 %}bull{% else %}bear{% endif %}" style="font-size:16px;font-weight:600;">
+      {% if total_pnl >= 0 %}+{% endif %}{{ "%.2f"|format(total_pnl) }} $
+    </span>
+  </div>
+</div>
+
+{% if trades %}
+<section class="card section-card">
+  <div class="section-head">
+    <div>
+      <h3>Geschlossene Trades</h3>
+      <div class="sub">Seite {{ page }}</div>
+    </div>
+  </div>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Paar</th>
+        <th>Einstieg</th>
+        <th>Menge</th>
+        <th>Geöffnet</th>
+        <th>Geschlossen</th>
+        <th>Dauer</th>
+        <th>P&L</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in trades %}
+      {% set symbol_letter = t.symbol[0] if t.symbol else '?' %}
+      {% set is_long = t.side == 'Buy' %}
+      <tr>
+        <td>
+          <div class="pair-cell">
+            <div class="pair-ico" style="background:linear-gradient(135deg,{% if 'BTC' in t.symbol %}#F7931A,#E08613{% elif 'ETH' in t.symbol %}#627EEA,#3C5BD0{% elif 'SOL' in t.symbol %}#14F195,#0BA67A{% elif 'XRP' in t.symbol %}#23292F,#0F1419{% else %}#6B6B6B,#4A4A4A{% endif %});">
+              {{ symbol_letter }}
+            </div>
+            <div class="pair-meta">
+              <div class="pair-name num">{{ t.symbol }}</div>
+              <div class="pair-side {% if is_long %}long{% else %}short{% endif %}">
+                {{ 'LONG' if is_long else 'SHORT' }}
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="num">{{ "%.2f"|format(t.avg_entry) if t.avg_entry else '—' }} $</td>
+        <td class="num">{{ t.total_qty if t.total_qty else '—' }}</td>
+        <td style="color:var(--tx-2);font-size:12.5px;">{{ t.opened_at[:16] if t.opened_at else '—' }}</td>
+        <td style="color:var(--tx-2);font-size:12.5px;">{{ t.closed_at[:16] if t.closed_at else '—' }}</td>
+        <td style="color:var(--tx-2);font-size:12.5px;">{{ t.duration }}</td>
+        <td>
+          <div class="pnl-cell {% if t.pnl >= 0 %}bull{% else %}bear{% endif %} num">
+            {% if t.pnl >= 0 %}+{% endif %}{{ "%.2f"|format(t.pnl) }} $
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+{% if page > 1 or has_next %}
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:20px;">
+  {% if page > 1 %}
+  <a href="/verlauf?page={{ page - 1 }}" class="btn btn-ghost" style="text-decoration:none;">Zurück</a>
+  {% endif %}
+  <span style="color:var(--tx-3);font-size:13px;">Seite {{ page }}</span>
+  {% if has_next %}
+  <a href="/verlauf?page={{ page + 1 }}" class="btn btn-ghost" style="text-decoration:none;">Weiter</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="card" style="padding:60px 24px;text-align:center;">
+  <div style="color:var(--tx-3);font-size:14px;">
+    <svg class="ico" style="width:32px;height:32px;margin-bottom:12px;color:var(--tx-4);"><use href="#i-clock"/></svg>
+    <br>Noch keine abgeschlossenen Trades vorhanden.
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

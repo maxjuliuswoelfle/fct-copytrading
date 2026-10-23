@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block title %}Support · FirstClass Copy Trading{% endblock %}
+{% block crumb_title %}Support{% endblock %}
+
+{% block content %}
+
+<div class="page-head">
+  <div>
+    <h1>Support</h1>
+    <div class="sub">Hilfe, FAQ und direkter Kontakt zum Team</div>
+  </div>
+</div>
+
+<!-- HERO + KONTAKT nebeneinander -->
+<div class="support-top-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+
+  <!-- Links: Info -->
+  <div class="support-hero" style="margin-bottom:0;">
+    <div class="support-hero-icon">
+      <svg class="ico"><use href="#i-life"/></svg>
+    </div>
+    <div class="support-hero-text">
+      <h2>Wie können wir dir helfen?</h2>
+      <p>Unser Support-Team ist über Telegram erreichbar. Bei dringenden Fragen zu deinem Account oder Trading schreib uns direkt — wir antworten in der Regel innerhalb weniger Minuten.</p>
+    </div>
+  </div>
+
+  <!-- Rechts: Kontakt -->
+  <div class="support-card" style="margin-bottom:0;">
+    <div class="support-card-head">
+      <svg class="ico"><use href="#i-zap"/></svg>
+      <h3>Direkter Kontakt</h3>
+    </div>
+
+    <a href="https://t.me/FCT_Copy_Trading_Support_Bot" target="_blank" rel="noopener"
+       class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:16px;text-decoration:none;">
+      <svg class="ico"><use href="#i-arrow-up-right"/></svg>
+      Support auf Telegram öffnen
+    </a>
+
+    <div class="status-row">
+      <div class="status-label">Antwortzeit</div>
+      <div class="status-value" style="color:var(--bull);">< 30 Min.</div>
+    </div>
+    <div class="status-row">
+      <div class="status-label">Erreichbarkeit</div>
+      <div class="status-value">Mo–Fr, 9–21 Uhr</div>
+    </div>
+    <div class="status-row">
+      <div class="status-label">E-Mail</div>
+      <div class="status-value" style="font-size:12px;">support@firstclass-trading.com</div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+@media (max-width: 768px) {
+  .support-top-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<div class="support-grid">
+
+  {% if product_tier == 'copy_trading' %}
+  <!-- SYSTEM STATUS -->
+  <div class="support-card">
+    <div class="support-card-head">
+      <svg class="ico"><use href="#i-activity"/></svg>
+      <h3>System Status</h3>
+    </div>
+
+    <div class="status-row">
+      <div class="status-label">Copy Trading Bot</div>
+      <div class="status-value">
+        <span class="badge online">
+          <span class="live-dot" style="width:6px;height:6px;"></span>
+          Online
+        </span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-label">Exchange Verbindung</div>
+      <div class="status-value">
+        <span class="badge online">
+          <span class="live-dot" style="width:6px;height:6px;"></span>
+          Verbunden
+        </span>
+      </div>
+    </div>
+    <div class="status-row">
+      <div class="status-label">Sync Genauigkeit</div>
+      <div class="status-value num" data-live="sync_accuracy_support">— %</div>
+    </div>
+    <div class="status-row">
+      <div class="status-label">Ø Latenz</div>
+      <div class="status-value num" data-live="sync_latency_support">— ms</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- FAQ -->
+  <div class="support-card" style="grid-column: 1 / -1;">
+    <div class="support-card-head">
+      <svg class="ico"><use href="#i-help"/></svg>
+      <h3>Häufige Fragen</h3>
+    </div>
+
+    {% if product_tier == 'copy_trading' %}
+    <div class="faq-item">
+      <div class="faq-q">
+        Was passiert, wenn der Bot stoppt?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Bestehende Positionen bleiben offen und werden nicht automatisch geschlossen. Dein Account bei LeveX funktioniert unabhängig vom Bot weiter. Im unwahrscheinlichen Fall eines Ausfalls wirst du umgehend benachrichtigt und unser Team kümmert sich um die Wiederherstellung.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Kann ich das Copy Trading pausieren?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Ja, unter Einstellungen findest du einen Pause-Schalter. Wenn pausiert, werden keine neuen Trades eröffnet, aber bestehende Positionen werden weiterhin gemanagt (SL/TP Anpassungen).
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Wie werden die Positionsgrößen berechnet?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Deine Positionsgrößen werden proportional zur Account-Größe des Masters berechnet. Wenn der Master 1% seines Accounts in einen Trade investiert, wird auch bei dir 1% deines Accounts eingesetzt. So bleibt das Risiko relativ gleich.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Was bedeutet Sync Genauigkeit?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Die Sync Genauigkeit zeigt, wie präzise deine Trades mit denen des Masters übereinstimmen. 100% bedeutet, dass jeder Trade erfolgreich kopiert wurde. Minimale Abweichungen bei Entry-Preisen sind normal und entstehen durch Latenz zwischen den Börsen-Orders.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Wie kann ich meinen Account kündigen?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Kontaktiere uns über Telegram oder per E-Mail. Wir schließen alle offenen Positionen in Absprache mit dir und deaktivieren das Copy Trading. Dein LeveX-Account bleibt natürlich bestehen.
+      </div>
+    </div>
+
+    {% else %}
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Welche Trades werden gespiegelt?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Du erhältst alle Trades von Max in Echtzeit gespiegelt: Entries, Stop-Loss, Take-Profit, SL/TP-Updates, Scale-In/Out und Schließungen. So kannst du jeden Trade direkt nachhandeln.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Wie viele Trades werden pro Monat gespiegelt?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Im Durchschnitt 10-20 Trades pro Monat. Die Anzahl hängt von der Marktlage ab — Qualität geht immer vor Quantität.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Wo sehe ich die Trades?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Alle Trades werden in Echtzeit in unserer privaten Telegram-Gruppe gepostet. Du bekommst sofort eine Benachrichtigung auf dein Handy.
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <div class="faq-q">
+        Wie kann ich mein Abo kündigen?
+        <svg class="ico"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="faq-a">
+        Kontaktiere uns über Telegram oder per E-Mail. Dein Zugang zur Copy Trading Gruppe wird zum Ende der Abrechnungsperiode deaktiviert.
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // FAQ Toggle
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      item.classList.toggle('open');
+    });
+  });
+})();
+</script>
+
+{% endblock %}
