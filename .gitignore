@@ -142,3 +142,7 @@ _sicherung_*/
 tmp/
 # persoenliche Claude-Einstellungen (Pfade/Freigaben des jeweiligen Rechners)
 .claude/settings.local.json
+
+# Persoenliche Ergaenzung je Rechner (z.B. "ich bin Luis, nutze luis@ statt root@")
+# Wird von Claude Code gelesen, aber bewusst NICHT geteilt.
+CLAUDE.local.md
