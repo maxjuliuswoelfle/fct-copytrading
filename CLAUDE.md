@@ -182,6 +182,28 @@ Copy Trading Bot/
 | Bot-Pfad | `/home/botuser/copy-trading-bot/` |
 | Dashboard-Pfad | `/home/botuser/dashboard/` |
 
+> ### 🔑 Anmeldung — wer bist du?
+>
+> | Wer arbeitet | Befehl | Rechte |
+> |---|---|---|
+> | **Max** | `ssh root@<server-ip>` | direkt root |
+> | **Mitarbeiter** (Luis u. a.) | `ssh luis@<server-ip>` | eigener Benutzer, root-Rechte über **`sudo`** davor |
+>
+> **Überall in dieser Datei steht `root@…` — das ist Max' Weg.** Arbeitest du auf dem
+> Rechner eines Mitarbeiters, setze stattdessen dessen Benutzernamen ein und stelle
+> Befehlen, die root brauchen, `sudo` voran. Beispiel:
+> `sudo -u postgres psql -d fct_os` statt `sudo -u postgres psql` als root.
+>
+> **Diagnose:** Kommt bei `ssh root@…` ein **`Permission denied (publickey)`**, bist du
+> auf einem Mitarbeiter-Rechner → mit `luis@` erneut versuchen. Der Zugang ist dann
+> nicht kaputt, es ist nur der falsche Benutzername.
+>
+> 🔴 **NIEMALS einen Schlüssel in `/root/.ssh/authorized_keys` eintragen**, auch nicht
+> anfügend. Max hat dort genau einen Schlüssel; geht der verloren, ist der Server nur
+> noch über die Hetzner-Konsole erreichbar. Mitarbeiter-Zugänge sind immer **additiv**
+> (eigener Benutzer + eigene `authorized_keys` + eigene Datei unter `/etc/sudoers.d/`).
+
+
 **Domain-Setup:**
 - `copytrading.firstclass-trading.com` → IONOS Webspace (217.160.0.194) — Landingpage (statisches HTML)
 - `dashboard.firstclass-trading.com` → Hetzner VPS (178.105.135.197) — Dashboard (FastAPI)
