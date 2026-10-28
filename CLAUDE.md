@@ -75,7 +75,7 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 - **Ablefy-Webhook** (`/webhooks/ablefy`) — Payment/Refund/Order-Events, nur Produkte 517561 (Signale) + 517562 (Copy Trading), SEPA-Erstkäufe sofort freischalten (Rücklastschrift sperrt).
 - **Zugangs-Automatik** (`07 System/`) — `revoke-access-daily` Timer: Kündigungen zum Laufzeitende, Kick aus Main + Scalp, Dashboard-Sperre. Kick-Regel: Kulanz = ban + sofort unban (Endstatus `left`), Moderationsfall = permanent.
 - **Support-Bot** (`@FCT_Copy_Trading_Support_Bot`, `07 System/support_bot.py`) — Kundenanfragen, Mitschreiben für den AI-Support.
-- **Levex-Proxy** (`levex-proxy`, nur auf diesem Server, weil bei Levex gewhitelistet) — UID-Prüfung für den FCT-Club (Dienst des FCT-OS-Projekts, Code dort unter `05 System/levex-proxy/`).
+- **Levex-Proxy** (`levex-proxy`, nur auf diesem Server, weil bei Levex gewhitelistet) — UID-Prüfung für den FCT-Club (Dienst des FCT-OS-Projekts, Code dort unter `01 Betrieb/levex-proxy/`).
 - **Landingpages** (`04 Landingpage/`) — `copytrading.firstclass-trading.com` auf IONOS (statisch) + Event-Landingpage. Zielbild: auf den eigenen Stack ziehen (siehe Systemlandkarte).
 
 ## Offene Punkte
@@ -84,7 +84,7 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 - **AI-Support-Agent Baustein 4** — Antworten automatisieren (Bauplan: [[08 AI Support/(C) AI Support Agent — Bauplan]]).
 - **Kündigungs-Erkennung:** Kein Webhook-Event heißt bei Plan 610909 NICHT „nicht gekündigt" — Ablefy-Status aktiv prüfen (Regel in der Wissensbasis). Automatischer Abgleich wäre der nächste Schritt.
 - **Nicht zuordenbare Telegram-Accounts** („BND", „Viktor Lachner") — Lücke zwischen Telegram-ID und `dashboard_users`; Idee: Beitritt nur über personalisierten Einmal-Link.
-- **Backup der SQLite-DB** (`copy_trading.db`) — ❓ existiert ein Cron? Falls nicht: einrichten.
+- **Backup der SQLite-DB einrichten:** `07 System/backup-copytrading-db.sh` auf Server 2 installieren (Anleitung im Script-Kopf: Cron 03:30, 30 Tage, `/var/backups/copytrading/`).
 - **Landingpages konsolidieren** — IONOS → eigener Stack (Projekt in Notion).
 - **Admin-Panel, Analytics, Dashboard MVP 2.0** — nice-to-have, nicht priorisiert.
 - **Nice-to-have aus 2026-06:** Trade-Label Swing/Day/Scalp im Signal (Feature-Wunsch Max), Vorteils-Seite vor Upgrade-Checkout, Bumper-Offer.
@@ -193,10 +193,11 @@ cd "03 Dashboard/MVP 1.0" && ./deploy-dashboard.sh 178.105.135.197
 
 
 ## Verknüpfte Dateien
+- [[07 System/backup-copytrading-db.sh|Backup-Script SQLite (täglich 03:30)]]
 - [[(C) Wissensbasis Copytrading|(C) Wissensbasis Copytrading]]
 - [[(C) Logbuch Copytrading|(C) Logbuch Copytrading]]
 
-- ⚠️ **Vor jedem Aufräumen im Vault:** Schutzliste lesen — sie liegt im FCT-OS-Projekt und ist von hier aus **nicht** per Wikilink erreichbar (eigener Obsidian-Vault). Absoluter Pfad: `~/Life OS/FCT/FCT OS/05 System/(C) Vault aufräumen — Schutzliste.md`
+- ⚠️ **Vor jedem Aufräumen im Vault:** Schutzliste lesen — sie liegt im FCT-OS-Projekt und ist von hier aus **nicht** per Wikilink erreichbar (eigener Obsidian-Vault). Absoluter Pfad: `~/Life OS/FCT/FCT OS/03 Anleitungen/(C) Vault aufräumen — Schutzliste.md`
 - [[COMMANDS]]
 - [[(C) Aufräumen — Schutzliste|(C) Aufräumen — Schutzliste (was NICHT angefasst werden darf)]]
 - [[00 Architektur & Planung/(C) Systemarchitektur|(C) Systemarchitektur]]

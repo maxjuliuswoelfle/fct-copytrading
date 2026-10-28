@@ -5,7 +5,7 @@
 >
 > **Stand:** 2026-10-27
 
-> ⚠️ **Geltungsbereich:** Diese Datei deckt **nur** `FCT/Copytrading/` ab. Für den restlichen Vault gilt die übergeordnete Liste → [[FCT/FCT OS/05 System/(C) Vault aufräumen — Schutzliste|(C) Vault aufräumen — Schutzliste]].
+> ⚠️ **Geltungsbereich:** Diese Datei deckt **nur** `FCT/Copytrading/` ab. Für den restlichen Vault gilt die übergeordnete Liste → [[FCT/FCT OS/03 Anleitungen/(C) Vault aufräumen — Schutzliste|(C) Vault aufräumen — Schutzliste]].
 
 ---
 
