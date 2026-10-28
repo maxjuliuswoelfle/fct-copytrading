@@ -37,6 +37,9 @@ id_ed25519
 # .claudian komplett ausgeschlossen (2026-10-28): nicht nur sessions/, sondern auch
 # die persoenlichen Claudian-Einstellungen des jeweiligen Rechners.
 **/.claudian/
+# Fangt auch den alten Claudian-Pfad .claude/claudian-settings.json,
+# den **/.claudian/ nicht erfasst (Muster ohne Slash greift ueberall).
+**/claudian-settings.json
 **/.claude/sessions/
 **/.claude/shell-snapshots/
 **/.claude/todos/
