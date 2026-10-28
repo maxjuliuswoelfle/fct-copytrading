@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick Emanuel Dujmic (emanuel.dujmic@gmail.com, du_id 488) am 23.10.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_emanuel_dujmic.sh

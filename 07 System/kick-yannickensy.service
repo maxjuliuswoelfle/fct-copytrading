@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick yannickensy@gmail.com (Klotz Mensch) from Telegram groups (cancellation 2026-09-07)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_yannickensy.sh

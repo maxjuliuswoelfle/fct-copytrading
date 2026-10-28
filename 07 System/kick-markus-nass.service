@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Markus Nass (markus.nass@web.de, id 474) am 02.10.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_markus_nass.sh

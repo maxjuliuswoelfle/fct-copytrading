@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Simon Erni (simonerni00@gmail.com, id 451) am 20.09.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_simon_erni.sh

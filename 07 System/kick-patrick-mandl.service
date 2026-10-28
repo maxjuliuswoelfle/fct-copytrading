@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Patrick Mandl (patrick.man@gmx.at, id 367) am 05.10.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_patrick_mandl.sh

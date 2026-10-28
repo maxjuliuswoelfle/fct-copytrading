@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick ray.bartels@icloud.com (Arne) from Telegram groups (cancellation 2026-08-06)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_arne_ray_bartels.sh

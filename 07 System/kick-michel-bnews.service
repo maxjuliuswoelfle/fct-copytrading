@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Michel L (bnews@online.de, id 459) am 24.09.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_michel_bnews.sh

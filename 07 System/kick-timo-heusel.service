@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick heusel-timo@t-online.de (Timo Heusel) from Telegram groups (cancellation 2026-09-08)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_timo_heusel.sh

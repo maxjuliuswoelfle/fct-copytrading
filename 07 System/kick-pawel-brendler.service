@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Pawel Brendler (brendler.pawel@googlemail.com, id 465) am 28.09.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_pawel_brendler.sh

@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick stadleryanik25@gmail.com (yanik) from Telegram groups (goodwill early release 2026-08-30, no permanent ban)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_yanik_stadler.sh

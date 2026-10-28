@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick rmkt1@t-online.de from Telegram groups (cancellation 2026-08-29)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_rmkt1.sh

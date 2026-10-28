@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick derya.korkmaz@outlook.de (Derya Korkmaz / DEE) from Telegram groups (cancellation 2026-08-13)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_derya_korkmaz.sh

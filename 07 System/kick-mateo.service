@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot kick Mateo (Telegram 1995859812) from Telegram groups (cancellation 2026-08-28)
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_mateo.sh

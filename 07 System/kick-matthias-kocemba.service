@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Matthias Kocemba (matthias.kocemba@gmail.com, id 468) am 02.10.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_matthias_kocemba.sh

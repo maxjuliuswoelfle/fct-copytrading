@@ -1,6 +1,0 @@
-[Unit]
-Description=One-shot Kick Anna S (anna.stadl@icloud.com, id 433) am 29.09.2026
-
-[Service]
-Type=oneshot
-ExecStart=/home/botuser/scripts/kick_anna_stadl.sh

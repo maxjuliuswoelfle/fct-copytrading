@@ -104,7 +104,7 @@ build/
 **/data_cache/
 *.csv.gz
 # CSVs ab ~1 MB bitte einzeln pruefen; Marktdaten gehoeren nicht ins Repo
-03 Projects/Paused/Trading Bot/02 Entwicklung/data_cache/
+Archiv/Trading Bot/02 Entwicklung/data_cache/
 
 # --- 8. Betriebssystem-Muell ---
 .DS_Store
