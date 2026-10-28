@@ -80,6 +80,8 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 
 ## Offene Punkte
 
+Projekte/Aufgaben dazu liegen in Notion (⚙️ Operations → „Copytrading-Kunden in die Haupt-DB“, „Copytrading-Betrieb ausbauen“). Kurzliste:
+
 - **Phase 2 — automatisches Copy Trading:** zurückgestellt, nicht geplant. Falls später: End-to-End-Test mit echtem Trade, `MIN_DEPOSIT_USDT=1000`, API-Keys verschlüsseln (Fernet), Anleitungsvideos statt Platzhalter.
 - **AI-Support-Agent Baustein 4** — Antworten automatisieren (Bauplan: [[08 AI Support/(C) AI Support Agent — Bauplan]]).
 - **Kündigungs-Erkennung:** Kein Webhook-Event heißt bei Plan 610909 NICHT „nicht gekündigt" — Ablefy-Status aktiv prüfen (Regel in der Wissensbasis). Automatischer Abgleich wäre der nächste Schritt.
