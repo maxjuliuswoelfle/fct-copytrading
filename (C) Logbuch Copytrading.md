@@ -11,7 +11,7 @@
 > **2026-10-28** — **Tägliches Backup der Copytrading-SQLite auf Server 2 installiert und verifiziert.**
 > - Script: `/root/backup-copytrading-db.sh` (Quelle: `07 System/backup-copytrading-db.sh`) — `sqlite3 .backup` (WAL-sicher), `PRAGMA integrity_check`, gzip, Aufbewahrung 30 Tage.
 > - Cron (root, Server-Zeit = UTC): `30 3 * * *` → Log `/var/log/backup-copytrading.log`. Vorher gab es keine root-Crontab, nichts überschrieben. sqlite3 war bereits installiert.
-> - Ziel: `/var/backups/copytrading/copy_trading_JJJJ-MM-TT_HHMM.db.gz`. Erster manueller Lauf 09:18 UTC: 1,2 MB, Header `SQLite format 3`, `integrity_check` = `ok`, 14 Tabellen, 466 Zeilen in `dashboard_users`.
+> - Ziel: `/var/backups/copytrading/copy_trading_JJJJ-MM-TT_HHMM.db.gz` — Ordner `chmod 700` (nur root, enthält Kundendaten; `botuser` geprüft: Permission denied). Erster manueller Lauf 09:18 UTC: 1,2 MB, Header `SQLite format 3`, `integrity_check` = `ok`, 14 Tabellen, 466 Zeilen in `dashboard_users`.
 > - **Offen:** Backups liegen nur auf demselben Server — schützt gegen kaputte DB/Fehlbedienung, nicht gegen Serverausfall. Dafür Hetzner-Backups: konnte ich nicht prüfen (kein `hcloud`, kein API-Token) → Max schaltet in der Hetzner-Konsole für beide Server ein.
 > - Bot, Dashboard, levex-proxy, SSH-Konfig NICHT angefasst.
 
