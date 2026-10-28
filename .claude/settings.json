@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh -c 'D=\"${CLAUDE_PROJECT_DIR:-.}\"; [ -f \"$D/.claude/helpers/doku-check.sh\" ] && exec sh \"$D/.claude/helpers/doku-check.sh\"; exit 0'",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
+}
