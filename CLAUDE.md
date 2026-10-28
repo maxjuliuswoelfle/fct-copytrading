@@ -63,7 +63,7 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 
 ## Aktueller Status
 
-> **Zuletzt aktualisiert:** 2026-10-28 — CLAUDE.md aufgeteilt (Logbuch + Wissensbasis), Kopf auf Betriebsstand gebracht, Aufräumen vom 27.10. committet. Davor 2026-10-23: „Viktor Lachner" manuell entfernt (keinem Account zuordenbar). Details → [[(C) Logbuch Copytrading]].
+> **Zuletzt aktualisiert:** 2026-10-28 — Tägliches SQLite-Backup auf Server 2 installiert (03:30 UTC, verifiziert). Davor am selben Tag: CLAUDE.md aufgeteilt (Logbuch + Wissensbasis), Kopf auf Betriebsstand gebracht, Aufräumen vom 27.10. committet. Davor 2026-10-23: „Viktor Lachner" manuell entfernt (keinem Account zuordenbar). Details → [[(C) Logbuch Copytrading]].
 > **Status:** In Betrieb. Signal-Gruppe (Main + Scalp) läuft, Kunden kaufen über Ablefy (Plan 610907 monatlich / 610909 Jahresabo mit monatlicher Abbuchung). Kündigungen werden im Support-Bot gemeldet, in der Wissensbasis erfasst und vom konsolidierten Ablauf-Job (`revoke-access-daily`, täglich 08:55) zum Laufzeitende ausgeführt — seit 28.09. statt 49 Einzel-Timern. Session-Gate im Dashboard sperrt Gekündigte. AI-Support-Agent: Bausteine 1–3 gebaut (Mitschreiben, Wissensbasis, read-only Tools), Antworten noch nicht automatisiert.
 > **Offen:** siehe „Offene Punkte" unten.
 
@@ -84,7 +84,8 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 - **AI-Support-Agent Baustein 4** — Antworten automatisieren (Bauplan: [[08 AI Support/(C) AI Support Agent — Bauplan]]).
 - **Kündigungs-Erkennung:** Kein Webhook-Event heißt bei Plan 610909 NICHT „nicht gekündigt" — Ablefy-Status aktiv prüfen (Regel in der Wissensbasis). Automatischer Abgleich wäre der nächste Schritt.
 - **Nicht zuordenbare Telegram-Accounts** („BND", „Viktor Lachner") — Lücke zwischen Telegram-ID und `dashboard_users`; Idee: Beitritt nur über personalisierten Einmal-Link.
-- **Backup der SQLite-DB einrichten:** `07 System/backup-copytrading-db.sh` auf Server 2 installieren (Anleitung im Script-Kopf: Cron 03:30, 30 Tage, `/var/backups/copytrading/`).
+- ~~**Backup der SQLite-DB einrichten**~~ ✅ 2026-10-28 erledigt: `/root/backup-copytrading-db.sh`, Cron 03:30 UTC, 30 Tage, `/var/backups/copytrading/`, Log `/var/log/backup-copytrading.log`.
+- **Hetzner-Backups für Server 1 + 2 einschalten** (Konsole → Server → Backups → Enable, +20 % Serverpreis) — das SQLite-Backup liegt nur auf demselben Server.
 - **Landingpages konsolidieren** — IONOS → eigener Stack (Projekt in Notion).
 - **Admin-Panel, Analytics, Dashboard MVP 2.0** — nice-to-have, nicht priorisiert.
 - **Nice-to-have aus 2026-06:** Trade-Label Swing/Day/Scalp im Signal (Feature-Wunsch Max), Vorteils-Seite vor Upgrade-Checkout, Bumper-Offer.
