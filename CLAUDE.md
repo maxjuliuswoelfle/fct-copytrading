@@ -1,7 +1,7 @@
 # FCT Copytrading
 > ↩ [[CLAUDE|Life OS]] · [[FCT/CLAUDE|FCT]]
 
-Live-Produkt mit zahlenden Kunden: Max Steinauers Levex-Trades werden als **Signale** in eine bezahlte Telegram-Gruppe gepostet (Phase 1, live seit 28.06.2026) und sollen in Phase 2 **automatisch auf Kundenkonten gespiegelt** werden (Bot-Core fertig, Kundenseite noch nicht freigeschaltet — ❓ Status von Max bestätigen lassen). Dazu ein Kunden-Dashboard (Registrierung, Setup, Support) und die Kündigungs-/Zugangs-Automatik.
+Live-Produkt mit zahlenden Kunden: Max Steinauers Levex-Trades werden als **Signale** in eine bezahlte Telegram-Gruppe gepostet (Phase 1, live seit 28.06.2026) und sollen in Phase 2 **automatisch auf Kundenkonten gespiegelt** werden (Bot-Core fertig, Kundenseite bewusst nicht freigeschaltet — **Phase 2 ist aktuell nicht geplant**, Entscheidung Max 28.10.2026). Dazu ein Kunden-Dashboard (Registrierung, Setup, Support) und die Kündigungs-/Zugangs-Automatik.
 
 **Dieser Ordner ist die Werkbank** — Code, Scripts, Anleitungen, Git-versioniert. Das System läuft auf Server 2 (`178.105.135.197`). Gesamtbild aller FCT-Systeme → `FCT OS/(C) Systemlandkarte FCT.md`.
 
@@ -80,7 +80,7 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 
 ## Offene Punkte
 
-- **Phase 2 — automatisches Copy Trading freischalten:** End-to-End-Test mit echtem Trade, `MIN_DEPOSIT_USDT=1000`, API-Keys verschlüsseln (Fernet), Anleitungsvideos statt Platzhalter.
+- **Phase 2 — automatisches Copy Trading:** zurückgestellt, nicht geplant. Falls später: End-to-End-Test mit echtem Trade, `MIN_DEPOSIT_USDT=1000`, API-Keys verschlüsseln (Fernet), Anleitungsvideos statt Platzhalter.
 - **AI-Support-Agent Baustein 4** — Antworten automatisieren (Bauplan: [[08 AI Support/(C) AI Support Agent — Bauplan]]).
 - **Kündigungs-Erkennung:** Kein Webhook-Event heißt bei Plan 610909 NICHT „nicht gekündigt" — Ablefy-Status aktiv prüfen (Regel in der Wissensbasis). Automatischer Abgleich wäre der nächste Schritt.
 - **Nicht zuordenbare Telegram-Accounts** („BND", „Viktor Lachner") — Lücke zwischen Telegram-ID und `dashboard_users`; Idee: Beitritt nur über personalisierten Einmal-Link.
