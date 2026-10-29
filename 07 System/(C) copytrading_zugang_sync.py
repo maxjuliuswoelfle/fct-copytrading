@@ -31,8 +31,9 @@ TG_CHAT = "-1003664924257"
 TG_TOPIC_SYSTEM = 11
 CLOSE_BASE = "https://api.close.com/api/v1"
 
-# Team-Testaccounts (Max, 2026-10-29) — Server-2-IDs
-INTERN_S2_IDS = {74, 160, 210}
+# Team-Accounts (Max, 2026-10-29) — Server-2-IDs:
+# 74/160/210 Testaccounts, 10 max@, 11 alex@, 13 francesco@firstclass-trading.com
+INTERN_S2_IDS = {10, 11, 13, 74, 160, 210}
 
 FELDER = {
     "status": ("Copytrading Status", "choices", ["Aktiv", "Inaktiv"]),

@@ -8,6 +8,13 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-29 (5)** — **Erster echter Zugangsstatus-Sync gelaufen, Cron 03:45 läuft ab jetzt echt.**
+> - Vorher (Max' Freigabe): `INTERN_S2_IDS` um Team-Accounts 10 (max@), 11 (alex@), 13 (francesco@) erweitert → jetzt 6 intern. Alias `jenskuhlmann85@gmail.com` → Kunde `jenskuhlmann85@t-online.de` in `kunden_emails` (quelle `copytrading-sync-abgleich`).
+> - **Lauf 13:40–13:47 UTC:** 466 Zeilen in `copytrading_zugang`, **463 zugeordnet**, 353 aktiv, 118 mit Entzug. 3 Close-Felder angelegt („Copytrading Status/Tier/Entzug"), **457 Leads gesetzt, 0 Fehler**; Gegenprobe in Close an Krenik (Inaktiv/26.10.), Brunzel (Aktiv/28.06.2027), Rößler (Aktiv/02.11.), alex@ (Intern) ✓. `system_logs` Eintrag (warning, 6 neue Abweichungen), Telegram an Topic System.
+> - **Idempotenz:** Folge-Dry-Run 0 Änderungen, 0 Close-Updates, 0 neue Abweichungen. Crontab danach auf echt umgestellt (Sicherung `/root/crontab.bak-20261029-sync-echt`).
+> - **6 Abweichungen für Max:** Christoph Klein (`christoph.kln@gmx.de`, S2 zahlt seit 11.07., fehlt auf S1), 5 S1-Käufer ohne S2-Account (avinck, eleni.katsigiani, irowe, romanmarx.trading, stephankahl). 6 zugeordnete Kunden ohne Close-Lead.
+> - Notion-Aufgabe „Copytrading-Kunden in die Haupt-DB syncen" auf **Erledigt** mit Nachtrag Sync + Phase-2-Rückbau. Offen bleibt dort Schritt 3 (zentraler Kündigungs-Abgleich).
+
 > **2026-10-29 (4)** — **Zugangsstatus-Sync Server 2 → Server 1 gebaut, Dry-Run gelaufen, echter Sync wartet auf Max' Freigabe.** Vorher: Repo mit Luis' Stand gemergt + auf den Git-Server gepusht (`1ca7825`); eingeloggter Pfad mit Testaccount 74 geprüft (`/signup/copytrading` → `/cancel-upgrade` → `/dashboard` 200; Tier zurück auf `paid_signals`, Onboarding `active`; Test-Session danach entfernt, alte Session wiederhergestellt).
 > - **Server 2:** `GET /api/internal/access-status` (`api_routes.py`), eigener Token `INTERNAL_SYNC_TOKEN` in der Bot-`.env` (nur lesend). Liefert pro Account E-Mail, aktiv, Tier, Entzug, Order-ID, Telegram-ID. Ohne/falscher Token 401. Dashboard neu gestartet 13:27, Bot nicht angefasst.
 > - **Server 1:** `/root/copytrading_zugang_sync.py` (Quelle `07 System/(C) copytrading_zugang_sync.py`), Zugangsdaten in `/etc/fct/copytrading-sync.env` (600, keine Klartext-Keys im Script). Cron **03:45 UTC, vorerst `--dry-run`** → `/var/log/copytrading-sync.log`. Crontab-Sicherung `/root/crontab.bak-20261029-sync`.
