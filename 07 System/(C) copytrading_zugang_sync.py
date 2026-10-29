@@ -15,7 +15,7 @@ Ziel:    Tabelle copytrading_zugang (pro Server-2-Account eine Zeile, kunde_id f
          Close-Lead-Felder "Copytrading Status" / "Copytrading Tier" / "Copytrading Entzug"
 Abgleich: E-Mail (kunden.email + kunden_emails, gmail = googlemail).
 Abweichungen (nur NEUE -> Telegram Topic System):
-  - Kunde auf Server 2 unbekannt auf Server 1
+  - aktiver Kunde auf Server 2 unbekannt auf Server 1
   - Copytrading-Kaeufer auf Server 1 ohne Account auf Server 2
 Team-Testaccounts (INTERN_S2_IDS) bekommen Tier "Intern" und gelten nie als Abweichung.
 
@@ -199,7 +199,8 @@ def main():
             "telegram_id": int(u["telegram_id"]) if str(u.get("telegram_id") or "").lstrip("-").isdigit() else None,
             "close_hash": hashlib.sha1(f"{status}|{tier}|{u['entzug']}".encode()).hexdigest()[:16],
         })
-        if not k and not intern:
+        # Nur aktive Zugaenge zaehlen — wer auf Server 2 regulaer beendet ist, ist kein Fall mehr
+        if not k and not intern and u["aktiv"]:
             abw.append((ART_S2, mail))
 
     intern_mails = {norm(u["email"]) for u in s2 if u["id"] in INTERN_S2_IDS}

@@ -8,6 +8,17 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-29 (6)** — **Sync-Abweichungen abgearbeitet: Klein beendet, Vinck-Aufgabe, 4 Dubletten gefunden.**
+> - **Christoph Klein** (`christoph.kln@gmx.de`, id 397, `LIFETIME-FREE`): kostenloser Freundschafts-Zugang (Max), kein Kauf → nicht nachziehen. Regulär beendet: Zeile **id 27** in `scheduled_access_revocations` (revoke_at 29.10., permanent, quelle `max`), `revoke-access-daily` per `systemctl start` gelaufen → `needs_manual`, weil **keine Telegram-ID** bekannt (auch nicht im Bot-Log). Die zwei Job-Schritte von Hand nachgezogen: Invite `+gnRhnNEq-icxMTJi` widerrufen (`is_revoked:true`), DB `cancelled` / `is_active=0` / `deactivated_at`. **⚠️ Aus den Telegram-Gruppen entfernen kann ihn nur Max manuell** (wie bei Lachner). DB-Sicherung vorher: `/root/backup-phase2-20261029/copy_trading_vor_klein.db`.
+> - **Sync-Regel:** Server-2-Accounts ohne Gegenstück auf Server 1 zählen nur noch als Abweichung, wenn sie **aktiv** sind. Dry-Run danach: 5 Abweichungen, 0 neue.
+> - **Close-Aufgaben** „Copytrading-Onboarding nie abgeschlossen — anrufen" für 5 Käufer angelegt (zugewiesen an **Alexander Orthober** — die Standard-ID aus den Flows, nicht Max). **Danach erkannt: 4 davon sind Dubletten mit anderer Mail und haben einen aktiven Account auf Server 2** → diese 4 Aufgaben geschlossen + als „[IRRTUM, nicht anrufen]" markiert (nicht gelöscht):
+>   - Stephan Kahl: Kauf `stephankahl@outlook.com`, Account `kahlstephan5@outlook.de`
+>   - Ronald Julen: Kauf `info@irowe.ch`, Account `rj68@gmx.ch`
+>   - Eleni Katsigianni: Kauf `eleni.katsigiani@deutschebahn.com`, Account `katsigianni@elmar-taxi.de`
+>   - Roman Marx: Kauf `romanmarx.trading@gmail.com` (Kauf storniert), Account `roman.marx@gmx.de`
+>   - **Offen bleibt nur Andre Vinck** (`avinck@outlook.com`): Zahlungen kamen auf Server 2 an (Webhooks ab 02.07.), ein Dashboard-Account wurde nie angelegt → Aufgabe offen.
+> - **6 zugeordnete Kunden ohne Close-Lead:** die 4 Dubletten oben (eigener `kunden`-Datensatz mit der Account-Mail, ohne Käufe) + **Arjen Huisman** (`anhhuisman@gmail.com`) und **Mario Ernst** (`mario.ernst@ppsteo.de`), beide `chargebacked`, auf Server 1 ohne Kauf. **Keine Close-Leads angelegt:** Für die 4 wären es Dubletten in Close (sie haben einen Lead unter der Kauf-Mail), die 2 Chargebacks sind keine Käufer. Richtig wäre, die 4 `kunden`-Dubletten zusammenzuführen (`/root/kunden_zusammenfuehren.py`, wie Fahrenholz/Wilk) → wartet auf Max.
+
 > **2026-10-29 (5)** — **Erster echter Zugangsstatus-Sync gelaufen, Cron 03:45 läuft ab jetzt echt.**
 > - Vorher (Max' Freigabe): `INTERN_S2_IDS` um Team-Accounts 10 (max@), 11 (alex@), 13 (francesco@) erweitert → jetzt 6 intern. Alias `jenskuhlmann85@gmail.com` → Kunde `jenskuhlmann85@t-online.de` in `kunden_emails` (quelle `copytrading-sync-abgleich`).
 > - **Lauf 13:40–13:47 UTC:** 466 Zeilen in `copytrading_zugang`, **463 zugeordnet**, 353 aktiv, 118 mit Entzug. 3 Close-Felder angelegt („Copytrading Status/Tier/Entzug"), **457 Leads gesetzt, 0 Fehler**; Gegenprobe in Close an Krenik (Inaktiv/26.10.), Brunzel (Aktiv/28.06.2027), Rößler (Aktiv/02.11.), alex@ (Intern) ✓. `system_logs` Eintrag (warning, 6 neue Abweichungen), Telegram an Topic System.
