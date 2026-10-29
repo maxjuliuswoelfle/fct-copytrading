@@ -8,6 +8,13 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-29** — **Kündigung „Nas Im" / Nasim Miah (`nasim_miah@gmx.de`, id 444) erfasst — Zugangsentzug am 12.11.2026, Zeile id 26 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte), Kauf 11.08., drei Zahlungen, bezahlt bis 11.11. → Max' 12.11. = ein Tag Kulanz.
+> - Telegram-ID war via Auto-Capture schon in der DB, verifiziert `member` in beiden Kanälen. `customers.name` ist leer — nur über Mail + ID auffindbar.
+> - **⚠️ In Ablefy ist NICHT gekündigt** (kein Event; bei Monatsabo ist das Event verlässlich). Zieht die Karte am 11./12.11., holt die Auto-Reaktivierung ihn zurück → **Max muss vor dem 11.11. in Ablefy kündigen.**
+> - Dry-Run `--date 2026-11-12`: Job erkennt 4 Fälle (Jakobs + Boers 29.10., Rößler 02.11., Miah 12.11.), alle `member`, alle würden sauber laufen. Jakobs + Boers laufen heute 08:55 UTC (Timer aktiv, gestern „Nichts fällig" korrekt).
+> - Offen: Kündigungsbestätigung an ihn. Bot NICHT angefasst.
+
 > **2026-10-28 (3)** — **Chadlia Mami: Max meldet „erledigt" — Ablefy-Kündigung ist drin, aber zum 28.11., nicht zum 28.10.**
 > - Zweite Ansage „die einmal kicken sofort" bezog sich auf dieselbe ID `5548930124` — sie war seit 07:06 UTC bereits raus; Status erneut geprüft: `left`/`left` in beiden Kanälen, nichts zu tun.
 > - **Ablefy:** 11:47 UTC `order.subscription.canceled` + GRANT `subscription_canceled`, **`access_valid_until: 2026-11-28`**. Davor 08:45 UTC `paymethod_changed`. **Heißt: Die Rate für den 29.10. wird noch gezogen** (anders als bei Hans-Peter Walter, wo Ablefy vorzeitig zum Monatsende beendet hat).
