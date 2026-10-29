@@ -8,6 +8,13 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-29 (2)** — **„NOMAD 🌐" / Nikolai Günther (`nikolai_guenther@yahoo.com`, id 432) auf Max' Ansage permanent gebannt + auf die Blocklist gesetzt.**
+> - `banChatMember` (mit `revoke_messages`) in Main + Scalp → Status `kicked`/`until_date:0` in beiden. Vorher „member not found" in beiden — er war nicht mehr drin (seit dem Zahlungsausfall Ende August, vgl. Nichtzahler-Check). Ban wirkt als Rejoin-Sperre.
+> - Blocklist id 2 (`nikolai_guenther@yahoo.com` + ID 782737748) → kein Re-Signup, kein Rückholen durch die Auto-Reaktivierung. Invite widerrufen, DB `cancelled` / `is_active=0`.
+> - Keine API-Keys, 0 Mappings. Jahresabo 616171, 77,05 € Karte, eine Zahlung (29.07.), seit 30.08. `payment_paused`.
+> - **Kontext:** Er hat heute im Support mit spanischem/katalanischem Verbraucherrecht argumentiert; Support hat sofortige Beendigung + Forderungsverzicht verbindlich bestätigt (Kulanz, ohne Anerkennung). **Offen für Max: Order 16731481 in Ablefy beenden** (steht noch auf pausiert) + Bestätigung per E-Mail/Ablefy, wie von ihm erbeten.
+> - Bot NICHT angefasst.
+
 > **2026-10-29** — **Kündigung „Nas Im" / Nasim Miah (`nasim_miah@gmx.de`, id 444) erfasst — Zugangsentzug am 12.11.2026, Zeile id 26 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte), Kauf 11.08., drei Zahlungen, bezahlt bis 11.11. → Max' 12.11. = ein Tag Kulanz.
 > - Telegram-ID war via Auto-Capture schon in der DB, verifiziert `member` in beiden Kanälen. `customers.name` ist leer — nur über Mail + ID auffindbar.
