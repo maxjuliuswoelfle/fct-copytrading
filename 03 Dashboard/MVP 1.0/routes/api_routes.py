@@ -627,6 +627,8 @@ async def get_equity_curve(request: Request, period: str = "1M"):
 @router.post("/setup/validate-key")
 async def validate_key(request: Request):
     """API Key gegen Levex validieren (Setup Schritt 3)."""
+    # Copy-Trading-Setup (Phase 2) seit 2026-10-29 geschlossen
+    raise HTTPException(status_code=410, detail="Copy Trading Setup ist geschlossen")
     user = get_current_user(request)
     if not user:
         raise HTTPException(status_code=401, detail="Nicht eingeloggt")

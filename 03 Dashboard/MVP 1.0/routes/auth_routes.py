@@ -17,6 +17,20 @@ import logging
 auth_logger = logging.getLogger("auth")
 
 router = APIRouter()
+
+# Copy-Trading-Einstieg (Phase 2) — seit 2026-10-29 aus (Entscheidung Max).
+# Aus = /signup/copytrading und /setup/copytrading leiten um, keine Key-Eingabe moeglich.
+COPYTRADING_SETUP_ENABLED = False
+
+
+def _copytrading_closed(request: Request) -> RedirectResponse:
+    """Copy-Trading-Einstieg geschlossen: Eingeloggte zurueck auf ihren alten Tier
+    (/cancel-upgrade setzt Tier + Onboarding zurueck, keine Redirect-Schleife), sonst Login."""
+    if get_current_user(request):
+        return RedirectResponse(url="/cancel-upgrade", status_code=303)
+    return RedirectResponse(url="/login", status_code=303)
+
+
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "..", "templates"))
 
 
@@ -200,6 +214,8 @@ async def activate_invite(
 
 @router.get("/signup/copytrading")
 async def register_page(request: Request):
+    if not COPYTRADING_SETUP_ENABLED:
+        return _copytrading_closed(request)
     user = get_current_user(request)
     if user:
         db = get_db()
@@ -241,6 +257,8 @@ async def register(
     accept_marketing: str = Form(None),
     csrf_token: str = Form(""),
 ):
+    if not COPYTRADING_SETUP_ENABLED:
+        return _copytrading_closed(request)
     db = get_db()
     ctx = {"first_name": first_name, "last_name": last_name, "email": email}
 
@@ -632,6 +650,8 @@ async def reset_password(
 
 @router.get("/setup/copytrading")
 async def setup_page(request: Request, step: int | None = None):
+    if not COPYTRADING_SETUP_ENABLED:
+        return _copytrading_closed(request)
     user = get_current_user(request)
     if not user:
         return RedirectResponse(url="/signup/copytrading")
@@ -676,6 +696,8 @@ async def setup_page(request: Request, step: int | None = None):
 
 @router.post("/setup/copytrading")
 async def setup_action(request: Request):
+    if not COPYTRADING_SETUP_ENABLED:
+        return _copytrading_closed(request)
     user = get_current_user(request)
     if not user:
         return RedirectResponse(url="/login")

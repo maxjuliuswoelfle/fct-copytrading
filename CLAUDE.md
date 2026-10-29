@@ -63,15 +63,15 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 
 ## Aktueller Status
 
-> **Zuletzt aktualisiert:** 2026-10-28 — `.claudian/` + `claudian-settings.json` komplett aus beiden Repos ausgeschlossen (Copytrading + FCT OS), beide Dateien aus dem Index entfernt; Luis' Auto-Commit hatte seine mitcommittet. Davor am selben Tag: Tägliches SQLite-Backup auf Server 2 installiert (03:30 UTC, verifiziert), CLAUDE.md aufgeteilt (Logbuch + Wissensbasis), Kopf auf Betriebsstand gebracht, Aufräumen vom 27.10. committet. Davor 2026-10-23: „Viktor Lachner" manuell entfernt (keinem Account zuordenbar). Details → [[(C) Logbuch Copytrading]].
+> **Zuletzt aktualisiert:** 2026-10-29 — Kunden-Ausführung (Phase 2) abgeschaltet: `EXECUTION_ENABLED=false` deployt, Bot neu gestartet, Signale/Polling/Positions-Tracking laufen, 0 Kunden-Orders (vorher ~356 fehlschlagende pro Trade). Affiliate-Keys aus Bot-`.env`, Francescos Kunden-Key aus der DB entfernt. Copy-Trading-Einstieg im Dashboard geschlossen (`/signup|setup/copytrading` → umgeleitet, `validate-key` → 410), 12 Phase-2-Scripts nach `99 Archiv/Phase 2 Copytrading/`. Sicherung `/root/backup-phase2-20261029/`. Davor 2026-10-28 — `.claudian/` + `claudian-settings.json` komplett aus beiden Repos ausgeschlossen (Copytrading + FCT OS), beide Dateien aus dem Index entfernt; Luis' Auto-Commit hatte seine mitcommittet. Davor am selben Tag: Tägliches SQLite-Backup auf Server 2 installiert (03:30 UTC, verifiziert), CLAUDE.md aufgeteilt (Logbuch + Wissensbasis), Kopf auf Betriebsstand gebracht, Aufräumen vom 27.10. committet. Davor 2026-10-23: „Viktor Lachner" manuell entfernt (keinem Account zuordenbar). Details → [[(C) Logbuch Copytrading]].
 > **Status:** In Betrieb. Signal-Gruppe (Main + Scalp) läuft, Kunden kaufen über Ablefy (Plan 610907 monatlich / 610909 Jahresabo mit monatlicher Abbuchung). Kündigungen werden im Support-Bot gemeldet, in der Wissensbasis erfasst und vom konsolidierten Ablauf-Job (`revoke-access-daily`, täglich 08:55) zum Laufzeitende ausgeführt — seit 28.09. statt 49 Einzel-Timern. Session-Gate im Dashboard sperrt Gekündigte. AI-Support-Agent: Bausteine 1–3 gebaut (Mitschreiben, Wissensbasis, read-only Tools), Antworten noch nicht automatisiert.
 > **Offen:** siehe „Offene Punkte" unten.
 
 ## Was läuft
 
 - **Signal-Bot** (`01 Bot-Core/signal_bot.py`) — 10 Nachrichtentypen, Trade-Nummerierung, Debounce, deutsche Formatierung; postet in Paid-Gruppen; profitable Closes + Wochen-/Monats-Summaries in den Marketing-Channel (`-1001252595461`).
-- **Bot-Core** — WebSocket-Listener, Parser (14 Actions), Execution Engine mit proportionaler Skalierung, Position-Mapping, Reconciliation, Pause/Resume. Technisch fertig; Kunden-Copytrading noch nicht aktiv (`MIN_DEPOSIT_USDT` vor Phase 2 auf 1000 zurück).
-- **Dashboard** (`03 Dashboard/MVP 1.0/`, FastAPI, Port 8443, `dashboard.firstclass-trading.com`) — Payment-First-Onboarding (Ablefy-Checkout → `/welcome` → Telegram-Link), 2 Tiers (Paid Signals = Dashboard Light, Copy Trading = voll), Session-Gate für Gekündigte, Support-Seite, Legal Pages, 5 transaktionale Mails via Google-Workspace-SMTP.
+- **Bot-Core** — WebSocket-Listener, Parser (14 Actions), Execution Engine mit proportionaler Skalierung, Position-Mapping, Reconciliation, Pause/Resume. Technisch fertig, aber **seit 29.10. abgeschaltet** (`EXECUTION_ENABLED=false` in der Bot-`.env`, Code bleibt drin). Der Prozess läuft nur noch als Signal-Bot.
+- **Dashboard** (`03 Dashboard/MVP 1.0/`, FastAPI, Port 8443, `dashboard.firstclass-trading.com`) — Payment-First-Onboarding (Ablefy-Checkout → `/welcome` → Telegram-Link), 2 Tiers (Paid Signals = Dashboard Light, Copy Trading = voll; Copy-Trading-Einstieg seit 29.10. geschlossen, `COPYTRADING_SETUP_ENABLED=False` in `auth_routes.py`), Session-Gate für Gekündigte, Support-Seite, Legal Pages, 5 transaktionale Mails via Google-Workspace-SMTP.
 - **Ablefy-Webhook** (`/webhooks/ablefy`) — Payment/Refund/Order-Events, nur Produkte 517561 (Signale) + 517562 (Copy Trading), SEPA-Erstkäufe sofort freischalten (Rücklastschrift sperrt).
 - **Zugangs-Automatik** (`07 System/`) — `revoke-access-daily` Timer: Kündigungen zum Laufzeitende, Kick aus Main + Scalp, Dashboard-Sperre. Kick-Regel: Kulanz = ban + sofort unban (Endstatus `left`), Moderationsfall = permanent.
 - **Support-Bot** (`@FCT_Copy_Trading_Support_Bot`, `07 System/support_bot.py`) — Kundenanfragen, Mitschreiben für den AI-Support.
@@ -82,7 +82,7 @@ Levex WebSocket ──→ listen.py ──→ parser.py ──→ execution.py �
 
 Projekte/Aufgaben dazu liegen in Notion (⚙️ Operations → „Copytrading-Kunden in die Haupt-DB“, „Copytrading-Betrieb ausbauen“). Kurzliste:
 
-- **Phase 2 — automatisches Copy Trading:** zurückgestellt, nicht geplant. Falls später: End-to-End-Test mit echtem Trade, `MIN_DEPOSIT_USDT=1000`, API-Keys verschlüsseln (Fernet), Anleitungsvideos statt Platzhalter.
+- **Phase 2 — automatisches Copy Trading:** wird nicht gelauncht (Max, 29.10.), zurückgebaut am 29.10. (Schalter aus, Einstieg zu, Keys raus). Offen nur noch: Francescos Levex-Key (UID 1150608, endet …0c55) bei Levex widerrufen (Max), Ablefy-Produkt 517562 deaktivieren (nie verkauft). Falls doch später: beide Schalter an, dann End-to-End-Test mit echtem Trade, `MIN_DEPOSIT_USDT=1000`, API-Keys verschlüsseln (Fernet), Anleitungsvideos statt Platzhalter.
 - **AI-Support-Agent Baustein 4** — Antworten automatisieren (Bauplan: [[08 AI Support/(C) AI Support Agent — Bauplan]]).
 - **Kündigungs-Erkennung:** Kein Webhook-Event heißt bei Plan 610909 NICHT „nicht gekündigt" — Ablefy-Status aktiv prüfen (Regel in der Wissensbasis). Automatischer Abgleich wäre der nächste Schritt.
 - **Nicht zuordenbare Telegram-Accounts** („BND", „Viktor Lachner") — Lücke zwischen Telegram-ID und `dashboard_users`; Idee: Beitritt nur über personalisierten Einmal-Link.
@@ -218,21 +218,21 @@ cd "03 Dashboard/MVP 1.0" && ./deploy-dashboard.sh 178.105.135.197
 - [[07 System/(C) test_session_gate|(C) test_session_gate.py — Trockentest Session-Gate (11/11 PASS)]]
 - [[07 System/(C) analyse_gekuendigt_abgelaufen|(C) analyse_gekuendigt_abgelaufen.py — read-only Analyse gekündigt + abgelaufen]]
 - [[07 System/(C) kick_gekuendigt_abgelaufen|(C) kick_gekuendigt_abgelaufen.py — rückwirkender Entzug (Dry-Run-Default)]]
-- [[07 System/(C) check_api_key|(C) check_api_key.py — Key-Prüfung (read-only)]]
-- [[07 System/(C) check_pos_mode|(C) check_pos_mode.py — Position-Modus prüfen (405-Bug)]]
-- [[07 System/(C) probe_balance_endpoint|(C) probe_balance_endpoint.py — Endpoint-Sondierung]]
-- [[07 System/(C) show_account_state|(C) show_account_state.py — Balance + offene Positionen]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_api_key|(C) check_api_key.py — Key-Prüfung (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_pos_mode|(C) check_pos_mode.py — Position-Modus prüfen (405-Bug)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) probe_balance_endpoint|(C) probe_balance_endpoint.py — Endpoint-Sondierung]]
+- [[99 Archiv/Phase 2 Copytrading/(C) show_account_state|(C) show_account_state.py — Balance + offene Positionen]]
 - [[07 System/(C) show_master_positions|(C) show_master_positions.py — Master-Positionen inkl. positionID]]
 - [[07 System/(C) audit_gekuendigte_mitglieder|(C) audit_gekuendigte_mitglieder.sh — Read-only Audit Gekündigte vs. Gruppen]]
 - [[07 System/(C) send_setup_mail_silvio|(C) send_setup_mail_silvio.py — Setup-Mail-Versand (Vorlage: .env relativ laden)]]
-- [[07 System/(C) check_affiliate_uids|(C) check_affiliate_uids.py — UID gegen Affiliate-Liste prüfen (read-only)]]
-- [[07 System/(C) check_possides_francesco|(C) check_possides_francesco.py — posSide + Account-Modus auslesen (read-only)]]
-- [[07 System/(C) check_order_raw|(C) check_order_raw.py — Order-Historie mit allen Feldern (read-only)]]
-- [[07 System/(C) compare_affiliate_records|(C) compare_affiliate_records.py — Affiliate-Records vergleichen (read-only)]]
-- [[07 System/(C) test_order_endpoints|(C) test_order_endpoints.py — Copy- vs. normaler Order-Endpoint (Limit, nicht füllbar)]]
-- [[07 System/(C) probe_key_permissions|(C) probe_key_permissions.py — Key-Berechtigungen sondieren (read-only)]]
-- [[07 System/(C) test_posside_varianten|(C) test_posside_varianten.py — 5 Varianten am Copy-Endpoint (alle 600034)]]
-- [[07 System/(C) check_balance_drop|(C) check_balance_drop.py — Balance-Einbruch aufklären (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_affiliate_uids|(C) check_affiliate_uids.py — UID gegen Affiliate-Liste prüfen (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_possides_francesco|(C) check_possides_francesco.py — posSide + Account-Modus auslesen (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_order_raw|(C) check_order_raw.py — Order-Historie mit allen Feldern (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) compare_affiliate_records|(C) compare_affiliate_records.py — Affiliate-Records vergleichen (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) test_order_endpoints|(C) test_order_endpoints.py — Copy- vs. normaler Order-Endpoint (Limit, nicht füllbar)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) probe_key_permissions|(C) probe_key_permissions.py — Key-Berechtigungen sondieren (read-only)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) test_posside_varianten|(C) test_posside_varianten.py — 5 Varianten am Copy-Endpoint (alle 600034)]]
+- [[99 Archiv/Phase 2 Copytrading/(C) check_balance_drop|(C) check_balance_drop.py — Balance-Einbruch aufklären (read-only)]]
 - [[07 System/(C) patch_reactivation|(C) patch_reactivation.py — Auto-Reaktivierung zahlender Rückkehrer (Webhook, 2026-09-11)]]
 - [[07 System/(C) test_reactivation|(C) test_reactivation.py — Trockentest auf DB-Kopie (26/26 PASS)]]
 - [[07 System/(C) patch_kick_guards|(C) patch_kick_guards.py — Zahlungs-Check in 7 Kick-Timer nachgerüstet]]

@@ -43,6 +43,10 @@ from bot_types import (
 
 DRY_RUN = os.getenv("DRY_RUN", "false").lower() == "true"
 
+# Kunden-Ausfuehrung (Phase 2). Aus = keine Kunden laden, keine Kunden-Orders,
+# keine Kunden-WebSockets. Signale, Telegram-Polling, Master-Historie laufen weiter.
+EXECUTION_ENABLED = os.getenv("EXECUTION_ENABLED", "false").lower() == "true"
+
 # Reconciliation-Flag: wird nach erstem Position-Snapshot ausgefuehrt
 _reconciliation_pending = False
 
@@ -75,7 +79,9 @@ signal_bot = SignalBot(
 # Kunden-WebSocket-Verbindungen fuer Balance-Tracking
 customer_ws_connections: list[CustomerWebSocket] = []
 
-if not DRY_RUN:
+if not DRY_RUN and not EXECUTION_ENABLED:
+    logger.info("[EXEC] Kunden-Ausfuehrung AUS (EXECUTION_ENABLED=false) — keine Kunden geladen")
+elif not DRY_RUN:
     # Kunden aus Datenbank laden
     db_customers = db.get_active_customers()
     if db_customers:
@@ -222,6 +228,9 @@ async def process_events_live(events: list[ParsedEvent]) -> None:
 
         # Telegram: Master-Trade Alerts (Team-intern)
         await _send_master_alert(event)
+
+        if not EXECUTION_ENABLED:
+            continue
 
         try:
             await engine.execute(event)
@@ -660,7 +669,7 @@ async def main() -> None:
     ws.on_reconnect(on_ws_reconnect)
 
     # Reconciliation nach Snapshot ausfuehren (wird durch Flag gesteuert)
-    if not DRY_RUN and active_mappings:
+    if not DRY_RUN and EXECUTION_ENABLED and active_mappings:
         global _reconciliation_pending
         _reconciliation_pending = True
 
@@ -711,7 +720,7 @@ async def main() -> None:
         signal_bot.start()
 
     # Auto-Reload: Neue Kunden alle 60 Sekunden pruefen
-    if not DRY_RUN:
+    if not DRY_RUN and EXECUTION_ENABLED:
         asyncio.create_task(_auto_reload_customers())
 
     await ws.connect()
