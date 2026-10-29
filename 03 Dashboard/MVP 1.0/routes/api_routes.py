@@ -680,3 +680,56 @@ async def internal_phone_lookup(request: Request, email: str = ""):
         "product_tier": user.get("product_tier"),
         "found": True,
     }
+
+
+# --------------------------------------------------------------------------
+# INTERNAL — Zugangsstatus aller Kunden fuer den naechtlichen Sync nach Server 1
+# Auth: Header  X-Internal-Token: <INTERNAL_SYNC_TOKEN>  (eigener Token, nur lesend)
+# --------------------------------------------------------------------------
+
+@router.get("/internal/access-status")
+async def internal_access_status(request: Request):
+    """Server 2 ist einzige Wahrheit fuer: aktiv ja/nein, Tier, Entzugsdatum.
+
+    aktiv   = payment_status 'paid' UND nicht per Kick/Chargeback deaktiviert
+              (is_active=0 allein ist die Selbst-Pause, zaehlt nicht).
+    entzug  = naechster offener Termin in scheduled_access_revocations,
+              sonst (wenn inaktiv) das Deaktivierungsdatum.
+    """
+    expected = os.environ.get("INTERNAL_SYNC_TOKEN", "")
+    provided = request.headers.get("X-Internal-Token", "")
+
+    import hmac
+    if not expected or not hmac.compare_digest(provided, expected):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    db = get_db()
+    rows = db._conn.execute("""
+        SELECT du.id, lower(trim(du.email)) AS email, du.product_tier, du.payment_status,
+               du.ablefy_order_id, du.telegram_chat_id, c.is_active, c.deactivated_at,
+               (SELECT min(r.revoke_at) FROM scheduled_access_revocations r
+                 WHERE r.status = 'pending'
+                   AND (r.dashboard_user_id = du.id OR lower(r.email) = lower(du.email))) AS revoke_pending
+        FROM dashboard_users du
+        JOIN customers c ON c.id = du.customer_id
+        ORDER BY du.id
+    """).fetchall()
+
+    users = []
+    for r in rows:
+        r = dict(r)
+        deaktiviert = r["is_active"] == 0 and r["deactivated_at"] is not None
+        aktiv = r["payment_status"] == "paid" and not deaktiviert
+        entzug = r["revoke_pending"] or (None if aktiv else r["deactivated_at"])
+        users.append({
+            "id": r["id"],
+            "email": r["email"],
+            "aktiv": aktiv,
+            "tier": r["product_tier"],
+            "payment_status": r["payment_status"],
+            "entzug": entzug[:10] if entzug else None,
+            "ablefy_order_id": r["ablefy_order_id"] or None,
+            "telegram_id": r["telegram_chat_id"] or None,
+        })
+
+    return {"generated_at": datetime.utcnow().isoformat() + "Z", "count": len(users), "users": users}
