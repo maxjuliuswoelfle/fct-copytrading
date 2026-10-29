@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-29 (7)** — **4 Kunden-Dubletten in der Haupt-DB zusammengeführt (Max' OK): Kahl, Julen, Katsigianni, Marx.**
+> - `/root/kunden_zusammenfuehren.py` (Hermes-venv), jeweils **Kauf-Datensatz behalten, Account-Mail als Zweitadresse**. Dry-Run vorher sauber, gleiche Nachnamen, aufgelöste Datensätze ohne Käufe. Close unverändert (jeweils nur ein Lead). Bei Marx zusätzlich `optins` + `discord_members` umgehängt.
+> - **Script angepasst:** `copytrading_zugang` in `FREMDSCHLUESSEL` ergänzt — sonst wäre das Löschen des alten Datensatzes am Fremdschlüssel gescheitert. Sicherung `/root/kunden_zusammenfuehren.py.bak-20261029-ctz`. **Merker: Jede neue Tabelle mit FK auf `kunden` muss dort eingetragen werden.**
+> - Tabellensicherung vorher: `/var/backups/postgresql/vor_merge_ct_dubletten_20261029.sql.gz`.
+> - **Sync-Dry-Run danach:** 4 Close-Updates (die 4 an ihren bestehenden Leads), 1 DB-Änderung (Klein → inaktiv), **einzige Abweichung Andre Vinck**, ohne Close-Lead nur noch Huisman + Ernst (Chargebacks, bewusst kein Lead). Wird heute Nacht 03:45 geschrieben.
+
 > **2026-10-29 (6)** — **Sync-Abweichungen abgearbeitet: Klein beendet, Vinck-Aufgabe, 4 Dubletten gefunden.**
 > - **Christoph Klein** (`christoph.kln@gmx.de`, id 397, `LIFETIME-FREE`): kostenloser Freundschafts-Zugang (Max), kein Kauf → nicht nachziehen. Regulär beendet: Zeile **id 27** in `scheduled_access_revocations` (revoke_at 29.10., permanent, quelle `max`), `revoke-access-daily` per `systemctl start` gelaufen → `needs_manual`, weil **keine Telegram-ID** bekannt (auch nicht im Bot-Log). Die zwei Job-Schritte von Hand nachgezogen: Invite `+gnRhnNEq-icxMTJi` widerrufen (`is_revoked:true`), DB `cancelled` / `is_active=0` / `deactivated_at`. **⚠️ Aus den Telegram-Gruppen entfernen kann ihn nur Max manuell** (wie bei Lachner). DB-Sicherung vorher: `/root/backup-phase2-20261029/copy_trading_vor_klein.db`.
 > - **Sync-Regel:** Server-2-Accounts ohne Gegenstück auf Server 1 zählen nur noch als Abweichung, wenn sie **aktiv** sind. Dry-Run danach: 5 Abweichungen, 0 neue.
