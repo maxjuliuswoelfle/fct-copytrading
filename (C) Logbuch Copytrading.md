@@ -8,6 +8,13 @@
 ---
 
 ## Session-Protokoll
+> **2026-10-30** — **Leon Scheuch (`leon.scheuch15@gmail.com`, id 215, Telegram „Leon") auf Max' Ansage sofort entfernt — Härtefall, ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer; über die im Support genannte Mail zugeordnet — per ID allein war er nicht in der DB). Keine API-Keys, 0 Mappings.
+> - Launch-Jahresabo 74,94 € (Karte). **Support hatte am 22.10. die vorzeitige Kündigung zugesagt, in Ablefy wurde aber erst am 30.10. 07:55 gekündigt — eine Stunde NACH der Abbuchung vom 30.10.** Ablefy-Ende jetzt 29.11., keine weitere Rate, kein Rückhol-Risiko.
+> - **Offen für Max: Rückerstattung der Rate vom 30.10. (74,94 €) in Ablefy auslösen** — der Support hat sie dem Kunden schriftlich zugesagt.
+> - Lehre: Kulanz-Kündigung und Ablefy-Kündigung am selben Tag erledigen (zweiter Fall nach Chadlia Mami, bei dem die Verzögerung eine Abbuchung gekostet hat).
+> - Bot NICHT angefasst.
+
 > **2026-10-29 (7)** — **4 Kunden-Dubletten in der Haupt-DB zusammengeführt (Max' OK): Kahl, Julen, Katsigianni, Marx.**
 > - `/root/kunden_zusammenfuehren.py` (Hermes-venv), jeweils **Kauf-Datensatz behalten, Account-Mail als Zweitadresse**. Dry-Run vorher sauber, gleiche Nachnamen, aufgelöste Datensätze ohne Käufe. Close unverändert (jeweils nur ein Lead). Bei Marx zusätzlich `optins` + `discord_members` umgehängt.
 > - **Script angepasst:** `copytrading_zugang` in `FREMDSCHLUESSEL` ergänzt — sonst wäre das Löschen des alten Datensatzes am Fremdschlüssel gescheitert. Sicherung `/root/kunden_zusammenfuehren.py.bak-20261029-ctz`. **Merker: Jede neue Tabelle mit FK auf `kunden` muss dort eingetragen werden.**
