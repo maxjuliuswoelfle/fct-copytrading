@@ -8,6 +8,11 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-02 (2)** — **Marieke Böhm / „Briesemut" (`marieke.boehm@googlemail.com`, id 391) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer). Keine API-Keys, 0 Mappings.
+> - Jahresabo 616171 (77,05 €, Karte, seit 07.07.), bezahlt bis 07.11. → 5 Tage verschenkt, unkritisch. **Ablefy war heute 09:15 UTC schon durch, vorzeitig zum 07.11.** → nichts offen, kein Rückhol-Risiko.
+> - Kündigungsgrund „kein Mehrwert" (fünfte Nennung dieser Richtung). Bot NICHT angefasst.
+
 > **2026-11-02** — **Signal-Bot: Abend-Übersicht (21:00) nur noch, wenn etwas offen ist.**
 > - `_send_overview_message`: Ohne offene Trades UND ohne wartende Limit-Orders geht keine Nachricht mehr in die Gruppe (vorher „Aktuell keine aktiven Trades oder Limit Orders"), nur noch der Log-Eintrag „Keine aktiven Positionen". Gilt getrennt für Main und Scalp. Mit mindestens einer Limit-Order wird weiter gesendet, Rest unverändert.
 > - Lokal getestet (leere Listen → kein Senden; 1 Limit → Senden). Commit `ef94b0f`, gepusht (Git-Server + GitHub).
