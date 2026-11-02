@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-02** — **Signal-Bot: Abend-Übersicht (21:00) nur noch, wenn etwas offen ist.**
+> - `_send_overview_message`: Ohne offene Trades UND ohne wartende Limit-Orders geht keine Nachricht mehr in die Gruppe (vorher „Aktuell keine aktiven Trades oder Limit Orders"), nur noch der Log-Eintrag „Keine aktiven Positionen". Gilt getrennt für Main und Scalp. Mit mindestens einer Limit-Order wird weiter gesendet, Rest unverändert.
+> - Lokal getestet (leere Listen → kein Senden; 1 Limit → Senden). Commit `ef94b0f`, gepusht (Git-Server + GitHub).
+> - Auf Server 2 nur `signal_bot.py` getauscht (vorher identisch mit Repo; Sicherung `/root/signal_bot.py.bak-20261102`), Bot neu gestartet: `active (running)`, „Taegliche-Uebersicht-Scheduler gestartet", `EXECUTION_ENABLED=false` unverändert („Kunden-Ausfuehrung AUS").
+> - Beobachtung, nicht angefasst: `API Fehler [3001] invalid argument` nach jedem Snapshot/Reconnect (5× in 24 h, auch vor dem Deploy); Unit `copy-trading-bot` steht auf `disabled` und kein Watchdog-Cron/-Timer gefunden → startet nach einem Server-Reboot vermutlich NICHT von selbst.
+
 > **2026-10-31** — **Kündigung „ANBO16" / Andreas Boon (`andreasboon@proton.me`, id 179) erfasst — Zugangsentzug am 28.06.2027, Zeile id 28 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, SEPA 74,94 €/Monat, Kauf 28.06.2026 → Laufzeitende 28.06.2027 = Max' Datum. Support hat ihm das Enddatum am 31.10. schriftlich bestätigt.
 > - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und nachgetragen. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
