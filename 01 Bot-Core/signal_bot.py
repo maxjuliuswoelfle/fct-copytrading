@@ -1739,13 +1739,7 @@ class SignalBot:
     ) -> None:
         """Eine Uebersichts-Nachricht bauen und an eine Gruppe senden."""
         if not open_trades and not pending_limits:
-            msg = (
-                f"{title}\n"
-                "\n"
-                "Aktuell keine aktiven Trades oder Limit Orders.\n"
-                f"\n{FOOTER}"
-            )
-            await self._send_to_group(group_id, msg)
+            # Nichts offen -> keine Nachricht in die Gruppe, nur loggen
             logger.info(f"[SIGNAL] DAILY OVERVIEW ({title}) | Keine aktiven Positionen")
             return
 
