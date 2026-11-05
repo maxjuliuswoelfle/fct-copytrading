@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-05** — **Ingo Dzialdowski / „Ingo D" (`ingo.dzialdowski@gmx.de`, id 365, @Ingo_D) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID + Handle nachgetragen. Keine API-Keys, 0 Mappings.
+> - **ID-Zuordnung über das Bot-Journal** (kein Support-Kontakt, DB leer): Scalp-Beitritt „Ingo (@Ingo_D) id=1863499112" am 04.07. 16:37, drei Minuten nach seinem Kauf — verifiziert, keinem anderen Account zugeordnet. Vierter Suchweg als Merker in der Wissensbasis.
+> - Jahresabo 616171 (77,05 €, Karte, seit 04.07.). **Ablefy war heute 12:51 UTC schon durch, vorzeitig zum 04.12.** → nichts offen. **Aber: Heute früh 06:55 zog noch die Rate** → 29 Tage bezahlt, nicht geliefert; bei Beschwerde Rückerstattung erwägen.
+> - Bot NICHT angefasst.
+
 > **2026-11-02 (2)** — **Marieke Böhm / „Briesemut" (`marieke.boehm@googlemail.com`, id 391) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
 > - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer). Keine API-Keys, 0 Mappings.
 > - Jahresabo 616171 (77,05 €, Karte, seit 07.07.), bezahlt bis 07.11. → 5 Tage verschenkt, unkritisch. **Ablefy war heute 09:15 UTC schon durch, vorzeitig zum 07.11.** → nichts offen, kein Rückhol-Risiko.
