@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-06** — **Christian Stemme / „Chris" (`cstemme@me.com`, id 195, @SunnyIsland78) auf Max' Ansage sofort entfernt — Härtefall (Erdbeben Panama), ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID + Handle nachgetragen (waren leer). Keine API-Keys, 0 Mappings.
+> - Launch-Jahresabo 610909, 74,94 € Karte, bezahlt bis 29.11. **Ablefy war heute 11:28 UTC schon durch, vorzeitig zum 29.11.** → keine weitere Abbuchung, kein Rückhol-Risiko.
+> - **Offen für Max/Alex:** Er fordert die Rückerstattung der Rate vom 30.10. (nennt 77,77 €, real 74,94 €) — Begründung: Kündigung angeblich schon am 22.10. bei Alex, Kulanz genehmigt. Bei uns liegt zum 22.10. nichts vor (kein Support-Log, kein Ablefy-Event). Entscheidung + Bestätigung an den Kunden steht aus.
+> - Dritter „Zusage erteilt, Rate zog trotzdem"-Fall in einer Woche (Scheuch, Dzialdowski, Stemme). Bot NICHT angefasst.
+
 > **2026-11-05** — **Ingo Dzialdowski / „Ingo D" (`ingo.dzialdowski@gmx.de`, id 365, @Ingo_D) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
 > - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID + Handle nachgetragen. Keine API-Keys, 0 Mappings.
 > - **ID-Zuordnung über das Bot-Journal** (kein Support-Kontakt, DB leer): Scalp-Beitritt „Ingo (@Ingo_D) id=1863499112" am 04.07. 16:37, drei Minuten nach seinem Kauf — verifiziert, keinem anderen Account zugeordnet. Vierter Suchweg als Merker in der Wissensbasis.
