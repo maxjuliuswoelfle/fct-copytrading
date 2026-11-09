@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-09** — **Support-Bot (`@FCT_Copy_Trading_Support_Bot`) schreibt seinen Bot-Token nicht mehr ins Journal.**
+> - **Was war:** `support_bot.py` loggt mit `basicConfig(level=INFO)`; `httpx` (python-telegram-bot) schrieb jede Request-URL inkl. `/bot<token>/` ins Journal (~60 Zeilen/10 Min, 12.447 seit 08.11.). Fund aus dem Abnahme-Healthcheck FCT OS.
+> - **Was ist jetzt:** Nach `basicConfig` `logging.getLogger("httpx").setLevel(logging.WARNING)` (wie hermes). Sicherung `/opt/support-bot/support_bot.py.bak-20261109`, Neustart 13:24:46 UTC (<1 s), Dienst aktiv, neuer Prozess schreibt 0 Token-Zeilen. Vault-Kopie `07 System/support_bot.py` = Server (md5 gleich).
+> - **Was Max noch tun muss:** nichts. Alte Journal-Zeilen + Token-Rotation laufen in der Zugangsdaten-Runde (FCT OS).
+> - **Aufgefallen, nicht angefasst:** nichts.
+
 > **2026-11-09 (2)** — **Kündigung Stefanie Schulz (`schulz.s1309@gmail.com`, id 238, @El_Schulzo) erfasst — Zugangsentzug am 01.07.2027, Zeile id 30 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, SEPA 74,94 €/Monat, Kauf 29.06.2026 → Laufzeitende 29.06.2027 (Support hat ihr dieses Datum bestätigt); Max' 01.07. = zwei Tage Kulanz, `valid_until` auf 29.06. gesetzt.
 > - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.

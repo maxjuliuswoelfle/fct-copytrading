@@ -29,6 +29,8 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
 log = logging.getLogger("support_bot")
+# httpx loggt sonst jede Telegram-URL inkl. Bot-Token (INFO)
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
 TOKEN = os.environ["SUPPORT_BOT_TOKEN"]
 GROUP_ID = int(os.environ["SUPPORT_GROUP_ID"])
