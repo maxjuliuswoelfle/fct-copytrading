@@ -8,6 +8,11 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-09 (2)** — **Kündigung Stefanie Schulz (`schulz.s1309@gmail.com`, id 238, @El_Schulzo) erfasst — Zugangsentzug am 01.07.2027, Zeile id 30 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, SEPA 74,94 €/Monat, Kauf 29.06.2026 → Laufzeitende 29.06.2027 (Support hat ihr dieses Datum bestätigt); Max' 01.07. = zwei Tage Kulanz, `valid_until` auf 29.06. gesetzt.
+> - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
+> - Kündigungsgrund „Leistungen nicht bereitgestellt" (sechste Leistungs-Kritik). Am 01.07.2027 jetzt drei Zeilen (Aschenbrenner, von Held, Schulz). Bot NICHT angefasst.
+
 > **2026-11-09** — **Kündigung Gregor von Held (`gregorvonheld67@gmail.com`, id 311, @gregorvh) erfasst — Zugangsentzug am 01.07.2027, Zeile id 29 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, SEPA 74,94 €/Monat, Kauf 01.07.2026 → Laufzeitende 01.07.2027 = Max' Datum (Kunde nannte 30.06., ein Tag Kulanz).
 > - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
