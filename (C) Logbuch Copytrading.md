@@ -8,6 +8,11 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-09 (3)** — **Roman Marx (`roman.marx@gmx.de`, id 450, Telegram „Roman") auf Max' Ansage sofort entfernt — ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`. Keine API-Keys, 0 Mappings. Telegram-ID war via Auto-Capture schon da.
+> - Monatsabo 96,45 € (Karte), Kauf 19.08., zwei Zahlungen. **In Ablefy schon am 15.10. gekündigt, Zugang bis 19.10.** — er saß danach **21 Tage unbezahlt** in beiden Kanälen, weil er nur bei Ablefy und nie im Support gekündigt hat (Stufe-2-Lücke). Nichts verschenkt, nichts offen.
+> - Empfehlung: einmal read-only alle Ablefy-Kündigungen mit abgelaufenem Zugang gegen die Gruppen prüfen — das war sicher nicht der einzige. Bot NICHT angefasst.
+
 > **2026-11-09** — **Support-Bot (`@FCT_Copy_Trading_Support_Bot`) schreibt seinen Bot-Token nicht mehr ins Journal.**
 > - **Was war:** `support_bot.py` loggt mit `basicConfig(level=INFO)`; `httpx` (python-telegram-bot) schrieb jede Request-URL inkl. `/bot<token>/` ins Journal (~60 Zeilen/10 Min, 12.447 seit 08.11.). Fund aus dem Abnahme-Healthcheck FCT OS.
 > - **Was ist jetzt:** Nach `basicConfig` `logging.getLogger("httpx").setLevel(logging.WARNING)` (wie hermes). Sicherung `/opt/support-bot/support_bot.py.bak-20261109`, Neustart 13:24:46 UTC (<1 s), Dienst aktiv, neuer Prozess schreibt 0 Token-Zeilen. Vault-Kopie `07 System/support_bot.py` = Server (md5 gleich).
