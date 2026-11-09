@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-09** — **Kündigung Gregor von Held (`gregorvonheld67@gmail.com`, id 311, @gregorvh) erfasst — Zugangsentzug am 01.07.2027, Zeile id 29 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, SEPA 74,94 €/Monat, Kauf 01.07.2026 → Laufzeitende 01.07.2027 = Max' Datum (Kunde nannte 30.06., ein Tag Kulanz).
+> - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
+> - Zweite genannte Mail `gregorvonheld@a1.net` existiert bei uns nicht — nur die Gmail-Adresse. Nicht verwechseln mit Gregor Ebner (id 199).
+> - Dry-Run `--date 2027-07-01` bestätigt. Am 01.07.2027 läuft er zusammen mit Aschenbrenner. **Offen:** Kündigungsbestätigung an ihn. Bot NICHT angefasst.
+
 > **2026-11-06** — **Christian Stemme / „Chris" (`cstemme@me.com`, id 195, @SunnyIsland78) auf Max' Ansage sofort entfernt — Härtefall (Erdbeben Panama), ohne Dauersperre.**
 > - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID + Handle nachgetragen (waren leer). Keine API-Keys, 0 Mappings.
 > - Launch-Jahresabo 610909, 74,94 € Karte, bezahlt bis 29.11. **Ablefy war heute 11:28 UTC schon durch, vorzeitig zum 29.11.** → keine weitere Abbuchung, kein Rückhol-Risiko.
