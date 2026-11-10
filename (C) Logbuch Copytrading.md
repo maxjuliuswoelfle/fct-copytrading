@@ -8,6 +8,11 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-10** — **Nicole Heisner / „Nic H." (`nicoleheisner@web.de`, id 310) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer). Keine API-Keys, 0 Mappings. `customers.name` leer, Invite auf „Trader" — nur über Mail + ID auffindbar.
+> - Launch-Jahresabo 610909 (74,94 €, Karte). **Ablefy heute 06:09 UTC vorzeitig zum 01.12. gekündigt** → nichts offen, kein Rückhol-Risiko. **21 Tage Restlaufzeit verschenkt** (Rate vom 02.11.) — bei Beschwerde Erstattung erwägen.
+> - Kündigungsgrund: „alle Trades kostenlos im Livestream" — siebte Mehrwert-Kritik. Bot NICHT angefasst.
+
 > **2026-11-09 (3)** — **Roman Marx (`roman.marx@gmx.de`, id 450, Telegram „Roman") auf Max' Ansage sofort entfernt — ohne Dauersperre.**
 > - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`. Keine API-Keys, 0 Mappings. Telegram-ID war via Auto-Capture schon da.
 > - Monatsabo 96,45 € (Karte), Kauf 19.08., zwei Zahlungen. **In Ablefy schon am 15.10. gekündigt, Zugang bis 19.10.** — er saß danach **21 Tage unbezahlt** in beiden Kanälen, weil er nur bei Ablefy und nie im Support gekündigt hat (Stufe-2-Lücke). Nichts verschenkt, nichts offen.
