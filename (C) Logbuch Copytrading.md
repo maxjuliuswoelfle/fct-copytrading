@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-11** — **Kündigung Stephan Reichard (`stephan.reichard@gmx.net`, id 486) erfasst — Zugangsentzug am 14.11.2026, Zeile id 31 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte), Kauf 14.09., zwei Zahlungen, bezahlt bis 14.11. **Ablefy-Kündigung war heute 06:47 UTC schon durch, `access_valid_until` 14.11. = exakt Max' Datum** → nichts offen.
+> - Telegram-ID war via Auto-Capture schon in der DB, verifiziert `member` in beiden. Dry-Run `--date 2026-11-14` bestätigt (zusammen mit Miah 12.11.).
+> - **Nebenbei: Nasim Miah ist in Ablefy doch gekündigt** — Event kam am 29.10. 06:21, eine Minute nach meiner Erfassung (Ende 11.11.). Der offene Punkt „Max muss in Ablefy kündigen" ist damit erledigt, Kick morgen 08:55 läuft regulär.
+> - Offen: Kündigungsbestätigung an Reichard. Bot NICHT angefasst.
+
 > **2026-11-10** — **Nicole Heisner / „Nic H." (`nicoleheisner@web.de`, id 310) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
 > - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer). Keine API-Keys, 0 Mappings. `customers.name` leer, Invite auf „Trader" — nur über Mail + ID auffindbar.
 > - Launch-Jahresabo 610909 (74,94 €, Karte). **Ablefy heute 06:09 UTC vorzeitig zum 01.12. gekündigt** → nichts offen, kein Rückhol-Risiko. **21 Tage Restlaufzeit verschenkt** (Rate vom 02.11.) — bei Beschwerde Erstattung erwägen.
