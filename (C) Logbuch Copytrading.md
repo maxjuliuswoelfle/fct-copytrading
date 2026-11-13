@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-13** — **Kündigung Bernhard Grosser (`bernhardgrosser67@gmail.com`, id 64, @bgrosser) erfasst — Zugangsentzug am 28.06.2027, Zeile id 32 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, 74,94 €/Monat (Karte), Kauf 28.06.2026 → Laufzeitende 28.06.2027 = Max' Datum; Support hat ihm das bestätigt. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
+> - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen.
+> - Zwei Verwechslungen im Verlauf: erst „Trading Club" statt Copytrading, dann falsche Mail (`…10@gmail.com` existiert nicht). Zuordnung über `…67@gmail.com` + ID eindeutig.
+> - Am 28.06.2027 jetzt sieben Zeilen. Bot NICHT angefasst.
+
 > **2026-11-11** — **Kündigung Stephan Reichard (`stephan.reichard@gmx.net`, id 486) erfasst — Zugangsentzug am 14.11.2026, Zeile id 31 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte), Kauf 14.09., zwei Zahlungen, bezahlt bis 14.11. **Ablefy-Kündigung war heute 06:47 UTC schon durch, `access_valid_until` 14.11. = exakt Max' Datum** → nichts offen.
 > - Telegram-ID war via Auto-Capture schon in der DB, verifiziert `member` in beiden. Dry-Run `--date 2026-11-14` bestätigt (zusammen mit Miah 12.11.).
