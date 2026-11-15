@@ -8,6 +8,12 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-15** — **Kündigung Marc Mentzer (`marc.mentzer@gmx.de`, id 373, „Marc M") erfasst — Zugangsentzug am 06.12.2026, Zeile id 33 im Ablauf-Job.**
+> - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte) seit 06.07., bezahlt bis 06.12. **Ablefy-Kündigung heute 15:49 UTC schon durch, Ende 06.12. = exakt Max' Datum** → nichts offen.
+> - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und nachgetragen. Dry-Run `--date 2026-12-06` bestätigt.
+> - Nebenbefund: kauft parallel andere FCT-Produkte (608223 ff., bis zu 1.951 €, aktuelle Order bis 10.12.) — Kündigung betrifft nur das Signal-Abo.
+> - **Kontrolle der letzten Läufe:** Miah (12.11.) und Reichard (14.11.) beide `done` / „Ban bestätigt" um 08:55 UTC — der Job arbeitet sauber. Offen: Kündigungsbestätigung an Mentzer. Bot NICHT angefasst.
+
 > **2026-11-13** — **Kündigung Bernhard Grosser (`bernhardgrosser67@gmail.com`, id 64, @bgrosser) erfasst — Zugangsentzug am 28.06.2027, Zeile id 32 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Launch-Jahresabo 610909, 74,94 €/Monat (Karte), Kauf 28.06.2026 → Laufzeitende 28.06.2027 = Max' Datum; Support hat ihm das bestätigt. Kein Ablefy-Event — bei 610909 zum Laufzeitende normal.
 > - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und samt Handle nachgetragen.
