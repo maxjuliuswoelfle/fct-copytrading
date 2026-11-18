@@ -8,6 +8,11 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-18** — **Kristina Spleth / „835256" (`k.spleth@web.de`, id 235) auf Max' Ansage sofort entfernt — ohne Dauersperre.**
+> - Ban + sofortiger Unban in Main + Scalp, Endstatus `left`/`left`. Invite widerrufen, DB `cancelled` / `is_active=0`, Telegram-ID nachgetragen (war leer). Keine API-Keys, 0 Mappings. Telegram-Name ist eine Zahl — nur über Mail + ID auffindbar.
+> - Launch-Jahresabo 610909, SEPA 74,94 €. Hatte am 02.11. regulär gekündigt (Support: Ende 29.06.2027 — dafür war nie eine Job-Zeile angelegt worden), bat am 17.11. um vorzeitige Entlassung (zu wenige Trades, „wochenlang nur eine Big Short", finanziell). **Ablefy heute 06:38 UTC vorzeitig zum 29.11. gekündigt** → nichts offen. 11 Tage Restlaufzeit verschenkt.
+> - Achte Leistungs-Kritik. Bot NICHT angefasst.
+
 > **2026-11-15** — **Kündigung Marc Mentzer (`marc.mentzer@gmx.de`, id 373, „Marc M") erfasst — Zugangsentzug am 06.12.2026, Zeile id 33 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte) seit 06.07., bezahlt bis 06.12. **Ablefy-Kündigung heute 15:49 UTC schon durch, Ende 06.12. = exakt Max' Datum** → nichts offen.
 > - Telegram-ID war leer → aus dem Support-Header verifiziert (`member` in beiden) und nachgetragen. Dry-Run `--date 2026-12-06` bestätigt.
