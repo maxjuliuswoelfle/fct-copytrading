@@ -8,6 +8,10 @@
 ---
 
 ## Session-Protokoll
+
+> **2026-11-19 (2)** — Sofort-Kick Sven Löchelt (`swifty.rice@gmx.de`, id 104, TG 5652824136 „Sumo Jumbo") auf Zuruf Max, ohne Sperre. ID war nicht in der DB → über nachgereichte Mail + Kunden-ID zugeordnet, `telegram_chat_id` nachgetragen. Main + Scalp ban/unban → `left`/`left`, Einladungslink widerrufen, `payment_status=cancelled`, `is_active=0`. Ablefy-Order 16519573 (Plan 610909, Jahresabo seit 28.06.) um 22:14 zum 28.11. gekündigt, keine weitere Rate → nichts offen bei Ablefy. Kunde hatte außerordentlich nach § 314 BGB gekündigt (Leistungsmangel) und verlangt schriftliche Bestätigung zum 19.11. → bei Max offen.
+
+> **2026-11-19** — Sofort-Kick Lihua Zou Stahr (`lihua.zoustahr@yahoo.com`, id 358, TG 7487353081) auf Zuruf Max, ohne Sperre. Main + Scalp ban/unban → `left`/`left`, Reaktivierungs-Link widerrufen, `payment_status=cancelled`, `is_active=0`. Ablefy-Order 16930311 (Plan 616171) um 22:13 regulär zum 28.11. gekündigt (GRANT + `subscription_canceled`), keine weitere Rate → nichts offen. Hinweis: Kundin hatte nur regulär gekündigt, Max entschied Sofort-Kick → 9 bezahlte Tage verschenkt. Support-Bestätigung an die Kundin durch Max bereits raus.
 > **2026-11-18 (2)** — **Kündigung Enrico Schreiner / „Enschr" (`enschr@web.de`, id 431) erfasst — Zugangsentzug am 28.11.2026, Zeile id 34 im Ablauf-Job.**
 > - Keine API-Keys, 0 Mappings, nicht auf der Blocklist, kein bestehender Eintrag. Monatsabo 96,45 € (Karte) seit 28.07., vier Zahlungen, bezahlt bis 28.11. **Ablefy-Kündigung heute 18:07 UTC schon durch, Ende 28.11. = exakt Max' Datum** → nichts offen.
 > - Telegram-ID war via Auto-Capture schon in der DB, verifiziert `member` in beiden. Dry-Run `--date 2026-11-28` bestätigt.
