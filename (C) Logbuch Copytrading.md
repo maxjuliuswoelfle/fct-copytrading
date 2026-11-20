@@ -8,6 +8,14 @@
 ---
 
 ## Session-Protokoll
+> **2026-11-20** — **Karl Gombocz (`kago9562@gmail.com`, id 159, @KarlGombocz) auf Ansage von Max W. permanent gebannt + auf die Blocklist gesetzt (Forderung abgeschrieben).**
+> - Vorher `member` in Main + Scalp. Zeile id 35 in `scheduled_access_revocations` (`permanent`, Quelle `max`, fällig heute), Dry-Run des Ablauf-Jobs, dann `revoke-access-daily.service` einmal von Hand gestartet (13:48 UTC): `kicked`/`kicked` gegengeprüft, Invite widerrufen (`ok=True`), DB `cancelled` / `is_active=0`. Kein eigener Telegram-Aufruf, kein Griff in die Bot-`.env`.
+> - Blocklist id 3 (Mail + ID 5121875553). Telegram-ID + Handle nachgetragen — gefunden im Bot-Journal vom 04.07. (Scalp-Beitritt), Support-Log und Haupt-DB hatten nichts.
+> - Sicherung vorher: `/root/sicherung_gombocz_s2_20261120.json` (Server 2, 600).
+> - Keine API-Keys, 0 Mappings. Jahresabo Order 16520012, eine Zahlung (28.06.), seit 29.07. `payment_paused` — damals folgte kein REVOKE, er saß bis heute in beiden Gruppen.
+> - **Offen (Max W./Alex):** Order 16520012 in Ablefy beenden. Close-Felder „Copytrading Status/Entzug“ stellt der Nachtlauf 03:45 UTC um (Dry-Run des Syncs zeigt „Inaktiv, Entzug 2026-11-20“).
+> - Eigene Fehler: (1) erste Journal-Suche ohne Zeitfenster über mehrere Units lief Minuten — abgebrochen, nur lesend. (2) Gearbeitet wurde zuerst auf einem Vault-Stand vom 09.11.; die Einträge vom 09.–19.11. lagen nur auf dem Git-Server. Vor dem Schreiben nachgezogen, inhaltlich ohne Folgen. Merker: vor jeder Arbeit hier `git pull`.
+> - Bot NICHT angefasst, kein Neustart.
 
 > **2026-11-19 (2)** — Sofort-Kick Sven Löchelt (`swifty.rice@gmx.de`, id 104, TG 5652824136 „Sumo Jumbo") auf Zuruf Max, ohne Sperre. ID war nicht in der DB → über nachgereichte Mail + Kunden-ID zugeordnet, `telegram_chat_id` nachgetragen. Main + Scalp ban/unban → `left`/`left`, Einladungslink widerrufen, `payment_status=cancelled`, `is_active=0`. Ablefy-Order 16519573 (Plan 610909, Jahresabo seit 28.06.) um 22:14 zum 28.11. gekündigt, keine weitere Rate → nichts offen bei Ablefy. Kunde hatte außerordentlich nach § 314 BGB gekündigt (Leistungsmangel) und verlangt schriftliche Bestätigung zum 19.11. → bei Max offen.
 
