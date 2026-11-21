@@ -29,6 +29,7 @@ from bot_types import (
     PerpFill,
     PerpPosition,
     PerpAccount,
+    is_private_pair,
 )
 
 
@@ -79,6 +80,10 @@ class LevexWebSocket:
         self._on_perp_account: Callable | None = None
         self._on_perp_ticker: Callable | None = None
         self._on_reconnect: Callable | None = None
+
+        # Private Paare (USDC): schon geloggte Positionen/Accounts merken, damit
+        # das Journal nicht bei jedem Preis-Update geflutet wird.
+        self._private_logged: set[str] = set()
 
     # --------------------------------------------------------------------------
     # CALLBACK REGISTRIERUNG
@@ -379,6 +384,14 @@ class LevexWebSocket:
             for row in (data.get("fills") or [])
         ]
 
+        # Private Paare (USDC) verwerfen — siehe bot_types.is_private_pair
+        total = len(open_orders) + len(closed_orders) + len(fills)
+        open_orders = self._drop_private(open_orders, "Order")
+        closed_orders = self._drop_private(closed_orders, "Order")
+        fills = self._drop_private(fills, "Fill")
+        if self._only_private(data, total, len(open_orders) + len(closed_orders) + len(fills)):
+            return
+
         self._on_perp_order({
             "open": open_orders,
             "closed": closed_orders,
@@ -399,6 +412,12 @@ class LevexWebSocket:
             for row in rows
         ]
 
+        # Private Paare (USDC) verwerfen — siehe bot_types.is_private_pair
+        total = len(positions)
+        positions = self._drop_private(positions, "Position")
+        if self._only_private(data, total, len(positions)):
+            return
+
         self._on_perp_position({
             "positions": positions,
             "_type": data.get("type", "incremental"),
@@ -417,10 +436,62 @@ class LevexWebSocket:
             for row in rows
         ]
 
+        # Privates Guthaben (USDC) verwerfen — sonst ueberschreibt es die
+        # USDT-Master-Balance ("% vom Account" in den Signalen waere falsch).
+        total = len(accounts)
+        accounts = self._drop_private(accounts, "Account")
+        if self._only_private(data, total, len(accounts)):
+            return
+
         self._on_perp_account({
             "accounts": accounts,
             "_type": data.get("type", "incremental"),
         })
+
+    # --------------------------------------------------------------------------
+    # PRIVATE PAARE (USDC) — am Eingang verwerfen
+    # --------------------------------------------------------------------------
+
+    def _drop_private(self, items: list, kind: str) -> list:
+        """Private Eintraege (USDC-Paare / USDC-Guthaben) aus einer Liste entfernen.
+
+        Orders und Fills werden jedes Mal geloggt (einzelne Ereignisse). Positionen
+        und Accounts kommen bei jedem Preis-Update erneut — die werden nur beim
+        ersten Mal auf INFO geloggt, danach auf DEBUG.
+        """
+        kept = []
+        for item in items:
+            symbol = getattr(item, "symbol", "") or ""
+            currency = getattr(item, "currency", "") or ""
+            if not is_private_pair(symbol, currency):
+                kept.append(item)
+                continue
+
+            side = getattr(item, "side", "") or ""
+            label = " ".join(p for p in (side, symbol or currency or "?") if p)
+            text = f"[PRIVAT] {kind} ignoriert: {label} — privates Paar, kein Signal"
+            if kind in ("Order", "Fill"):
+                logger.info(text)
+            else:
+                key = f"{kind}:{getattr(item, 'positionID', '') or symbol or currency}"
+                if key in self._private_logged:
+                    logger.debug(text)
+                else:
+                    self._private_logged.add(key)
+                    logger.info(text)
+        return kept
+
+    @staticmethod
+    def _only_private(data: Any, total_before: int, total_after: int) -> bool:
+        """True, wenn ein INKREMENTELLES Update ausschliesslich private Eintraege enthielt.
+
+        Dann wird der Callback gar nicht aufgerufen — als haette es das Update nie
+        gegeben. Snapshots werden IMMER weitergereicht (auch leer), weil listen.py
+        daran den State aufbaut und verwaiste Signal-Namen abgleicht.
+        """
+        if data.get("type", "incremental") == "snapshot":
+            return False
+        return total_before > 0 and total_after == 0
 
     def _handle_perp_ticker_update(self, data: Any) -> None:
         """perpTicker.update verarbeiten — oeffentliche Marktdaten."""

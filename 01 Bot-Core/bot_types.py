@@ -236,3 +236,37 @@ class ParsedEvent:
     symbol: str
     details: dict[str, Any]
     timestamp: float  # Epoch in Millisekunden
+
+
+# ============================================================================
+# PRIVATE PAARE — werden NICHT als Signal gepostet / nicht gespiegelt
+# ============================================================================
+# Regel (Max W., 2026-11-21): Alle USDC-Paare sind Max Steinauers PRIVATE Trades,
+# alle USDT-Paare sind Copy Trading. Private Paare werden direkt am Eingang
+# (websocket_client.py) verworfen — sie erreichen weder Parser noch Signal-Bot,
+# Team-Alerts, Datenbank oder Dashboard.
+
+PRIVATE_CURRENCIES: tuple[str, ...] = ("USDC",)
+COPY_CURRENCIES: tuple[str, ...] = ("USDT",)
+
+
+def is_private_pair(symbol: str = "", currency: str = "") -> bool:
+    """True, wenn ein Order/Fill/Position/Account zu einem privaten Paar gehoert.
+
+    Das SYMBOL entscheidet (die Regel lautet "USDC-Paare privat, USDT-Paare Copy Trading"):
+    - Symbol endet auf USDT  -> immer Copy Trading (False), egal was im Waehrungsfeld steht
+    - Symbol endet auf USDC  -> privat (True)
+    Nur wenn das Symbol nichts hergibt (leer, z.B. beim Account, oder unbekannte
+    Schreibweise), entscheidet das Waehrungsfeld (currency == USDC -> privat).
+
+    Schreibweisen wie "btcusdc", "BTC-USDC" oder "BTCUSDCPERP" werden erkannt.
+    """
+    sym = "".join(ch for ch in (symbol or "").upper() if ch.isalnum())
+    if sym.endswith("PERP"):
+        sym = sym[:-4]
+    if sym:
+        if any(sym.endswith(c) for c in COPY_CURRENCIES):
+            return False
+        if any(sym.endswith(c) for c in PRIVATE_CURRENCIES):
+            return True
+    return (currency or "").strip().upper() in PRIVATE_CURRENCIES

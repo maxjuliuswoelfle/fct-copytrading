@@ -25,6 +25,8 @@ Ergebnis des kompletten Bot-Audits vom **2026-06-30**. Fokus: Zustände, die ang
 
 ## 🟡 Signal-Bot — noch offen (live, Phase 1)
 
+- **`<0,1 %` sprengt die Telegram-Nachricht** (gefunden 2026-11-21, `signal_bot.py` `_fmt_account_pct`, Zeile 416): Bei einer Positionsgröße unter 0,1 % vom Account steht `<0,1 %` im Text; gesendet wird mit `parse_mode=HTML` → Telegram antwortet 400 „Unsupported start tag "0,1"", kein Retry, **das Signal fällt komplett aus** (Journal: `[SIGNAL] OPEN_MARKET | … | Paid: ✗`). Aufgetreten am 21.11. 09:36:10 UTC bei einem 0,0025-BTC-Test. Trifft auch USDT-Trades mit sehr kleinem Einsatz. → Fix: `&lt;0,1 %` ausgeben (oder „unter 0,1 %"); danach Deploy + Neustart nach Ansage.
+
 - **#3/#4 Rest-Edgecase (kosmetisch):** Neustart genau im Fenster zwischen Limit-Einstellen und Ausführen → der spätere Fill wird als „Nachkauf" statt „neue Position" gelabelt (Ursache: `get_signal_display_name` ignoriert `is_active`). Übersicht ist durch #1-Fix korrekt; nur das Nachrichten-Label im seltenen Timing falsch. Niedrige Prio.
 
 - **#8 Zeitzonen-Fehler Übersicht** (`signal_bot.py:1414`): im Winter feuert die 21:00-Übersicht eine Stunde zu früh (20:00 lokal). Kosmetisch.
