@@ -21,11 +21,12 @@ Ergebnis des kompletten Bot-Audits vom **2026-06-30**. Fokus: Zustände, die ang
 - **Revert labelte Re-Placement als „Nachkauf"** → Cancel+Replace (neue OrderID) erzeugte ein OPEN-Limit, das als `limit_added` gepostet wurde, obwohl keine offene Position existiert. Jetzt: `limit_added` nur bei echter Live-Position (`_has_live_position`), sonst `new_limit`. Deployed.
 - **Wartende Limit fehlte in der 21:00-Übersicht nach Neustart** → Übersicht las Limits nur aus dem flüchtigen In-Memory-Dict `_pending_limits`, das bei Snapshot/Reconnect nicht neu befüllt wird. Jetzt aus neuer Parser-Methode `get_pending_limit_orders()` (aus `_active_orders`, überlebt Reconnect). Deployed. (Ersetzt faktisch den Rest-Edgecase hinter #3/#4 für die Übersicht.)
 
+### `<0,1 %` sprengte die Telegram-Nachricht (2026-11-21)
+- **Signal fiel bei Mini-Positionen komplett aus** → `signal_bot.py` `_fmt_account_pct` gab bei einer Positionsgröße unter 0,1 % vom Account `<0,1 %` zurück; gesendet wird mit `parse_mode=HTML` → Telegram 400 „Unsupported start tag "0,1"", kein Retry (Journal: `[SIGNAL] OPEN_MARKET | … | Paid: ✗`, aufgetreten am 21.11. 09:36:10 UTC bei einem 0,0025-BTC-Test; hätte auch USDT-Trades getroffen). Jetzt `&lt;0,1 %` (Anzeige in Telegram unverändert „<0,1 %"). Deployed 21.11. 11:33 UTC. Echter Versand noch nicht beobachtet — beim nächsten Trade unter 0,1 % im Journal auf `Paid: ✓` achten.
+
 ---
 
 ## 🟡 Signal-Bot — noch offen (live, Phase 1)
-
-- **`<0,1 %` sprengt die Telegram-Nachricht** (gefunden 2026-11-21, `signal_bot.py` `_fmt_account_pct`, Zeile 416): Bei einer Positionsgröße unter 0,1 % vom Account steht `<0,1 %` im Text; gesendet wird mit `parse_mode=HTML` → Telegram antwortet 400 „Unsupported start tag "0,1"", kein Retry, **das Signal fällt komplett aus** (Journal: `[SIGNAL] OPEN_MARKET | … | Paid: ✗`). Aufgetreten am 21.11. 09:36:10 UTC bei einem 0,0025-BTC-Test. Trifft auch USDT-Trades mit sehr kleinem Einsatz. → Fix: `&lt;0,1 %` ausgeben (oder „unter 0,1 %"); danach Deploy + Neustart nach Ansage.
 
 - **#3/#4 Rest-Edgecase (kosmetisch):** Neustart genau im Fenster zwischen Limit-Einstellen und Ausführen → der spätere Fill wird als „Nachkauf" statt „neue Position" gelabelt (Ursache: `get_signal_display_name` ignoriert `is_active`). Übersicht ist durch #1-Fix korrekt; nur das Nachrichten-Label im seltenen Timing falsch. Niedrige Prio.
 

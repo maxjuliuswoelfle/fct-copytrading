@@ -411,9 +411,12 @@ class SignalBot:
     @staticmethod
     def _fmt_account_pct(value: float) -> str:
         """Kontoanteil formatieren (ohne Vorzeichen): 2.5 → '2,5 %'"""
-        # Unter 0,1% nicht auf 0 runden, damit kleine Einsaetze sichtbar bleiben
+        # Unter 0,1% nicht auf 0 runden, damit kleine Einsaetze sichtbar bleiben.
+        # WICHTIG: "&lt;" statt "<" — gesendet wird mit parse_mode=HTML, ein rohes "<"
+        # liest Telegram als Tag-Anfang und lehnt die ganze Nachricht mit 400 ab
+        # (Signal faellt aus, so passiert am 2026-11-21). In Telegram steht "<0,1 %".
         if 0 < value < 0.1:
-            return "<0,1 %"
+            return "&lt;0,1 %"
         return f"{value:.1f}".replace(".", ",") + " %"
 
     @staticmethod
